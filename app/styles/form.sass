@@ -1,11 +1,18 @@
+@import 'sass-bootstrap/lib/bootstrap'
+
+$icon-font-path: "/bower_components/sass-bootstrap/fonts/"
+
 $errorColor: #cc4e4e
 
 form
-	width: 50%
-	margin: auto
+	@extend .form-group
+
+	label
+		display: block
 	input
-		margin: 0 0 50px
+		@extend .form-control
+
 	.CustomValidationError
 		position: relative
-		top: -50px
+		font-size: 0.8em
 		color: $errorColor
