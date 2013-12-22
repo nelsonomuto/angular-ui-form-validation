@@ -1,11 +1,11 @@
-# Angular ui form validation
+# Angular ui form validation &nbsp;[![Build Status](https://travis-ci.org/angular-ui/ui-router.png?branch=master)](https://travis-ci.org/angular-ui/ui-router)
 
 #### A flexible approach to handling form validation and displaying field errors.
 
 ## Install:
  - Either clone & build this repository
  - [or Download the release](https://github.com/nelsonomuto/angular-ui-form-validation/blob/master/dist/angular-ui-form-validation.js)
- - or via bower `$ bower install angular-ui-form-validation'
+ - or via bower `$ bower install angular-ui-form-validation`
 
 ## Getting Started
 >
@@ -15,7 +15,10 @@ The idea behind this component is to allow you to be able to do three things:
 
 **(2)** Give you the flexibility to create your own custom validations.
 
+![custom validation message for no space](errorMessageNoSpace.png)
+
 **(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
+
 
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
