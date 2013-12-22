@@ -31,6 +31,8 @@ The end result is validation and error handling without convoluting your markup 
     />
     <span class="help-block">username | validates min char = 5, max = 10, no special chars</span>alidation-no-space="true"
     />
+        ...
+
 </form>
 >
 ```

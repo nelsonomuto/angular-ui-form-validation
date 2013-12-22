@@ -346,7 +346,9 @@ module.exports = function (grunt) {
     concat: {
       dist: {
         src: [          
-          '<%= yeoman.directives %>/{,*}/*.js'
+          // '<%= yeoman.directives %>/{,*}/*.js, !**/*.spec.js'
+          '<%= yeoman.directives %>/{,*}/*.js',
+          '!<%= yeoman.directives %>/{,*}/*spec.js'
         ],
         dest: '<%= yeoman.dist %>/<%= pkg.name %>.js'
       }
