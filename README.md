@@ -1,4 +1,4 @@
-# Angular ui form validation &nbsp;[![Build Status](https://travis-ci.org/angular-ui/ui-router.png?branch=master)](https://travis-ci.org/angular-ui/ui-router)
+# Angular ui form validation &nbsp;[![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
 
 #### A flexible approach to handling form validation and displaying field errors.
 
@@ -15,7 +15,7 @@ The idea behind this component is to allow you to be able to do three things:
 
 **(2)** Give you the flexibility to create your own custom validations.
 
-![custom validation message for no space](errorMessageNoSpace.png)
+![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
 
 **(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
 
