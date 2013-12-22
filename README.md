@@ -30,7 +30,5 @@ The idea behind this component is to allow you to be able to do three things:
     <span class="help-block">username | validates min char = 5, max = 10, no special chars</span>alidation-no-space="true"
     />
 </form>
->
-```html
 
 For a sample example clone this repository and run the grunt serve task.
