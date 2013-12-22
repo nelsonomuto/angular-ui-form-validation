@@ -17,6 +17,8 @@ The idea behind this component is to allow you to be able to do three things:
 
 **(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
 
+The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
+
 ```html
  <form novalidate>    
     <label for="username">Username</label>
@@ -30,5 +32,7 @@ The idea behind this component is to allow you to be able to do three things:
     <span class="help-block">username | validates min char = 5, max = 10, no special chars</span>alidation-no-space="true"
     />
 </form>
+>
+```
 
 For a sample example clone this repository and run the grunt serve task.
