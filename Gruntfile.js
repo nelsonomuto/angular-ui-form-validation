@@ -19,9 +19,11 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     // Project settings
+    pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
+      directives: 'app/scripts/directives',
       dist: 'dist'
     },
 
@@ -339,9 +341,16 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // concat: {
-    //   dist: {}
-    // },
+
+
+    concat: {
+      dist: {
+        src: [          
+          '<%= yeoman.directives %>/{,*}/*.js'
+        ],
+        dest: '<%= yeoman.dist %>/<%= pkg.name %>.js'
+      }
+    },
 
     // Test settings
     karma: {
