@@ -3,6 +3,7 @@
 #### A flexible approach to handling form validation and displaying field errors.
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
+![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
 ```html
  <form novalidate>    
     <label for="username">Username</label>
@@ -33,9 +34,6 @@ The idea behind this component is to allow you to be able to do three things:
 **(1)** Provide a list of commonly used validations that you may plug in to your form fields.
 
 **(2)** Give you the flexibility to create your own custom validations.
-
-![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
-
 
 
 **(3)** _(Available with next release)_ Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
