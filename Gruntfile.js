@@ -364,10 +364,10 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       },
-      travis: {
+      firefox: {
         configFile: 'karma.conf.js',
         singleRun: true,
-        browsers: ['PhantomJS']
+        browsers: ['Firefox']
       }
     }
   });

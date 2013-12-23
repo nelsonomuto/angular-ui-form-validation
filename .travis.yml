@@ -5,4 +5,6 @@ node_js:
 before_script:
   - 'npm install -g bower grunt-cli'
   - 'bower install'
-script: 'grunt karma:travis'
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+script: 'grunt karma:firefox'
