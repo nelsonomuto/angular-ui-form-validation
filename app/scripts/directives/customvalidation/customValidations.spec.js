@@ -1,6 +1,6 @@
 describe('directives.customvalidation.customValidations', function () {
     var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages, passwordInput, confirmPasswordInput;
-
+    
     beforeEach(function (){
         module('directives.customvalidation.customValidations');
         inject(function ($rootScope, $compile){
