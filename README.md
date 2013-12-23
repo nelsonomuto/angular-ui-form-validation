@@ -17,7 +17,7 @@ The idea behind this component is to allow you to be able to do three things:
 
 ![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
 
-**(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
+**(3)** (Available with next release) Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
 
 
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
@@ -26,10 +26,14 @@ The end result is validation and error handling without convoluting your markup 
  <form novalidate>    
     <label for="username">Username</label>
     <input type="text" id="username" name="username" ng-model="user.username"
-      validation-min-length="5" 
+      validation-max-length="10"
+      validation-min-length="5"
+
+      <!-- The ability to specify a template will be included in a future release -->
+      <!-- validation-min-length="{ value: 5, template: 'tooltipMessage.html' }"  -->
+
       validation-no-space="true"
       validation-field-required="true"
-      validation-max-length="10"
       validation-no-special-chars="true"
     />
     <span class="help-block">username | validates min char = 5, max = 10, no special chars</span>alidation-no-space="true"

@@ -33,14 +33,14 @@
         },
         {
             customValidationAttribute: 'validationMinLength',
-            errorMessage: function (attr) { return 'Minimum of ' + attr + ' characters'; },
+            errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
             validator: function (val, attr){
                 return val.length > parseInt(attr, 10);    
             }   
         },
         {
             customValidationAttribute: 'validationMaxLength',
-            errorMessage: function (attr) { return 'Maximum of ' + attr + ' characters'; },
+            errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
             validator: function (val, attr){
                 return val.length < parseInt(attr, 10);
             }   
@@ -88,6 +88,21 @@
             }
         }
     ];
+
+    getValidationAttributeValue = function (attr, property) {
+        var value, property;
+
+        property = property || 'value';
+
+        value = attr;
+
+        try{
+            value = JSOL.parse(attr)[property];
+        } catch (e) {
+        }
+
+        return value || attr;
+    };
     
     getValidatorByAttribute = function (customValidationAttribute) {
         var validator;
@@ -112,14 +127,16 @@
     createValidationFormatterLink = function (formatterArgs, $timeout) {
         
         return function($scope, $element, $attrs, ngModelController) {
-            var errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations;
-            
-            if($attrs[formatterArgs.customValidationAttribute]){
+            var errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue;
+
+            validationAttributeValue = getValidationAttributeValue($attrs[formatterArgs.customValidationAttribute]);
+
+            if(validationAttributeValue){
                 modelName = $attrs.ngModel.substring(0, $attrs.ngModel.indexOf('.'));
                 propertyName = $attrs.ngModel.substring($attrs.ngModel.indexOf('.') + 1);
                 model = $scope[modelName];
                 if(typeof(formatterArgs.errorMessage) === 'function'){
-                    errorMessage = formatterArgs.errorMessage($attrs[formatterArgs.customValidationAttribute]);
+                    errorMessage = formatterArgs.errorMessage(validationAttributeValue);
                 } else {
                     errorMessage = formatterArgs.errorMessage;
                 }
@@ -182,7 +199,7 @@
 
                     value = $element.val().trimRight();
 
-                    isValid = formatterArgs.validator(value, $attrs[formatterArgs.customValidationAttribute], $element, model, ngModelController);
+                    isValid = formatterArgs.validator(value, validationAttributeValue, $element, model, ngModelController);
 
                     ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
