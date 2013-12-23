@@ -9,9 +9,6 @@ The end result is validation and error handling without convoluting your markup 
     <input type="text" id="username" name="username" ng-model="user.username"
       validation-max-length="10"
       validation-min-length="5"
-
-      validation-min-length="{ value: 5, template: 'tooltipMessage.html' }"  
-      
       validation-no-space="true"
       validation-field-required="true"
       validation-no-special-chars="true"
