@@ -117,7 +117,7 @@ describe('directives.customvalidation.customValidations', function () {
         });        
     });
 
-    describe('object attributes', function(){
+    describe('object literal validation attribute value', function(){
             beforeEach(function (){
                 inject(function ($rootScope, $compile){
                     element = angular.element('<form name="form">' +
@@ -168,4 +168,54 @@ describe('directives.customvalidation.customValidations', function () {
             });        
         });
 
+        describe('custom error message template', function () {
+            beforeEach(function (){
+                inject(function ($rootScope, $compile){                    
+                    element = angular.element('<form name="form">' +
+                        '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
+                        'validation-min-length="{ template:\'views/errorTemplateOne.html\', value: 8}" validation-one-alphabet="{ template:\'views/errorTemplateTwo.html\', value: true}" validation-one-number="{ template:\'\', value: true}" validation-one-lower-case-letter="true" '+
+                        'validation-one-upper-case-letter="true" validation-no-special-chars="true" validation-no-space="true" />'+
+                        '<input ng-model="user.confirmPassword" type="text" id="confirmPassword" name="confirmPassword" validation-confirm-password="true" />'+
+                        '</form>');
+                    passwordInput = element.find('#password');
+                    confirmPasswordInput = element.find('#confirmPassword');
+                    scope = $rootScope;
+                    angular.extend(scope, {
+                        user: {
+                            password: null,
+                            confirmPassword: null
+                        }
+                    });
+                    $compile(element)(scope);
+                    scope.$digest();
+                    errorMessages = element.find('.CustomValidationError');
+                });
+            });
+
+            it('should contain nine hidden error messages', function () {
+                hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+                visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+
+                expect(9).toEqual(hiddenErrorMessages.length);
+                expect(0).toEqual(visibleErrorMessages.length);
+            });
+
+            it('should show password errors when password is changed', function (){
+                passwordInput.val('sadffsdaadfsfsda');
+                scope.$broadcast('runCustomValidations');
+                hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+                visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+                expect(8).toEqual(hiddenErrorMessages.length);
+                expect(1).toEqual(visibleErrorMessages.length);
+                expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());   
+
+                passwordInput.val('sadffsdaadfsSfsda');
+                scope.$broadcast('runCustomValidations');
+                hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+                visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+                expect(8).toEqual(hiddenErrorMessages.length);
+                expect(1).toEqual(visibleErrorMessages.length);
+                expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim()); 
+            });        
+        });
 });
