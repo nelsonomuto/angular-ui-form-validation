@@ -23,12 +23,14 @@ The end result is validation and error handling without convoluting your markup 
 
 </form>
 ```
-## Install:
+
+## Getting Started
+
+### Install:
  - Either clone & build this repository
  - [or Download the release](https://github.com/nelsonomuto/angular-ui-form-validation/blob/master/dist/angular-ui-form-validation.js)
  - or via bower `$ bower install angular-ui-form-validation`
-
-## Getting Started
+ 
 >
 The idea behind this component is to allow you to be able to do three things:
 
