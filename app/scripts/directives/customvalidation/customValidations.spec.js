@@ -168,13 +168,13 @@ describe('directives.customvalidation.customValidations', function () {
             });        
         });
 
-        describe('custom error message template', function () {
+        xdescribe('custom error message template wrap', function () {
             beforeEach(function (){
                 inject(function ($rootScope, $compile){                    
                     element = angular.element('<form name="form">' +
                         '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
-                        'validation-min-length="{ template:\'views/errorTemplateOne.html\', value: 8}" validation-one-alphabet="{ template:\'views/errorTemplateTwo.html\', value: true}" validation-one-number="{ template:\'\', value: true}" validation-one-lower-case-letter="true" '+
-                        'validation-one-upper-case-letter="true" validation-no-special-chars="true" validation-no-space="true" />'+
+                        'validation-min-length="{ template:\'views/errorTemplateOne.html\', value: 8}" validation-one-alphabet="{ template:\'views/errorTemplateTwo.html\', value: true}" validation-one-number="{ template:\'views/errorTemplateTwo.html\', value: 8}" validation-one-lower-case-letter="true" '+
+                        'validation-one-upper-case-letter="{ template:\'views/errorTemplateOne.html\', value: 8}" validation-no-special-chars="true" validation-no-space="true" />'+
                         '<input ng-model="user.confirmPassword" type="text" id="confirmPassword" name="confirmPassword" validation-confirm-password="true" />'+
                         '</form>');
                     passwordInput = element.find('#password');
@@ -207,6 +207,7 @@ describe('directives.customvalidation.customValidations', function () {
                 visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
                 expect(8).toEqual(hiddenErrorMessages.length);
                 expect(1).toEqual(visibleErrorMessages.length);
+                expect('ErrorTemplateOne').toEqual(angular.element(visibleErrorMessages[0]).parents('div').attr('class'));   
                 expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());   
 
                 passwordInput.val('sadffsdaadfsSfsda');
@@ -215,6 +216,7 @@ describe('directives.customvalidation.customValidations', function () {
                 visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
                 expect(8).toEqual(hiddenErrorMessages.length);
                 expect(1).toEqual(visibleErrorMessages.length);
+                expect('ErrorTemplateTwo').toEqual(angular.element(visibleErrorMessages[0]).parents('div').attr('class'));   
                 expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim()); 
             });        
         });

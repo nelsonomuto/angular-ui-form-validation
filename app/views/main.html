@@ -15,7 +15,7 @@
   <form novalidate>    
     <label for="username">Username</label>
     <input type="text" id="username" name="username" ng-model="user.username"
-      validation-min-length="5" 
+      validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" 
       validation-no-space="true"
       validation-field-required="true"
       validation-max-length="10"

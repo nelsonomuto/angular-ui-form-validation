@@ -1,6 +1,6 @@
 (function(){
-    var customValidations, toggleValidationMessage, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex,
-        getValidatorByAttribute;
+    var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex,
+        getValidatorByAttribute, getCustomTemplate;
     
     customValidations = [
         {
@@ -89,7 +89,7 @@
         }
     ];
 
-    getValidationAttributeValue = function (attr, property) {
+    getValidationAttributeValue = function (attr) {
         var value, property;
 
         property = property || 'value';
@@ -102,6 +102,28 @@
         }
 
         return value || attr;
+    };
+
+    getCustomTemplate = function (attr, templateRetriever, $q) {
+        var deferred, templateUrl, promise;
+
+        deferred = $q.defer();
+
+        promise = deferred.promise;
+
+        try{
+            templateUrl = JSOL.parse(attr)['template'];
+            if(templateUrl === undefined || templateUrl === null || templateUrl === '') {
+                deferred.reject('No template url specified.');                
+            } else {
+                promise = templateRetriever.getTemplate(templateUrl);
+            }
+
+        } catch (e) {
+            deferred.reject('Error retrieving custom error template: ' + e);
+        }
+
+        return promise;
     };
     
     getValidatorByAttribute = function (customValidationAttribute) {
@@ -124,14 +146,14 @@
         return index;
     };
 
-    createValidationFormatterLink = function (formatterArgs, $timeout) {
+    createValidationFormatterLink = function (formatterArgs, templateRetriever, $q) {
         
         return function($scope, $element, $attrs, ngModelController) {
-            var errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue;
+            var errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue, customErrorTemplate;
 
             validationAttributeValue = getValidationAttributeValue($attrs[formatterArgs.customValidationAttribute]);
 
-            if(validationAttributeValue){
+            if (validationAttributeValue) {
                 modelName = $attrs.ngModel.substring(0, $attrs.ngModel.indexOf('.'));
                 propertyName = $attrs.ngModel.substring($attrs.ngModel.indexOf('.') + 1);
                 model = $scope[modelName];
@@ -151,6 +173,24 @@
                 $element.after(errorMessageElement);
                 errorMessageElement.hide();
                 
+                getCustomTemplate($attrs[formatterArgs.customValidationAttribute], templateRetriever, $q).then(function (template) {
+                    customErrorTemplate = angular.element(template);
+                    customErrorTemplate.html('');
+                    $scope.$watch(function (){
+                        return errorMessageElement.css('display');
+                    }, function(){
+                        if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
+                            console.log('error showing');
+                            errorMessageElement.wrap(customErrorTemplate);
+                        } else {
+                            console.log('error NOT showing');
+                            if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
+                                errorMessageElement.unwrap(customErrorTemplate);
+                            }
+                        }
+                    });                    
+                });
+
                 if (formatterArgs.customValidationAttribute === 'validationNoSpace') {
                     $element.keyup(function (event){
                         if (event.keyCode === 8) {
@@ -174,12 +214,12 @@
                         if(confirmPasswordIsDirty && passwordIsValid){
                             passwordMatch =  $('[name=password]').val() === $element.val();                        
 
-                            $scope.$apply(function () {
+                            // $scope.$apply(function () { //TODO: deprecate after further test cases prove unnecessary 
                                 ngModelController.$setValidity('validationconfirmpassword', passwordMatch); 
                                    confirmPasswordElement
                                     .siblings('.CustomValidationError.validationConfirmPassword:first')
                                         .toggle(! passwordMatch);                                              
-                            });
+                            // });
                         }                        
                     });
                     return;
@@ -244,14 +284,14 @@
         };    
     };
     
-    customValidationsModule = angular.module('directives.customvalidation.customValidations', []);
+    customValidationsModule = angular.module('directives.customvalidation.customValidations', ['services.templateRetriever']);
     
     angular.forEach(customValidations, function(customValidation){
-        customValidationsModule.directive('input', function ($timeout) {
+        customValidationsModule.directive('input', function (templateRetriever, $q) {
             return {
                 require: '?ngModel',
                 restrict: 'E',
-                link: createValidationFormatterLink(customValidation, $timeout)
+                link: createValidationFormatterLink(customValidation, templateRetriever, $q)
             };
         });   
     });
