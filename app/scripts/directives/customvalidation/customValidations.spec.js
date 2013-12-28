@@ -1,3 +1,5 @@
+"use strict;"
+
 describe('directives.customvalidation.customValidations', function () {
     var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages, passwordInput, confirmPasswordInput;
     

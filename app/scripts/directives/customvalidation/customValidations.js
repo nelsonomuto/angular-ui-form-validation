@@ -173,23 +173,23 @@
                 $element.after(errorMessageElement);
                 errorMessageElement.hide();
                 
-                getCustomTemplate($attrs[formatterArgs.customValidationAttribute], templateRetriever, $q).then(function (template) {
-                    customErrorTemplate = angular.element(template);
-                    customErrorTemplate.html('');
-                    $scope.$watch(function (){
-                        return errorMessageElement.css('display');
-                    }, function(){
-                        if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
-                            console.log('error showing');
-                            errorMessageElement.wrap(customErrorTemplate);
-                        } else {
-                            console.log('error NOT showing');
-                            if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
-                                errorMessageElement.unwrap(customErrorTemplate);
-                            }
-                        }
-                    });                    
-                });
+                // getCustomTemplate($attrs[formatterArgs.customValidationAttribute], templateRetriever, $q).then(function (template) {
+                //     customErrorTemplate = angular.element(template);
+                //     customErrorTemplate.html('');
+                //     $scope.$watch(function (){
+                //         return errorMessageElement.css('display');
+                //     }, function(){
+                //         if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
+                //             console.log('error showing');
+                //             errorMessageElement.wrap(customErrorTemplate);
+                //         } else {
+                //             console.log('error NOT showing');
+                //             if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
+                //                 errorMessageElement.unwrap(customErrorTemplate);
+                //             }
+                //         }
+                //     });                    
+                // });
 
                 if (formatterArgs.customValidationAttribute === 'validationNoSpace') {
                     $element.keyup(function (event){
