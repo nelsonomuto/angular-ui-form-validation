@@ -43,3 +43,89 @@ The idea behind this component is to allow you to be able to do three things:
 
 
 For a sample example clone this repository and run the grunt serve task.
+
+###Creating your own custom validations
+
+  You need to copy paste the below module, you may rename it as whatever you like. Simply add/remove to the array of validations. Ensure that you include both this module and 'directives.customvalidation.customValidations' as dependencies in your application module.
+
+  ```js
+    //To create your own validations you need to copy paste this section
+    extendCustomValidationsModule = angular.module('extendCustomValidationsModule', ['directives.customvalidation.customValidations']);
+
+    angular.forEach([
+         {
+            customValidationAttribute: 'validationMinLength',
+            errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
+            validator: function (val, attr){
+                return val.length > parseInt(attr, 10);    
+            }   
+        },
+        {
+            customValidationAttribute: 'validationMaxLength',
+            errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
+            validator: function (val, attr){
+                return val.length < parseInt(attr, 10);
+            }   
+        },
+        {
+            customValidationAttribute: 'validationOnlyAlphabets',
+            errorMessage: 'Valid characters are: A-Z, a-z',
+            validator: function (val){
+                return (/^[a-z]*$/i).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationOneUpperCaseLetter',
+            errorMessage: 'Must contain at least one uppercase letter',
+            validator: function (val){
+                return (/^(?=.*[A-Z]).+$/).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationOneLowerCaseLetter',
+            errorMessage: 'Must contain at least one lowercase letter',
+            validator: function (val){
+                return (/^(?=.*[a-z]).+$/).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationOneNumber',
+            errorMessage: 'Must contain at least one number',
+            validator: function (val){
+                return (/^(?=.*[0-9]).+$/).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationOneAlphabet',
+            errorMessage: 'Must contain at least one alphabet',
+            validator: function (val) {
+                return (/^(?=.*[a-z]).+$/i).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationNoSpecialChars',
+            errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
+            validator: function (val){
+                return (/^[a-z0-9_\-\s]*$/i).test(val);
+            }
+        }
+    ], 
+
+    function(customValidation){
+        extendCustomValidationsModule.directive('input', function (customValidationLink) {
+            return {
+                require: '?ngModel',
+                restrict: 'E',
+                link: customValidationLink.create(customValidation)
+            };
+        });   
+    });
+    //**End section to create your own validations
+  ```
+####Validator method API
+  The validator method takes the following arguments:
+
+  ```javascript
+    validator(value, validationAttributeValue, $element, model, ngModelController) { return true; }    
+  ```
+  It return a boolean which upon the error message is toggled.

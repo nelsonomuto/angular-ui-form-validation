@@ -76,7 +76,7 @@
         // {
         //     customValidationAttribute: 'validationOneAlphabet',
         //     errorMessage: 'Must contain at least one alphabet',
-        //     validator: function (val, attr, controller) {
+        //     validator: function (val) {
         //         return (/^(?=.*[a-z]).+$/i).test(val);    
         //     }
         // },
@@ -354,7 +354,7 @@
         {
             customValidationAttribute: 'validationOneAlphabet',
             errorMessage: 'Must contain at least one alphabet',
-            validator: function (val, attr, controller) {
+            validator: function (val) {
                 return (/^(?=.*[a-z]).+$/i).test(val);    
             }
         },
@@ -377,5 +377,5 @@
         });   
     });
     //**End section to create your own validations
-    
+
 })();
