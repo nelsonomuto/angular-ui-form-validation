@@ -5,6 +5,7 @@ describe('directives.customvalidation.customValidations', function () {
     
     beforeEach(function (){
         module('directives.customvalidation.customValidations');
+        module('extendCustomValidations');
         inject(function ($rootScope, $compile){
             element = angular.element('<form name="form">' +
                 '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
