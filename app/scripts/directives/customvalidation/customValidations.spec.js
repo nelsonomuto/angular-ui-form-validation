@@ -171,7 +171,7 @@ describe('directives.customvalidation.customValidations', function () {
             });        
         });
 
-        xdescribe('custom error message template wrap', function () {
+        describe('custom error message template wrap', function () {
             beforeEach(function (){
                 inject(function ($rootScope, $compile){                    
                     element = angular.element('<form name="form">' +

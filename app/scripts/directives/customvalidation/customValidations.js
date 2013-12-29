@@ -213,13 +213,11 @@
 
                         if(confirmPasswordIsDirty && passwordIsValid){
                             passwordMatch =  $('[name=password]').val() === $element.val();                        
-
-                            // $scope.$apply(function () { //TODO: deprecate after further test cases prove unnecessary 
-                                ngModelController.$setValidity('validationconfirmpassword', passwordMatch); 
-                                   confirmPasswordElement
-                                    .siblings('.CustomValidationError.validationConfirmPassword:first')
-                                        .toggle(! passwordMatch);                                              
-                            // });
+                            
+                            ngModelController.$setValidity('validationconfirmpassword', passwordMatch); 
+                               confirmPasswordElement
+                                .siblings('.CustomValidationError.validationConfirmPassword:first')
+                                    .toggle(! passwordMatch);    
                         }                        
                     });
                     return;
