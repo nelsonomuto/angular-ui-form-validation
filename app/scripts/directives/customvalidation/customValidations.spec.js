@@ -16,10 +16,20 @@ describe('directives.customvalidation.customValidations', function () {
                 '</form>');
             passwordInput = element.find('#password');
             templateRetriever = $injector.get('templateRetriever');
-            spyOn(templateRetriever, 'getTemplate').andCallFake(function (){
-                return $q.when('<div class="ErrorTemplateOne" >{{errorMessage}}</div>');
+
+            spyOn(templateRetriever, 'getTemplate').andCallFake(function (templateUrl){
+                var template;
+                if(templateUrl === 'views/errorTemplateOne.html'){
+                    template = '<div class="ErrorTemplateOne" >{{errorMessage}}</div>'
+                }
+                if(templateUrl === 'views/errorTemplateTwo.html'){
+                    template = '<div class="ErrorTemplateTwo" >{{errorMessage}}</div>'
+                }
+                return $q.when(template);
             });
+
             scope = $rootScope;
+            
             angular.extend(scope, {
                 user: {
                     name: null,
@@ -210,8 +220,8 @@ describe('directives.customvalidation.customValidations', function () {
 
             it('should show password errors when password is changed', function (){
                 passwordInput.val('sadffsdaadfsfsda');
-                element.scope().$apply();
                 scope.$broadcast('runCustomValidations');
+                element.scope().$apply();
                 hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
                 visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
                 expect(8).toEqual(hiddenErrorMessages.length);
