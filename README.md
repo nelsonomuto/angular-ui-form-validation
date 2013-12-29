@@ -31,6 +31,14 @@ The end result is validation and error handling without convoluting your markup 
  - [or Download the release](https://github.com/nelsonomuto/angular-ui-form-validation/blob/master/dist/angular-ui-form-validation.js)
  - or via bower `$ bower install angular-ui-form-validation`
  
+ - Add the three following dependencies to your app module:
+ ```javascript
+    angular.module('<your_app_module_name>', [
+      'directives.customvalidation.customValidations',
+      'extendCustomValidations',
+      'directives.invalidinputformatter.invalidInputFormatter'
+    ])
+ ```
 >
 The idea behind this component is to allow you to be able to do three things:
 
