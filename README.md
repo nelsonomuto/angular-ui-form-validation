@@ -23,14 +23,6 @@ The end result is validation and error handling without convoluting your markup 
 
 </form>
 ```
-
-## Getting Started
-
-### Install:
- - Either clone & build this repository
- - [or Download the release](https://github.com/nelsonomuto/angular-ui-form-validation/blob/master/dist/angular-ui-form-validation.js)
- - or via bower `$ bower install angular-ui-form-validation`
- 
 >
 The idea behind this component is to allow you to be able to do three things:
 
@@ -41,8 +33,23 @@ The idea behind this component is to allow you to be able to do three things:
 
 **(3)** _(Available with next release)_ Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
 
+## Getting Started
 
-For a sample example clone this repository and run the grunt serve task.
+### Install:
+ - Either clone & build this repository
+ - [or Download the release](https://github.com/nelsonomuto/angular-ui-form-validation/blob/master/dist/angular-ui-form-validation.js)
+ - or via bower `$ bower install angular-ui-form-validation`
+ 
+ - Add the three following dependencies to your app module:
+ ```javascript
+    angular.module('<your_app_module_name>', [
+      'directives.customvalidation.customValidations',
+      'extendCustomValidations',
+      'directives.invalidinputformatter.invalidInputFormatter'
+    ])
+ ```
+
+*For a sample example clone this repository and run the grunt serve task.
 
 ###Creating your own custom validations
 
@@ -128,4 +135,4 @@ For a sample example clone this repository and run the grunt serve task.
   ```javascript
     validator(value, validationAttributeValue, $element, model, ngModelController) { return true; }    
   ```
-  It return a boolean which upon the error message is toggled.
+  It returns a boolean which upon the error message is toggled.
