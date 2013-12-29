@@ -135,4 +135,4 @@ The idea behind this component is to allow you to be able to do three things:
   ```javascript
     validator(value, validationAttributeValue, $element, model, ngModelController) { return true; }    
   ```
-  It return a boolean which upon the error message is toggled.
+  It returns a boolean which upon the error message is toggled.
