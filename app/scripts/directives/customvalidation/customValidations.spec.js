@@ -1,12 +1,13 @@
 "use strict;"
 
 describe('directives.customvalidation.customValidations', function () {
-    var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages, passwordInput, confirmPasswordInput;
+    var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages, passwordInput, confirmPasswordInput, templateRetriever;
     
     beforeEach(function (){
         module('directives.customvalidation.customValidations');
         module('extendCustomValidations');
-        inject(function ($rootScope, $compile){
+        inject(function ($injector, $rootScope, $compile, _$q_){
+            $q = _$q_;
             element = angular.element('<form name="form">' +
                 '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
                 'validation-min-length="8" validation-one-alphabet="true" validation-one-number="true" validation-one-lower-case-letter="true" '+
@@ -14,6 +15,10 @@ describe('directives.customvalidation.customValidations', function () {
                 '<input ng-model="user.name" type="text" id="name" name="name" validation-field-required="true" validation-one-number="true" />'+
                 '</form>');
             passwordInput = element.find('#password');
+            templateRetriever = $injector.get('templateRetriever');
+            spyOn(templateRetriever, 'getTemplate').andCallFake(function (){
+                return $q.when('<div class="ErrorTemplateOne" >{{errorMessage}}</div>');
+            });
             scope = $rootScope;
             angular.extend(scope, {
                 user: {
@@ -205,6 +210,7 @@ describe('directives.customvalidation.customValidations', function () {
 
             it('should show password errors when password is changed', function (){
                 passwordInput.val('sadffsdaadfsfsda');
+                element.scope().$apply();
                 scope.$broadcast('runCustomValidations');
                 hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
                 visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
