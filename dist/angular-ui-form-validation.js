@@ -1,6 +1,107 @@
+/*
+ * ****NB: Nelson Omuto - I have made modifications to the parser to allow for values that are in single quoted strings so it is not 
+ * entirely valid JSOL
+ * 
+ * Copyright 2010, Google Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+;(function(self) {
+  /**
+   JSOL stands for JavaScript Object Literal which is a string representing
+   an object in JavaScript syntax.
+
+   For example:
+
+   {foo:"bar"} is equivalent to {"foo":"bar"} in JavaScript. Both are valid JSOL.
+
+   Note that {"foo":"bar"} is proper JSON[1] therefore you can use one of the many
+   JSON parsers out there like json2.js[2] or even the native browser's JSON parser,
+   if available.
+
+   However, {foo:"bar"} is NOT proper JSON but valid Javascript syntax for
+   representing an object with one key, "foo" and its value, "bar".
+   Using a JSON parser is not an option since this is NOT proper JSON.
+
+   You can use JSOL.parse to safely parse any string that reprsents a JavaScript Object Literal.
+   JSOL.parse will throw an Invalid JSOL exception on function calls, function declarations and variable references.
+
+   Examples:
+
+   JSOL.parse('{foo:"bar"}');  // valid
+
+   JSOL.parse('{evil:(function(){alert("I\'m evil");})()}');  // invalid function calls
+
+   JSOL.parse('{fn:function() { }}'); // invalid function declarations
+
+   var bar = "bar";
+   JSOL.parse('{foo:bar}');  // invalid variable references
+
+   [1] http://www.json.org
+   [2] http://www.json.org/json2.js
+   */
+  if (!self.JSOL) {
+    self.JSOL = {};
+  }
+  // Used for trimming whitespace
+  var trim =  /^(\s|\u00A0)+|(\s|\u00A0)+$/g;
+  if (typeof self.JSOL.parse !== "function") {
+    self.JSOL.parse = function(text) {
+      // make sure text is a "string"
+      if (typeof text !== "string" || !text) {
+        return null;
+      }
+      // Make sure leading/trailing whitespace is removed
+      text = text.replace(trim, "");
+
+      //****Invalid JSOL modification to allow for single quoted strings: TODO rename JSOL variable and file to something else, no longer valid JSOL
+      text = text.replace(/'/g, '"');
+
+      // Make sure the incoming text is actual JSOL (or Javascript Object Literal)
+      // Logic borrowed from http://json.org/json2.js
+      if ( /^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, "@")
+           .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]")
+           .replace(/(?:^|:|,)(?:\s*\[)+/g, ":")
+           /** everything up to this point is json2.js **/
+           /** this is the 5th stage where it accepts unquoted keys **/
+           .replace(/\w*\s*\:/g, ":")) ) {
+        return (new Function("return " + text))();
+      }
+      else {
+        throw("Invalid JSOL: " + text);
+      }
+    };
+  }
+})(window);
+
 (function(){
-    var customValidations, toggleValidationMessage, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex,
-        getValidatorByAttribute;
+    var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex,
+        getValidatorByAttribute, getCustomTemplate;
     
     customValidations = [
         {
@@ -30,64 +131,101 @@
             validator: function (val){
                 return (/^[^\s]+$/).test(val);
             }
-        },
-        {
-            customValidationAttribute: 'validationMinLength',
-            errorMessage: function (attr) { return 'Minimum of ' + attr + ' characters'; },
-            validator: function (val, attr){
-                return val.length > parseInt(attr, 10);    
-            }   
-        },
-        {
-            customValidationAttribute: 'validationMaxLength',
-            errorMessage: function (attr) { return 'Maximum of ' + attr + ' characters'; },
-            validator: function (val, attr){
-                return val.length < parseInt(attr, 10);
-            }   
-        },
-        {
-            customValidationAttribute: 'validationOnlyAlphabets',
-            errorMessage: 'Valid characters are: A-Z, a-z',
-            validator: function (val){
-                return (/^[a-z]*$/i).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneUpperCaseLetter',
-            errorMessage: 'Must contain at least one uppercase letter',
-            validator: function (val){
-                return (/^(?=.*[A-Z]).+$/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneLowerCaseLetter',
-            errorMessage: 'Must contain at least one lowercase letter',
-            validator: function (val){
-                return (/^(?=.*[a-z]).+$/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneNumber',
-            errorMessage: 'Must contain at least one number',
-            validator: function (val){
-                return (/^(?=.*[0-9]).+$/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneAlphabet',
-            errorMessage: 'Must contain at least one alphabet',
-            validator: function (val, attr, controller) {
-                return (/^(?=.*[a-z]).+$/i).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationNoSpecialChars',
-            errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
-            validator: function (val){
-                return (/^[a-z0-9_\-\s]*$/i).test(val);
-            }
-        }
+        }//,
+        // {
+        //     customValidationAttribute: 'validationMinLength',
+        //     errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
+        //     validator: function (val, attr){
+        //         return val.length > parseInt(attr, 10);    
+        //     }   
+        // },
+        // {
+        //     customValidationAttribute: 'validationMaxLength',
+        //     errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
+        //     validator: function (val, attr){
+        //         return val.length < parseInt(attr, 10);
+        //     }   
+        // },
+        // {
+        //     customValidationAttribute: 'validationOnlyAlphabets',
+        //     errorMessage: 'Valid characters are: A-Z, a-z',
+        //     validator: function (val){
+        //         return (/^[a-z]*$/i).test(val);    
+        //     }
+        // },
+        // {
+        //     customValidationAttribute: 'validationOneUpperCaseLetter',
+        //     errorMessage: 'Must contain at least one uppercase letter',
+        //     validator: function (val){
+        //         return (/^(?=.*[A-Z]).+$/).test(val);    
+        //     }
+        // },
+        // {
+        //     customValidationAttribute: 'validationOneLowerCaseLetter',
+        //     errorMessage: 'Must contain at least one lowercase letter',
+        //     validator: function (val){
+        //         return (/^(?=.*[a-z]).+$/).test(val);    
+        //     }
+        // },
+        // {
+        //     customValidationAttribute: 'validationOneNumber',
+        //     errorMessage: 'Must contain at least one number',
+        //     validator: function (val){
+        //         return (/^(?=.*[0-9]).+$/).test(val);    
+        //     }
+        // },
+        // {
+        //     customValidationAttribute: 'validationOneAlphabet',
+        //     errorMessage: 'Must contain at least one alphabet',
+        //     validator: function (val) {
+        //         return (/^(?=.*[a-z]).+$/i).test(val);    
+        //     }
+        // },
+        // {
+        //     customValidationAttribute: 'validationNoSpecialChars',
+        //     errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
+        //     validator: function (val){
+        //         return (/^[a-z0-9_\-\s]*$/i).test(val);
+        //     }
+        // }
     ];
+
+    getValidationAttributeValue = function (attr) {
+        var value, property;
+
+        property = property || 'value';
+
+        value = attr;
+
+        try{
+            value = JSOL.parse(attr)[property];
+        } catch (e) {
+        }
+
+        return value || attr;
+    };
+
+    getCustomTemplate = function (attr, templateRetriever, $q) {
+        var deferred, templateUrl, promise;
+
+        deferred = $q.defer();
+
+        promise = deferred.promise;
+
+        try{
+            templateUrl = JSOL.parse(attr)['template'];
+            if(templateUrl === undefined || templateUrl === null || templateUrl === '') {
+                deferred.reject('No template url specified.');                
+            } else {
+                promise = templateRetriever.getTemplate(templateUrl);
+            }
+
+        } catch (e) {
+            deferred.reject('Error retrieving custom error template: ' + e);
+        }
+
+        return promise;
+    };
     
     getValidatorByAttribute = function (customValidationAttribute) {
         var validator;
@@ -109,17 +247,19 @@
         return index;
     };
 
-    createValidationFormatterLink = function (formatterArgs, $timeout) {
+    createValidationFormatterLink = function (formatterArgs, templateRetriever, $q) {
         
         return function($scope, $element, $attrs, ngModelController) {
-            var errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations;
-            
-            if($attrs[formatterArgs.customValidationAttribute]){
+            var errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue, customErrorTemplate;
+
+            validationAttributeValue = getValidationAttributeValue($attrs[formatterArgs.customValidationAttribute]);
+
+            if (validationAttributeValue) {
                 modelName = $attrs.ngModel.substring(0, $attrs.ngModel.indexOf('.'));
                 propertyName = $attrs.ngModel.substring($attrs.ngModel.indexOf('.') + 1);
                 model = $scope[modelName];
                 if(typeof(formatterArgs.errorMessage) === 'function'){
-                    errorMessage = formatterArgs.errorMessage($attrs[formatterArgs.customValidationAttribute]);
+                    errorMessage = formatterArgs.errorMessage(validationAttributeValue);
                 } else {
                     errorMessage = formatterArgs.errorMessage;
                 }
@@ -134,6 +274,24 @@
                 $element.after(errorMessageElement);
                 errorMessageElement.hide();
                 
+                // getCustomTemplate($attrs[formatterArgs.customValidationAttribute], templateRetriever, $q).then(function (template) {
+                //     customErrorTemplate = angular.element(template);
+                //     customErrorTemplate.html('');
+                //     $scope.$watch(function (){
+                //         return errorMessageElement.css('display');
+                //     }, function(){
+                //         if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
+                //             console.log('error showing');
+                //             errorMessageElement.wrap(customErrorTemplate);
+                //         } else {
+                //             console.log('error NOT showing');
+                //             if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
+                //                 errorMessageElement.unwrap(customErrorTemplate);
+                //             }
+                //         }
+                //     });                    
+                // });
+
                 if (formatterArgs.customValidationAttribute === 'validationNoSpace') {
                     $element.keyup(function (event){
                         if (event.keyCode === 8) {
@@ -157,12 +315,12 @@
                         if(confirmPasswordIsDirty && passwordIsValid){
                             passwordMatch =  $('[name=password]').val() === $element.val();                        
 
-                            $scope.$apply(function () {
+                            // $scope.$apply(function () { //TODO: deprecate after further test cases prove unnecessary 
                                 ngModelController.$setValidity('validationconfirmpassword', passwordMatch); 
                                    confirmPasswordElement
                                     .siblings('.CustomValidationError.validationConfirmPassword:first')
                                         .toggle(! passwordMatch);                                              
-                            });
+                            // });
                         }                        
                     });
                     return;
@@ -182,7 +340,7 @@
 
                     value = $element.val().trimRight();
 
-                    isValid = formatterArgs.validator(value, $attrs[formatterArgs.customValidationAttribute], $element, model, ngModelController);
+                    isValid = formatterArgs.validator(value, validationAttributeValue, $element, model, ngModelController);
 
                     ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
@@ -227,18 +385,100 @@
         };    
     };
     
-    customValidationsModule = angular.module('directives.customvalidation.customValidations', []);
+    customValidationsModule = angular.module('directives.customvalidation.customValidations', ['services.templateRetriever'])
+
+    .factory('customValidationLink', function (templateRetriever, $q) {
+        return {
+            create: function (customValidation) {
+                customValidations.push(customValidation);
+                return createValidationFormatterLink(customValidation, templateRetriever, $q)
+            }
+        }
+    });
     
     angular.forEach(customValidations, function(customValidation){
-        customValidationsModule.directive('input', function ($timeout) {
+        customValidationsModule.directive('input', function (templateRetriever, $q) {
             return {
                 require: '?ngModel',
                 restrict: 'E',
-                link: createValidationFormatterLink(customValidation, $timeout)
+                link: createValidationFormatterLink(customValidation, templateRetriever, $q)
             };
         });   
     });
-    
+
+    //To create your own validations you need to copy paste this section
+    extendCustomValidations = angular.module('extendCustomValidations', ['directives.customvalidation.customValidations']);
+
+    angular.forEach([
+         {
+            customValidationAttribute: 'validationMinLength',
+            errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
+            validator: function (val, attr){
+                return val.length > parseInt(attr, 10);    
+            }   
+        },
+        {
+            customValidationAttribute: 'validationMaxLength',
+            errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
+            validator: function (val, attr){
+                return val.length < parseInt(attr, 10);
+            }   
+        },
+        {
+            customValidationAttribute: 'validationOnlyAlphabets',
+            errorMessage: 'Valid characters are: A-Z, a-z',
+            validator: function (val){
+                return (/^[a-z]*$/i).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationOneUpperCaseLetter',
+            errorMessage: 'Must contain at least one uppercase letter',
+            validator: function (val){
+                return (/^(?=.*[A-Z]).+$/).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationOneLowerCaseLetter',
+            errorMessage: 'Must contain at least one lowercase letter',
+            validator: function (val){
+                return (/^(?=.*[a-z]).+$/).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationOneNumber',
+            errorMessage: 'Must contain at least one number',
+            validator: function (val){
+                return (/^(?=.*[0-9]).+$/).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationOneAlphabet',
+            errorMessage: 'Must contain at least one alphabet',
+            validator: function (val) {
+                return (/^(?=.*[a-z]).+$/i).test(val);    
+            }
+        },
+        {
+            customValidationAttribute: 'validationNoSpecialChars',
+            errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
+            validator: function (val){
+                return (/^[a-z0-9_\-\s]*$/i).test(val);
+            }
+        }
+    ], 
+
+    function(customValidation){
+        extendCustomValidations.directive('input', function (customValidationLink) {
+            return {
+                require: '?ngModel',
+                restrict: 'E',
+                link: customValidationLink.create(customValidation)
+            };
+        });   
+    });
+    //**End section to create your own validations
+
 })();
 angular.module('directives.invalidinputformatter.invalidInputFormatter', [])
 .directive('input', function() { 
