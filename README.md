@@ -48,6 +48,11 @@ The idea behind this component is to allow you to be able to do three things:
       'directives.invalidinputformatter.invalidInputFormatter'
     ])
  ```
+###Dependencies:
+  - AngularJS 1.0.8 +
+
+####Dev dependencies:  
+  - Node, npm, bower, grunt
 
 *For a sample example clone this repository and run the grunt serve task.
 
