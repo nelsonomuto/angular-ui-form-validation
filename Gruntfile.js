@@ -346,6 +346,7 @@ module.exports = function (grunt) {
     concat: {
       dist: {
         src: [       
+          '<%= yeoman.app %>/bower_components/angular-template-retriever/dist/angular-template-retriever.js', 
           '<%= yeoman.app %>/scripts/JSOL/jsol.js', //TODO: may move and rename this as it is modified to accept invalid JSOL
           '<%= yeoman.directives %>/{,*}/*.js',
           '!<%= yeoman.directives %>/{,*}/*spec.js'
