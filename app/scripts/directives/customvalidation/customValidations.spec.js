@@ -220,6 +220,7 @@ describe('directives.customvalidation.customValidations', function () {
 
             it('should show password errors when password is changed', function (){
                 passwordInput.val('sadffsdaadfsfsda');
+                element.scope().$apply();
                 scope.$broadcast('runCustomValidations');
                 element.scope().$apply();
                 hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
@@ -230,7 +231,9 @@ describe('directives.customvalidation.customValidations', function () {
                 expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());   
 
                 passwordInput.val('sadffsdaadfsSfsda');
+                element.scope().$apply();
                 scope.$broadcast('runCustomValidations');
+                element.scope().$apply();
                 hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
                 visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
                 expect(8).toEqual(hiddenErrorMessages.length);

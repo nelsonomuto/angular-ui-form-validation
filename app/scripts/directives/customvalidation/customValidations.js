@@ -1,7 +1,10 @@
 (function(){
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex,
-        getValidatorByAttribute, getCustomTemplate;
+        getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
+        currentlyDisplayedTemplate;
     
+    customTemplates = [];
+
     customValidations = [
         {
             customValidationAttribute: 'validationFieldRequired',
@@ -88,6 +91,17 @@
         //     }
         // }
     ];
+
+    isCurrentlyDisplayingAnErrorMessageInATemplate = function (inputElement) {
+        var isCurrentlyDisplayingAnErrorMessageInATemplate = false;
+        angular.forEach(customTemplates, function (template){
+            if(template.parent().is(inputElement.parents('form'))){
+                isCurrentlyDisplayingAnErrorMessageInATemplate = true;  
+                currentlyDisplayedTemplate = template;
+            }
+        });
+        return isCurrentlyDisplayingAnErrorMessageInATemplate;
+    }
 
     getValidationAttributeValue = function (attr) {
         var value, property;
@@ -176,16 +190,20 @@
                 getCustomTemplate($attrs[formatterArgs.customValidationAttribute], templateRetriever, $q).then(function (template) {
                     customErrorTemplate = angular.element(template);
                     customErrorTemplate.html('');
+                    
                     $scope.$watch(function (){
                         return errorMessageElement.css('display');
                     }, function(){
                         if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
                             console.log('error showing');
                             errorMessageElement.wrap(customErrorTemplate);
+                            customTemplates.push(angular.element(errorMessageElement.parents()[0]));
+                            // runCustomValidations();
                         } else {
                             console.log('error NOT showing');
                             if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
                                 errorMessageElement.unwrap(customErrorTemplate);
+                                // runCustomValidations();
                             }
                         }
                     });                    
@@ -224,13 +242,17 @@
                 }
 
                 runCustomValidations = function () {
-                    var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, currentErrorMessage, currentErrorMessageIsStale,
-                        currentErrorMessageValidator, currentErrorMessagePriorityIndex, currentErrorMessageIsOfALowerPriority, fieldNameSelector;
+                    var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
+                        currentErrorMessage, currentErrorMessageIsStale,
+                        currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
+                        currentErrorMessageIsOfALowerPriority, fieldNameSelector;
 
                     fieldNameSelector = '[data-custom-field-name="'+ $element.attr('name') +'"]';
 
-                    currentErrorMessage = 
-                        $element.siblings('.CustomValidationError[style="display: inline;"]'+fieldNameSelector+', '+
+                    currentErrorMessage = isCurrentlyDisplayingAnErrorMessageInATemplate($element) ?
+                        currentlyDisplayedTemplate.children('.CustomValidationError[style="display: inline;"]'+fieldNameSelector+', '+
+                            '.CustomValidationError[style="display: block;"]'+fieldNameSelector)
+                        : $element.siblings('.CustomValidationError[style="display: inline;"]'+fieldNameSelector+', '+
                             '.CustomValidationError[style="display: block;"]'+fieldNameSelector);
 
                     currentlyDisplayingAnErrorMessage = currentErrorMessage.length > 0;
@@ -253,7 +275,7 @@
                     if(! currentlyDisplayingAnErrorMessage) {
                         $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
                             .toggle(!isValid);
-                    } else { 
+                    } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
                         currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
                         currentErrorMessageIsStale = currentErrorMessageValidator(value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController);
                         
@@ -264,6 +286,26 @@
                             currentErrorMessage.hide();
                             $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
                                 .toggle(!isValid);                        
+                        }                      
+                    }
+
+                    if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
+                        currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
+                        currentErrorMessageIsStale = currentErrorMessageValidator(
+                            value, 
+                            getValidationAttributeValue($attrs[currentErrorMessage.attr('data-custom-validation-attribute')]), 
+                            $element, model, ngModelController
+                        );
+                        
+                        currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
+                        currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
+                        
+                        if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid 
+                            && currentlyDisplayedTemplate.children().attr('class').indexOf(formatterArgs.customValidationAttribute) === -1)) {
+                            currentErrorMessage.hide();
+                            $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
+                                .toggle(!isValid);  
+                            $scope.$apply();                      
                         }                      
                     }
 
