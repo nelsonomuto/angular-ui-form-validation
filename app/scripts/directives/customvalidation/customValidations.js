@@ -198,12 +198,10 @@
                             console.log('error showing');
                             errorMessageElement.wrap(customErrorTemplate);
                             customTemplates.push(angular.element(errorMessageElement.parents()[0]));
-                            // runCustomValidations();
                         } else {
                             console.log('error NOT showing');
                             if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
                                 errorMessageElement.unwrap(customErrorTemplate);
-                                // runCustomValidations();
                             }
                         }
                     });                    
@@ -305,7 +303,7 @@
                             currentErrorMessage.hide();
                             $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
                                 .toggle(!isValid);  
-                            $scope.$apply();                      
+                            // $scope.$apply();   //TODO: find a way to enable unit test cycle                   
                         }                      
                     }
 
