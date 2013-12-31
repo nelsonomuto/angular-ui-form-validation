@@ -303,7 +303,7 @@
                             currentErrorMessage.hide();
                             $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
                                 .toggle(!isValid);  
-                            // $scope.$apply();   //TODO: find a way to enable unit test cycle                   
+                            $scope.$apply();   //TODO: replace with trigger for unwrapping, throwing console errors already in digest                   
                         }                      
                     }
 
