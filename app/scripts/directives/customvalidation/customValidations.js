@@ -351,14 +351,14 @@
             customValidationAttribute: 'validationMinLength',
             errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
             validator: function (val, attr){
-                return val.length > parseInt(attr, 10);    
+                return val.length >= parseInt(attr, 10);    
             }   
         },
         {
             customValidationAttribute: 'validationMaxLength',
             errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
             validator: function (val, attr){
-                return val.length < parseInt(attr, 10);
+                return val.length <= parseInt(attr, 10);
             }   
         },
         {
