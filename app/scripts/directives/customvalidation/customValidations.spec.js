@@ -218,7 +218,7 @@ describe('directives.customvalidation.customValidations', function () {
                 expect(0).toEqual(visibleErrorMessages.length);
             });
 
-            xit('should show password errors when password is changed', function (){
+            it('should show password errors when password is changed', function (){
                 passwordInput.val('sadffsdaadfsfsda');
                 element.scope().$apply();
                 scope.$broadcast('runCustomValidations');
