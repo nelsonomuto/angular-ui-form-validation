@@ -188,12 +188,10 @@
                 errorMessageElement.hide();
                 
                 getCustomTemplate($attrs[formatterArgs.customValidationAttribute], templateRetriever, $q).then(function (template) {
+                    var errorMessageToggled;
                     customErrorTemplate = angular.element(template);
                     customErrorTemplate.html('');
-                    
-                    $scope.$watch(function (){
-                        return errorMessageElement.css('display');
-                    }, function(){
+                    errorMessageToggled = function(){
                         if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
                             console.log('error showing');
                             errorMessageElement.wrap(customErrorTemplate);
@@ -204,7 +202,12 @@
                                 errorMessageElement.unwrap(customErrorTemplate);
                             }
                         }
-                    });                    
+                    };
+
+                    $scope.$watch(function (){
+                        return errorMessageElement.css('display');
+                    }, errorMessageToggled);     
+                    $scope.$on('errorMessageToggled', errorMessageToggled);            
                 });
 
                 if (formatterArgs.customValidationAttribute === 'validationNoSpace') {
@@ -302,8 +305,8 @@
                             && currentlyDisplayedTemplate.children().attr('class').indexOf(formatterArgs.customValidationAttribute) === -1)) {
                             currentErrorMessage.hide();
                             $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
-                                .toggle(!isValid);  
-                            $scope.$apply();   //TODO: replace with trigger for unwrapping, throwing console errors already in digest                   
+                                .toggle(!isValid);                              
+                            $scope.$broadcast('errorMessageToggled');
                         }                      
                     }
 
