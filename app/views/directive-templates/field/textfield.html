@@ -1,0 +1,12 @@
+<div class="field row">
+    <div class="span2">{{field.field_title}}:</div>
+    <div class="span4">
+        <input type="text" 
+        validation-min-length="{{field.minLength}}" 
+        validation-max-length="{{field.maxLength}}" 
+        ng-model="field.field_value" 
+        value="{{field.field_value}}" 
+        ng-required="field.field_required">
+        <span class="required-error" ng-show="field.field_required && !field.field_value">* test required</span>
+    </div>
+</div>
