@@ -5,6 +5,8 @@ angular.module('angularUiFormValidationApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
+  'fieldDirective',
+  'formDirective',
   'directives.customvalidation.customValidations',
   'extendCustomValidations',
   'directives.invalidinputformatter.invalidInputFormatter'
