@@ -37,7 +37,7 @@ The idea behind this component is to allow you to be able to do three things:
 ### Install:
  - Either clone & build this repository
  - [or Download the release](https://github.com/nelsonomuto/angular-ui-form-validation/blob/master/dist/angular-ui-form-validation.js)
- - or via bower `$ bower install angular-ui-form-validation`
+ - or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
  
  - Add the three following dependencies to your app module:
  ```javascript
