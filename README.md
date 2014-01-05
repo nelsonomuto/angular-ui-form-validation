@@ -17,7 +17,7 @@ The end result is validation and error handling without convoluting your markup 
     <label for="firstname">First Name</label>
     <!-- The ability to specify a template will be there in the next release -->
     <input type="text" id="firstname" name="firstname" ng-model="user.firstname"
-      validation-min-length="{ value: 5, template: 'tooltipMessage.html' }"  
+      validation-min-length="{ value: 5, template: 'extremeErrorTemplate.html' }"  
     />
                                   ...
 
