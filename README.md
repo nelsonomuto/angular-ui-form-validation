@@ -30,8 +30,7 @@ The idea behind this component is to allow you to be able to do three things:
 
 **(2)** Give you the flexibility to create your own custom validations.
 
-
-**(3)** _(Available with next release)_ Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
+**(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
 
 ## Getting Started
 
