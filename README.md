@@ -17,7 +17,7 @@ The end result is validation and error handling without convoluting your markup 
     <label for="firstname">First Name</label>
     <!-- The ability to specify a template will be there in the next release -->
     <input type="text" id="firstname" name="firstname" ng-model="user.firstname"
-      validation-min-length="{ value: 5, template: 'tooltipMessage.html' }"  
+      validation-min-length="{ value: 5, template: 'extremeErrorTemplate.html' }"  
     />
                                   ...
 
@@ -30,15 +30,14 @@ The idea behind this component is to allow you to be able to do three things:
 
 **(2)** Give you the flexibility to create your own custom validations.
 
-
-**(3)** _(Available with next release)_ Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
+**(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
 
 ## Getting Started
 
 ### Install:
  - Either clone & build this repository
  - [or Download the release](https://github.com/nelsonomuto/angular-ui-form-validation/blob/master/dist/angular-ui-form-validation.js)
- - or via bower `$ bower install angular-ui-form-validation`
+ - or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
  
  - Add the three following dependencies to your app module:
  ```javascript
