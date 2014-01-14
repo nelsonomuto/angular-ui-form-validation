@@ -13,7 +13,8 @@
     "angular-sanitize": "~1.2.0",
     "angular-route": "~1.2.0",
     "angular-bootstrap": "~0.7.0",
-    "angular-template-retriever": "*"
+    "angular-template-retriever": "*",
+    "angularjs-form-builder": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
