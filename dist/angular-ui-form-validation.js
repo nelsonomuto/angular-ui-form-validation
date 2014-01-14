@@ -101,8 +101,11 @@
 
 (function(){
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex,
-        getValidatorByAttribute, getCustomTemplate;
+        getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
+        currentlyDisplayedTemplate;
     
+    customTemplates = [];
+
     customValidations = [
         {
             customValidationAttribute: 'validationFieldRequired',
@@ -190,6 +193,17 @@
         // }
     ];
 
+    isCurrentlyDisplayingAnErrorMessageInATemplate = function (inputElement) {
+        var isCurrentlyDisplayingAnErrorMessageInATemplate = false;
+        angular.forEach(customTemplates, function (template){
+            if(template.parent().is(inputElement.parents('form'))){
+                isCurrentlyDisplayingAnErrorMessageInATemplate = true;  
+                currentlyDisplayedTemplate = template;
+            }
+        });
+        return isCurrentlyDisplayingAnErrorMessageInATemplate;
+    }
+
     getValidationAttributeValue = function (attr) {
         var value, property;
 
@@ -254,7 +268,7 @@
 
             validationAttributeValue = getValidationAttributeValue($attrs[formatterArgs.customValidationAttribute]);
 
-            if (validationAttributeValue) {
+            if (validationAttributeValue && validationAttributeValue !== 'undefined' && validationAttributeValue !== 'false' ) {
                 modelName = $attrs.ngModel.substring(0, $attrs.ngModel.indexOf('.'));
                 propertyName = $attrs.ngModel.substring($attrs.ngModel.indexOf('.') + 1);
                 model = $scope[modelName];
@@ -274,23 +288,28 @@
                 $element.after(errorMessageElement);
                 errorMessageElement.hide();
                 
-                // getCustomTemplate($attrs[formatterArgs.customValidationAttribute], templateRetriever, $q).then(function (template) {
-                //     customErrorTemplate = angular.element(template);
-                //     customErrorTemplate.html('');
-                //     $scope.$watch(function (){
-                //         return errorMessageElement.css('display');
-                //     }, function(){
-                //         if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
-                //             console.log('error showing');
-                //             errorMessageElement.wrap(customErrorTemplate);
-                //         } else {
-                //             console.log('error NOT showing');
-                //             if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
-                //                 errorMessageElement.unwrap(customErrorTemplate);
-                //             }
-                //         }
-                //     });                    
-                // });
+                getCustomTemplate($attrs[formatterArgs.customValidationAttribute], templateRetriever, $q).then(function (template) {
+                    var errorMessageToggled;
+                    customErrorTemplate = angular.element(template);
+                    customErrorTemplate.html('');
+                    errorMessageToggled = function(){
+                        if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
+                            console.log('error showing');
+                            errorMessageElement.wrap(customErrorTemplate);
+                            customTemplates.push(angular.element(errorMessageElement.parents()[0]));
+                        } else {
+                            console.log('error NOT showing');
+                            if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
+                                errorMessageElement.unwrap(customErrorTemplate);
+                            }
+                        }
+                    };
+
+                    $scope.$watch(function (){
+                        return errorMessageElement.css('display');
+                    }, errorMessageToggled);     
+                    $scope.$on('errorMessageToggled', errorMessageToggled);            
+                });
 
                 if (formatterArgs.customValidationAttribute === 'validationNoSpace') {
                     $element.keyup(function (event){
@@ -312,28 +331,31 @@
                         confirmPasswordIsDirty = /dirty/.test(confirmPasswordElement.attr('class'));
                         passwordIsValid = /invalid/.test(passwordElement.attr('class')) === false;
 
-                        if(confirmPasswordIsDirty && passwordIsValid){
+                        // if(confirmPasswordIsDirty && passwordIsValid){
+                        if(passwordIsValid){
                             passwordMatch =  $('[name=password]').val() === $element.val();                        
-
-                            // $scope.$apply(function () { //TODO: deprecate after further test cases prove unnecessary 
-                                ngModelController.$setValidity('validationconfirmpassword', passwordMatch); 
-                                   confirmPasswordElement
-                                    .siblings('.CustomValidationError.validationConfirmPassword:first')
-                                        .toggle(! passwordMatch);                                              
-                            // });
+                            
+                            ngModelController.$setValidity('validationconfirmpassword', passwordMatch); 
+                               confirmPasswordElement
+                                .siblings('.CustomValidationError.validationConfirmPassword:first')
+                                    .toggle(! passwordMatch);    
                         }                        
                     });
                     return;
                 }
 
                 runCustomValidations = function () {
-                    var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, currentErrorMessage, currentErrorMessageIsStale,
-                        currentErrorMessageValidator, currentErrorMessagePriorityIndex, currentErrorMessageIsOfALowerPriority, fieldNameSelector;
+                    var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
+                        currentErrorMessage, currentErrorMessageIsStale,
+                        currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
+                        currentErrorMessageIsOfALowerPriority, fieldNameSelector;
 
                     fieldNameSelector = '[data-custom-field-name="'+ $element.attr('name') +'"]';
 
-                    currentErrorMessage = 
-                        $element.siblings('.CustomValidationError[style="display: inline;"]'+fieldNameSelector+', '+
+                    currentErrorMessage = isCurrentlyDisplayingAnErrorMessageInATemplate($element) ?
+                        currentlyDisplayedTemplate.children('.CustomValidationError[style="display: inline;"]'+fieldNameSelector+', '+
+                            '.CustomValidationError[style="display: block;"]'+fieldNameSelector)
+                        : $element.siblings('.CustomValidationError[style="display: inline;"]'+fieldNameSelector+', '+
                             '.CustomValidationError[style="display: block;"]'+fieldNameSelector);
 
                     currentlyDisplayingAnErrorMessage = currentErrorMessage.length > 0;
@@ -356,7 +378,7 @@
                     if(! currentlyDisplayingAnErrorMessage) {
                         $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
                             .toggle(!isValid);
-                    } else { 
+                    } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
                         currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
                         currentErrorMessageIsStale = currentErrorMessageValidator(value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController);
                         
@@ -367,6 +389,26 @@
                             currentErrorMessage.hide();
                             $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
                                 .toggle(!isValid);                        
+                        }                      
+                    }
+
+                    if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
+                        currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
+                        currentErrorMessageIsStale = currentErrorMessageValidator(
+                            value, 
+                            getValidationAttributeValue($attrs[currentErrorMessage.attr('data-custom-validation-attribute')]), 
+                            $element, model, ngModelController
+                        );
+                        
+                        currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
+                        currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
+                        
+                        if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid 
+                            && currentlyDisplayedTemplate.children().attr('class').indexOf(formatterArgs.customValidationAttribute) === -1)) {
+                            currentErrorMessage.hide();
+                            $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
+                                .toggle(!isValid);                              
+                            $scope.$broadcast('errorMessageToggled');
                         }                      
                     }
 
@@ -414,14 +456,14 @@
             customValidationAttribute: 'validationMinLength',
             errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
             validator: function (val, attr){
-                return val.length > parseInt(attr, 10);    
+                return val.length >= parseInt(attr, 10);    
             }   
         },
         {
             customValidationAttribute: 'validationMaxLength',
             errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
             validator: function (val, attr){
-                return val.length < parseInt(attr, 10);
+                return val.length <= parseInt(attr, 10);
             }   
         },
         {
