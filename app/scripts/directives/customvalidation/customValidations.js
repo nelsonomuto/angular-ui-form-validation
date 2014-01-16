@@ -167,7 +167,7 @@
 
             validationAttributeValue = getValidationAttributeValue($attrs[formatterArgs.customValidationAttribute]);
 
-            if (validationAttributeValue) {
+            if (validationAttributeValue && validationAttributeValue !== 'undefined' && validationAttributeValue !== 'false' ) {
                 modelName = $attrs.ngModel.substring(0, $attrs.ngModel.indexOf('.'));
                 propertyName = $attrs.ngModel.substring($attrs.ngModel.indexOf('.') + 1);
                 model = $scope[modelName];
