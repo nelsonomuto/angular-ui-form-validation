@@ -1,96 +1,12 @@
-(function(){
-    var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex,
-        getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate;
+angular_ui_form_validations = (function(){
     
+    var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
+        getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
+        currentlyDisplayedTemplate;        
+
     customTemplates = [];
 
-    customValidations = [
-        // {
-        //     customValidationAttribute: 'validationFieldRequired',
-        //     errorMessage: 'This is a required field',
-        //     validator: function (val){
-        //         return (/\S/).test(val);    
-        //     }
-        // },
-        // {
-        //     customValidationAttribute: 'validationConfirmPassword',
-        //     errorMessage: 'Passwords do not match.',
-        //     validator: function (val, attr, element, model, ctrl){
-        //         return model.password.trimRight() === element.val().trimRight();
-        //     }
-        // },
-        // {
-        //     customValidationAttribute: 'validationEmail',
-        //     errorMessage: 'Please enter a valid email',
-        //     validator: function (val){
-        //         return (/^.*@.*\..*[a-z]$/i).test(val);
-        //     }
-        // },
-        // {
-        //     customValidationAttribute: 'validationNoSpace',
-        //     errorMessage: 'Cannot contain any spaces',
-        //     validator: function (val){
-        //         return (/^[^\s]+$/).test(val);
-        //     }
-        // }//,
-        // {
-        //     customValidationAttribute: 'validationMinLength',
-        //     errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
-        //     validator: function (val, attr){
-        //         return val.length > parseInt(attr, 10);    
-        //     }   
-        // },
-        // {
-        //     customValidationAttribute: 'validationMaxLength',
-        //     errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
-        //     validator: function (val, attr){
-        //         return val.length < parseInt(attr, 10);
-        //     }   
-        // },
-        // {
-        //     customValidationAttribute: 'validationOnlyAlphabets',
-        //     errorMessage: 'Valid characters are: A-Z, a-z',
-        //     validator: function (val){
-        //         return (/^[a-z]*$/i).test(val);    
-        //     }
-        // },
-        // {
-        //     customValidationAttribute: 'validationOneUpperCaseLetter',
-        //     errorMessage: 'Must contain at least one uppercase letter',
-        //     validator: function (val){
-        //         return (/^(?=.*[A-Z]).+$/).test(val);    
-        //     }
-        // },
-        // {
-        //     customValidationAttribute: 'validationOneLowerCaseLetter',
-        //     errorMessage: 'Must contain at least one lowercase letter',
-        //     validator: function (val){
-        //         return (/^(?=.*[a-z]).+$/).test(val);    
-        //     }
-        // },
-        // {
-        //     customValidationAttribute: 'validationOneNumber',
-        //     errorMessage: 'Must contain at least one number',
-        //     validator: function (val){
-        //         return (/^(?=.*[0-9]).+$/).test(val);    
-        //     }
-        // },
-        // {
-        //     customValidationAttribute: 'validationOneAlphabet',
-        //     errorMessage: 'Must contain at least one alphabet',
-        //     validator: function (val) {
-        //         return (/^(?=.*[a-z]).+$/i).test(val);    
-        //     }
-        // },
-        // {
-        //     customValidationAttribute: 'validationNoSpecialChars',
-        //     errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
-        //     validator: function (val){
-        //         return (/^[a-z0-9_\-\s]*$/i).test(val);
-        //     }
-        // }
-    ];
+    customValidations = [];
 
     isCurrentlyDisplayingAnErrorMessageInATemplate = function (inputElement) {
         var isCurrentlyDisplayingAnErrorMessageInATemplate = false;
@@ -243,6 +159,10 @@
                     return;
                 }
 
+                if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
+                    angular.element('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
+                }
+
                 runCustomValidations = function () {
                     var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
                         currentErrorMessage, currentErrorMessageIsStale,
@@ -328,96 +248,18 @@
     
     customValidationsModule = angular.module('directives.customvalidation.customValidations', ['services.templateRetriever'])
 
-    .factory('customValidationLink', function (templateRetriever, $q) {
+    .factory('customValidationUtil', function (templateRetriever, $q) {
         return {
-            create: function (customValidation) {
+            createValidationLink: function (customValidation) {
                 customValidations.push(customValidation);
                 return createValidationFormatterLink(customValidation, templateRetriever, $q)
             }
         }
     });
-    
-    angular.forEach(customValidations, function(customValidation){
-        customValidationsModule.directive('input', function (templateRetriever, $q) {
-            return {
-                require: '?ngModel',
-                restrict: 'E',
-                link: createValidationFormatterLink(customValidation, templateRetriever, $q)
-            };
-        });   
-    });
 
-    //To create your own validations you need to copy paste this section
-    extendCustomValidations = angular.module('extendCustomValidations', ['directives.customvalidation.customValidations']);
-
-    angular.forEach([
-         {
-            customValidationAttribute: 'validationMinLength',
-            errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
-            validator: function (val, attr){
-                return val.length >= parseInt(attr, 10);    
-            }   
-        },
-        {
-            customValidationAttribute: 'validationMaxLength',
-            errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
-            validator: function (val, attr){
-                return val.length <= parseInt(attr, 10);
-            }   
-        },
-        {
-            customValidationAttribute: 'validationOnlyAlphabets',
-            errorMessage: 'Valid characters are: A-Z, a-z',
-            validator: function (val){
-                return (/^[a-z]*$/i).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneUpperCaseLetter',
-            errorMessage: 'Must contain at least one uppercase letter',
-            validator: function (val){
-                return (/^(?=.*[A-Z]).+$/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneLowerCaseLetter',
-            errorMessage: 'Must contain at least one lowercase letter',
-            validator: function (val){
-                return (/^(?=.*[a-z]).+$/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneNumber',
-            errorMessage: 'Must contain at least one number',
-            validator: function (val){
-                return (/^(?=.*[0-9]).+$/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneAlphabet',
-            errorMessage: 'Must contain at least one alphabet',
-            validator: function (val) {
-                return (/^(?=.*[a-z]).+$/i).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationNoSpecialChars',
-            errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
-            validator: function (val){
-                return (/^[a-z0-9_\-\s]*$/i).test(val);
-            }
-        }
-    ], 
-
-    function(customValidation){
-        extendCustomValidations.directive('input', function (customValidationLink) {
-            return {
-                require: '?ngModel',
-                restrict: 'E',
-                link: customValidationLink.create(customValidation)
-            };
-        });   
-    });
-    //**End section to create your own validations
+    //shared config functions
+    return {
+        getValidationAttributeValue: getValidationAttributeValue
+    };
 
 })();
