@@ -4,10 +4,8 @@ angular.module('angularUiFormValidationApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute',
-  'directives.customvalidation.customValidations',
-  'extendCustomValidations',
-  'directives.invalidinputformatter.invalidInputFormatter'
+  'ngRoute',  
+  'directives.customvalidation.customValidationTypes'
 ])
   .config(function ($routeProvider) {
     $routeProvider
