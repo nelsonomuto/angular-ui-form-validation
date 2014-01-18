@@ -159,6 +159,10 @@ angular_ui_form_validations = (function(){
                     return;
                 }
 
+                if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
+                    angular.element('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
+                }
+
                 runCustomValidations = function () {
                     var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
                         currentErrorMessage, currentErrorMessageIsStale,
