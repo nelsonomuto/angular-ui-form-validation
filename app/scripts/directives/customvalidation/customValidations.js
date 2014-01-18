@@ -6,34 +6,34 @@
     customTemplates = [];
 
     customValidations = [
-        {
-            customValidationAttribute: 'validationFieldRequired',
-            errorMessage: 'This is a required field',
-            validator: function (val){
-                return (/\S/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationConfirmPassword',
-            errorMessage: 'Passwords do not match.',
-            validator: function (val, attr, element, model, ctrl){
-                return model.password.trimRight() === element.val().trimRight();
-            }
-        },
-        {
-            customValidationAttribute: 'validationEmail',
-            errorMessage: 'Please enter a valid email',
-            validator: function (val){
-                return (/^.*@.*\..*[a-z]$/i).test(val);
-            }
-        },
-        {
-            customValidationAttribute: 'validationNoSpace',
-            errorMessage: 'Cannot contain any spaces',
-            validator: function (val){
-                return (/^[^\s]+$/).test(val);
-            }
-        }//,
+        // {
+        //     customValidationAttribute: 'validationFieldRequired',
+        //     errorMessage: 'This is a required field',
+        //     validator: function (val){
+        //         return (/\S/).test(val);    
+        //     }
+        // },
+        // {
+        //     customValidationAttribute: 'validationConfirmPassword',
+        //     errorMessage: 'Passwords do not match.',
+        //     validator: function (val, attr, element, model, ctrl){
+        //         return model.password.trimRight() === element.val().trimRight();
+        //     }
+        // },
+        // {
+        //     customValidationAttribute: 'validationEmail',
+        //     errorMessage: 'Please enter a valid email',
+        //     validator: function (val){
+        //         return (/^.*@.*\..*[a-z]$/i).test(val);
+        //     }
+        // },
+        // {
+        //     customValidationAttribute: 'validationNoSpace',
+        //     errorMessage: 'Cannot contain any spaces',
+        //     validator: function (val){
+        //         return (/^[^\s]+$/).test(val);
+        //     }
+        // }//,
         // {
         //     customValidationAttribute: 'validationMinLength',
         //     errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },

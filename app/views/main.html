@@ -12,7 +12,8 @@
   <p>
     Validations are displayed one at a time based on the order set in customValidations.js
   </p>
-  <form novalidate>    
+  <form novalidate>   
+    <app-progress-bar></app-progress-bar> 
     <label for="username">Username</label>
     <input type="text" id="username" name="username" ng-model="user.username"
       validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" 
