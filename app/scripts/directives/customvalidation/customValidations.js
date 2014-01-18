@@ -246,7 +246,10 @@ angular_ui_form_validations = (function(){
         };    
     };
     
-    customValidationsModule = angular.module('directives.customvalidation.customValidations', ['services.templateRetriever'])
+    customValidationsModule = angular.module('directives.customvalidation.customValidations', [
+        'directives.invalidinputformatter.invalidInputFormatter',
+        'services.templateRetriever'
+    ])
 
     .factory('customValidationUtil', function (templateRetriever, $q) {
         return {
