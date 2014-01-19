@@ -30,7 +30,7 @@ The idea behind this component is to allow you to be able to do three things:
 
 **(1)** Provide a list of commonly used validations that you may plug in to your form fields.
 
-**(2)** Give you the flexibility to create your own custom validations.
+**(2)** Give you the flexibility to create your own custom validations. Either locally on your template controller or in a centralized customValidationTypes where you can re-use them across your application.
 
 **(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
 
