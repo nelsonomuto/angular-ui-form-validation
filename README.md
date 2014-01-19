@@ -1,8 +1,8 @@
 # Angular ui form validation &nbsp;[![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
 
-#### Supports angular versions >= 1.0.7. A flexible approach to handling form validation and displaying field errors.
+#### A flexible approach to handling form validation and displaying field errors.
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
-
+*Supports angular versions >= 1.0.7.
 ![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
 ```html
  <form novalidate>    
