@@ -192,7 +192,7 @@ describe('directives.customvalidation.customValidations', function () {
             });
         });
 
-        it('should show apply requiredFieldLabel class to label', function () {
+        it('should apply requiredFieldLabel class to label', function () {
             var label, labelClass;
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
@@ -203,7 +203,7 @@ describe('directives.customvalidation.customValidations', function () {
             labelClass = label.attr('class');
             expect(/requiredFieldLabel/.test(labelClass)).toBe(true);
         });
-    });
+    });    
 
     describe('object literal validation attribute value', function(){
         beforeEach(function (){
@@ -313,5 +313,52 @@ describe('directives.customvalidation.customValidations', function () {
             expect('ErrorTemplateTwo').toEqual(angular.element(visibleErrorMessages[0]).parents('div').attr('class'));   
             expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim()); 
         });        
+    });
+    describe('validationDynamicallyDefined', function() {
+        var customValidationTypes;
+        beforeEach(function (){
+            inject(function ($injector, $rootScope, $compile, $timeout) {
+                element = angular.element('<form name="form">' +
+                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+                    
+                    'validation-dynamically-defined="noOnes, noTwos"/>'+
+                    '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                angular.extend(scope, {
+                    user: {
+                        password: null,
+                        confirmPassword: null
+                    },
+                    noOnes: {
+                        customValidationAttribute: 'validationFieldRequired',
+                        errorMessage: 'No 1',
+                        validator: function (val){
+                            return val !== 1;    
+                        }
+                    },
+                    noTwos: {
+                       customValidationAttribute: 'validationFieldRequired',
+                        errorMessage: 'No 2',
+                        validator: function (val){
+                            return val !== 2;    
+                        } 
+                    }
+                });
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+
+        xit('should add dynamically defined validation to customvalidations', function () {
+            var label, labelClass;
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+
+            expect(2).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+        });
     });
 });
