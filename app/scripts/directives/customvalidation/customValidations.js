@@ -76,7 +76,7 @@ angular_ui_form_validations = (function(){
         return index;
     };
 
-    createValidationFormatterLink = function (formatterArgs, templateRetriever, $q, $timeout) {
+    createValidationFormatterLink = function (formatterArgs, templateRetriever, $q, $timeout, $log) {
         
         return function($scope, $element, $attrs, ngModelController) {
             var errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue, customErrorTemplate;
@@ -109,11 +109,11 @@ angular_ui_form_validations = (function(){
                         customErrorTemplate.html('');
                         errorMessageToggled = function(){
                             if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
-                                console.log('error showing');
+                                $log.log('error showing');
                                 errorMessageElement.wrap(customErrorTemplate);
                                 customTemplates.push(angular.element(errorMessageElement.parents()[0]));
                             } else {
-                                console.log('error NOT showing');
+                                $log.log('error NOT showing');
                                 if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
                                     errorMessageElement.unwrap(customErrorTemplate);
                                 }
@@ -253,13 +253,33 @@ angular_ui_form_validations = (function(){
         'services.templateRetriever'
     ])
 
-    .factory('customValidationUtil', function (templateRetriever, $q, $timeout) {
+    .factory('customValidationUtil', function (templateRetriever, $q, $timeout, $log) {
         return {
             createValidationLink: function (customValidation) {
                 customValidations.push(customValidation);
-                return createValidationFormatterLink(customValidation, templateRetriever, $q, $timeout)
+                return createValidationFormatterLink(customValidation, templateRetriever, $q, $timeout, $log)
             }
         }
+    })
+
+    .directive('input', function (customValidationUtil) {
+        return {
+            require: '?ngModel',
+            restrict: 'E',            
+            link: customValidationUtil.createValidationLink({
+                customValidationAttribute: 'validationDynamicallyDefined',
+                errorMessage: 'Field is invalid',
+                validator: function (val, attr, element, model, ctrl) {
+                    var valid;
+
+                    angular.forEach(attr.split(', '), function(){
+                        ctrl[attr][validator].apply(ctrl);
+                    });
+                    
+                    return valid;
+                }
+            })
+        };
     });
 
     //shared config functions
