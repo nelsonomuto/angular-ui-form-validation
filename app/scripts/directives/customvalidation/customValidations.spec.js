@@ -4,8 +4,7 @@ describe('directives.customvalidation.customValidations', function () {
     var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages, passwordInput, confirmPasswordInput, templateRetriever;
     
     beforeEach(function (){
-        module('directives.customvalidation.customValidations');
-        module('extendCustomValidations');
+        module('directives.customvalidation.customValidationTypes');        
         inject(function ($injector, $rootScope, $compile, _$q_){
             $q = _$q_;
             element = angular.element('<form name="form">' +
