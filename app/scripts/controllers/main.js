@@ -17,6 +17,20 @@ angular.module('angularUiFormValidationApp')
         email: null,
         firstName: null,
         lastName: null
-      }
+      },
+      locallyDefinedValidations: [                  
+          {
+              errorMessage: 'Cannot contain the number one',
+              validator: function (val){
+                  return /1/.test(val) !== true;    
+              }
+          },
+          {
+              errorMessage: 'Cannot contain the number two',
+              validator: function (val){
+                  return /2/.test(val) !== true;      
+              } 
+          }
+      ]
   });
 });
