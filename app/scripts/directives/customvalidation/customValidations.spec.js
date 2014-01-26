@@ -1,12 +1,12 @@
 "use strict;"
 
 describe('directives.customvalidation.customValidations', function () {
-    var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages, passwordInput, confirmPasswordInput, templateRetriever;
+    var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages, 
+        passwordInput, confirmPasswordInput, templateRetriever;
     
     beforeEach(function (){
         module('directives.customvalidation.customValidationTypes');        
-        inject(function ($injector, $rootScope, $compile, _$q_){
-            $q = _$q_;
+        inject(function ($injector, $rootScope, $compile, $q, $timeout) {
             element = angular.element('<form name="form">' +
                 '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
                 'validation-min-length="8" validation-one-alphabet="true" validation-one-number="true" validation-one-lower-case-letter="true" '+
@@ -38,6 +38,7 @@ describe('directives.customvalidation.customValidations', function () {
             });
             $compile(element)(scope);
             scope.$digest();
+            $timeout.flush();
             errorMessages = element.find('.CustomValidationError');
         });
     });
@@ -85,7 +86,7 @@ describe('directives.customvalidation.customValidations', function () {
     
     describe('confirmPassword', function(){
         beforeEach(function (){
-            inject(function ($rootScope, $compile){
+            inject(function ($rootScope, $compile, $timeout){
                 element = angular.element('<form name="form">' +
                     '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
                     'validation-min-length="8" validation-one-alphabet="true" validation-one-number="true" validation-one-lower-case-letter="true" '+
@@ -103,6 +104,7 @@ describe('directives.customvalidation.customValidations', function () {
                 });
                 $compile(element)(scope);
                 scope.$digest();
+                $timeout.flush();
                 errorMessages = element.find('.CustomValidationError');
             });
         });
@@ -136,7 +138,7 @@ describe('directives.customvalidation.customValidations', function () {
 
     describe('object literal validation attribute value', function(){
             beforeEach(function (){
-                inject(function ($rootScope, $compile){
+                inject(function ($rootScope, $compile, $timeout){
                     element = angular.element('<form name="form">' +
                         '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
                         'validation-min-length="{ template:\'\', value: 8}" validation-one-alphabet="{ template:\'\', value: true}" validation-one-number="{ template:\'\', value: true}" validation-one-lower-case-letter="true" '+
@@ -154,6 +156,7 @@ describe('directives.customvalidation.customValidations', function () {
                     });
                     $compile(element)(scope);
                     scope.$digest();
+                    $timeout.flush();
                     errorMessages = element.find('.CustomValidationError');
                 });
             });
@@ -187,7 +190,7 @@ describe('directives.customvalidation.customValidations', function () {
 
         describe('custom error message template wrap', function () {
             beforeEach(function (){
-                inject(function ($rootScope, $compile){                    
+                inject(function ($rootScope, $compile, $timeout){                    
                     element = angular.element('<form name="form">' +
                         '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
                         'validation-min-length="{ template:\'views/errorTemplateOne.html\', value: 8}" validation-one-alphabet="{ template:\'views/errorTemplateTwo.html\', value: true}" validation-one-number="{ template:\'views/errorTemplateTwo.html\', value: 8}" validation-one-lower-case-letter="true" '+
@@ -205,6 +208,7 @@ describe('directives.customvalidation.customValidations', function () {
                     });
                     $compile(element)(scope);
                     scope.$digest();
+                    $timeout.flush();
                     errorMessages = element.find('.CustomValidationError');
                 });
             });
