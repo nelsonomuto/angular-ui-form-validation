@@ -1,9 +1,11 @@
 (function(){
-    var extendCustomValidations = angular.module('directives.customvalidation.customValidationTypes', ['directives.customvalidation.customValidations']);
+    var extendCustomValidations = angular.module('directives.customvalidation.customValidationTypes', [
+        'directives.customvalidation.customValidations'
+    ])
 
     getValidationAttributeValue = angular_ui_form_validations.getValidationAttributeValue;
 
-    angular.forEach([
+    angular.forEach([        
          {        
             customValidationAttribute: 'validationFieldRequired',
             errorMessage: 'This is a required field',
@@ -14,7 +16,7 @@
          {
             customValidationAttribute: 'validationConfirmPassword',
             errorMessage: 'Passwords do not match.',
-            validator: function (val, attr, element, model, ctrl){
+            validator: function (val, attr, element, model, modelCtrl) {
                 return model.password.trimRight() === element.val().trimRight();
             }
          },
@@ -90,7 +92,7 @@
         }
     ], 
 
-    function(customValidation){
+    function(customValidation) {
         extendCustomValidations.directive('input', function (customValidationUtil) {
             return {
                 require: '?ngModel',
