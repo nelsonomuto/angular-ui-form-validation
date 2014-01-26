@@ -320,7 +320,7 @@ describe('directives.customvalidation.customValidations', function () {
             inject(function ($injector, $rootScope, $compile, $timeout) {
                 element = angular.element('<form name="form">' +
                     '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+                    
-                    'validation-dynamically-defined="noOnes, noTwos"/>'+
+                    'validation-dynamically-defined="locallyDefinedValidations"/>'+
                     '</form>');
                 passwordInput = element.find('#password');
                 confirmPasswordInput = element.find('#confirmPassword');
@@ -330,20 +330,20 @@ describe('directives.customvalidation.customValidations', function () {
                         password: null,
                         confirmPassword: null
                     },
-                    noOnes: {
-                        customValidationAttribute: 'validationFieldRequired',
-                        errorMessage: 'No 1',
-                        validator: function (val){
-                            return val !== 1;    
+                    locallyDefinedValidations: [                  
+                        {
+                            errorMessage: 'Cannot contain the number one',
+                            validator: function (val){
+                              return /1/.test(val) !== true;    
+                            }
+                        },
+                        {
+                          errorMessage: 'Cannot contain the number two',
+                             validator: function (val){
+                              return /2/.test(val) !== true;      
+                            } 
                         }
-                    },
-                    noTwos: {
-                       customValidationAttribute: 'validationFieldRequired',
-                        errorMessage: 'No 2',
-                        validator: function (val){
-                            return val !== 2;    
-                        } 
-                    }
+                    ]
                 });
                 $compile(element)(scope);
                 scope.$digest();
@@ -352,12 +352,12 @@ describe('directives.customvalidation.customValidations', function () {
             });
         });
 
-        xit('should add dynamically defined validation to customvalidations', function () {
+        it('should add dynamically defined validation to customvalidations', function () {
             var label, labelClass;
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
 
-            expect(2).toEqual(hiddenErrorMessages.length);
+            expect(1).toEqual(hiddenErrorMessages.length); //Multiple validations dynamically displayed using one error message element
             expect(0).toEqual(visibleErrorMessages.length);
         });
     });
