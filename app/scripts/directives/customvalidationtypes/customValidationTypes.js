@@ -16,7 +16,7 @@
          {
             customValidationAttribute: 'validationConfirmPassword',
             errorMessage: 'Passwords do not match.',
-            validator: function (val, attr, element, model, ctrl) {
+            validator: function (val, attr, element, model, modelCtrl) {
                 return model.password.trimRight() === element.val().trimRight();
             }
          },
