@@ -18,7 +18,7 @@ angular_ui_form_validations = (function(){
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
-                valid = validation.validator.apply(scope, [val, attr, element, model, modelCtrl, scope]);
+                valid = validation.validator.apply(scope, arguments);
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
