@@ -5,6 +5,8 @@ The end result is validation and error handling without convoluting your markup 
 
 **Supports angular versions 1.0.7 and greater.**
 
+[Plunker Demo](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview)
+
 ![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
 ```html
  <form novalidate>    

@@ -12,8 +12,7 @@
   <p>
     Validations are displayed one at a time based on the order set in customValidations.js
   </p>
-  <form novalidate>   
-    <app-progress-bar></app-progress-bar> 
+  <form novalidate>    
     <label for="username">Username</label>
     <input type="text" id="username" name="username" ng-model="user.username"
       validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" 
@@ -23,7 +22,7 @@
       validation-no-special-chars="true"
       validation-dynamically-defined="locallyDefinedValidations"
     />
-    <span class="help-block">username | validates min char = 5, max = 10, no special chars</span>
+    <span class="help-block">username | validates no ones, no twos, min char = 5, max = 10, no special chars</span>
 
     <label for="password">Password</label>
     <input type="text" id="password" name="password" ng-model="user.password"
