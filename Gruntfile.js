@@ -23,6 +23,7 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
+      services: 'app/scripts/services',
       directives: 'app/scripts/directives',
       dist: 'dist'
     },
@@ -347,8 +348,10 @@ module.exports = function (grunt) {
       dist: {
         src: [       
           '<%= yeoman.app %>/scripts/JSOL/jsol.js', //TODO: may move and rename this as it is modified to accept invalid JSOL
+          '<%= yeoman.services %>/{,*}/*.js',
           '<%= yeoman.directives %>/{,*}/*.js',
-          '!<%= yeoman.directives %>/{,*}/*spec.js'
+          '!**/*spec.js'
+          // '!<%= yeoman.directives %>/{,*}/*spec.js'
         ],
         dest: '<%= yeoman.dist %>/<%= pkg.name %>.js'
       }
