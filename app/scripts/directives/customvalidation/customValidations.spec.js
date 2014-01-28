@@ -363,13 +363,13 @@ describe('directives.customvalidation.customValidations', function () {
                     locallyDefinedValidations: [                  
                         {
                             errorMessage: 'Cannot contain the number one',
-                            validator: function (val){
+                            validator: function (errorMessageElement, val){
                               return /1/.test(val) !== true;    
                             }
                         },
                         {
                           errorMessage: 'Cannot contain the number two',
-                             validator: function (val){
+                             validator: function (errorMessageElement, val){
                               return /2/.test(val) !== true;      
                             } 
                         }
