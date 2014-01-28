@@ -192,7 +192,7 @@ angular_ui_form_validations = (function(){
                         $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
                     }
 
-                    runCustomValidations = function () {
+                    runCustomValidations = function (errorMessageElement) {
                         var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
                             currentErrorMessage, currentErrorMessageIsStale,
                             currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
@@ -228,7 +228,7 @@ angular_ui_form_validations = (function(){
                                 .toggle(!isValid);
                         } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
                             currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
-                            currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement, value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
+                            currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
                             
                             currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
                             currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
@@ -266,11 +266,11 @@ angular_ui_form_validations = (function(){
                     };
 
                     ngModelController.$parsers.push(function() {
-                        return runCustomValidations();
+                        return runCustomValidations(errorMessageElement);
                     });
 
                     $scope.$on('runCustomValidations', function () {
-                        runCustomValidations();
+                        runCustomValidations(errorMessageElement);
                     });
                 }    
 
