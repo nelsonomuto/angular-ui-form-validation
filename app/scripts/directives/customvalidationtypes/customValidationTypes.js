@@ -9,84 +9,89 @@
          {        
             customValidationAttribute: 'validationFieldRequired',
             errorMessage: 'This is a required field',
-            validator: function (val){
+            validator: function (errorMessageElement, val){
                 return (/\S/).test(val);    
             }
          },
          {
             customValidationAttribute: 'validationConfirmPassword',
             errorMessage: 'Passwords do not match.',
-            validator: function (val, attr, element, model, modelCtrl) {
+            validator: function (errorMessageElement, val, attr, element, model, modelCtrl) {
                 return model.password.trimRight() === element.val().trimRight();
             }
          },
          {
             customValidationAttribute: 'validationEmail',
             errorMessage: 'Please enter a valid email',
-            validator: function (val){
+            validator: function (errorMessageElement, val){
                 return (/^.*@.*\..*[a-z]$/i).test(val);
             }
          },
          {
             customValidationAttribute: 'validationNoSpace',
             errorMessage: 'Cannot contain any spaces',
-            validator: function (val){
+            validator: function (errorMessageElement, val){
                 return (/^[^\s]+$/).test(val);
             }
          },
          {
             customValidationAttribute: 'validationMinLength',
             errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
-            validator: function (val, attr){
+            validator: function (errorMessageElement, val, attr){
                 return val.length >= parseInt(attr, 10);    
             }   
         },
         {
-            customValidationAttribute: 'validationMaxLength',
-            errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
-            validator: function (val, attr){
-                return val.length <= parseInt(attr, 10);
+            customValidationAttribute: 'validationMaxLength',            
+            errorMessage: '',
+            validator: function (errorMessageElement, val, attr) {                
+                if (val.length <= parseInt(attr, 10)) {
+                    return true;
+                } else {
+                    errorMessageElement.html('Maximum of ' + attr + ' characters');
+                    return false;
+                }
             }   
         },
         {
             customValidationAttribute: 'validationOnlyAlphabets',
             errorMessage: 'Valid characters are: A-Z, a-z',
-            validator: function (val){
+            validator: function (errorMessageElement, val){
                 return (/^[a-z]*$/i).test(val);    
             }
         },
         {
             customValidationAttribute: 'validationOneUpperCaseLetter',
             errorMessage: 'Must contain at least one uppercase letter',
-            validator: function (val){
+            validator: function (errorMessageElement, val){
                 return (/^(?=.*[A-Z]).+$/).test(val);    
             }
         },
         {
             customValidationAttribute: 'validationOneLowerCaseLetter',
             errorMessage: 'Must contain at least one lowercase letter',
-            validator: function (val){
+            validator: function (errorMessageElement, val){
                 return (/^(?=.*[a-z]).+$/).test(val);    
             }
         },
         {
             customValidationAttribute: 'validationOneNumber',
             errorMessage: 'Must contain at least one number',
-            validator: function (val){
+            validator: function (errorMessageElement, val){
                 return (/^(?=.*[0-9]).+$/).test(val);    
             }
         },
         {
             customValidationAttribute: 'validationOneAlphabet',
             errorMessage: 'Must contain at least one alphabet',
-            validator: function (val) {
+            validator: function (errorMessageElement, val) {
                 return (/^(?=.*[a-z]).+$/i).test(val);    
             }
         },
         {
             customValidationAttribute: 'validationNoSpecialChars',
             errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
-            validator: function (val){
+            validator: function (errorMessageElement, val){
                 return (/^[a-z0-9_\-\s]*$/i).test(val);
             }
         }
