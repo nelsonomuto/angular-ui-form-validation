@@ -289,7 +289,7 @@ describe('directives.customvalidation.customValidations', function () {
             expect(9).toEqual(hiddenErrorMessages.length);
             expect(0).toEqual(visibleErrorMessages.length);
         });
-
+        
         it('should show password errors when password is changed', function (){
             passwordInput.val('sadffsdaadfsfsda');
             element.scope().$apply();
@@ -314,6 +314,36 @@ describe('directives.customvalidation.customValidations', function () {
             expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim()); 
         });        
     });
+    describe('error message modified by validator', function() {
+        var customValidationTypes;
+        beforeEach(function (){
+            inject(function ($injector, $rootScope, $compile, $timeout) {
+                element = angular.element('<form name="form">' +
+                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+                    
+                    'validation-max-length="5"/>'+
+                    '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+
+        it('should be able to modify error message in validator', function () {
+            passwordInput.val('sadffsdaadfsfsda');
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(0).toEqual(hiddenErrorMessages.length);
+            expect(1).toEqual(visibleErrorMessages.length);             
+            expect('Maximum of 5 characters').toEqual(visibleErrorMessages.html().trim());   
+        });
+    });
     describe('validationDynamicallyDefined', function() {
         var customValidationTypes;
         beforeEach(function (){
@@ -333,13 +363,13 @@ describe('directives.customvalidation.customValidations', function () {
                     locallyDefinedValidations: [                  
                         {
                             errorMessage: 'Cannot contain the number one',
-                            validator: function (val){
+                            validator: function (errorMessageElement, val){
                               return /1/.test(val) !== true;    
                             }
                         },
                         {
                           errorMessage: 'Cannot contain the number two',
-                             validator: function (val){
+                             validator: function (errorMessageElement, val){
                               return /2/.test(val) !== true;      
                             } 
                         }

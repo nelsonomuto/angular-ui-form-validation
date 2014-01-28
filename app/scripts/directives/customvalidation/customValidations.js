@@ -13,12 +13,12 @@ angular_ui_form_validations = (function(){
         errorCount: 0,
         _errorMessage: 'Field is invalid',
         errorMessage: function () { return dynamicallyDefinedValidation._errorMessage; },
-        validator: function (val, attr, element, model, modelCtrl, scope) {
+        validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope) {
             var valid, i, validation;            
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
-                valid = validation.validator.apply(scope, [val, attr, element, model, modelCtrl, scope]);
+                valid = validation.validator.apply(scope, arguments);
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
@@ -210,7 +210,7 @@ angular_ui_form_validations = (function(){
 
                         value = $element.val().trimRight();
 
-                        isValid = formatterArgs.validator(value, validationAttributeValue, $element, model, ngModelController, $scope);
+                        isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
 
                         ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
@@ -228,7 +228,7 @@ angular_ui_form_validations = (function(){
                                 .toggle(!isValid);
                         } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
                             currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
-                            currentErrorMessageIsStale = currentErrorMessageValidator(value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
+                            currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement, value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
                             
                             currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
                             currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
@@ -243,6 +243,7 @@ angular_ui_form_validations = (function(){
                         if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
                             currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
                             currentErrorMessageIsStale = currentErrorMessageValidator(
+                                errorMessageElement,
                                 value, 
                                 getValidationAttributeValue($attrs[currentErrorMessage.attr('data-custom-validation-attribute')]), 
                                 $element, model, ngModelController
