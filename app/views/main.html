@@ -12,7 +12,7 @@
   <p>
     Validations are displayed one at a time based on the order set in customValidations.js
   </p>
-  <form novalidate>    
+  <form novalidate name="demoForm">    
     <label for="username">Username</label>
     <input type="text" id="username" name="username" ng-model="user.username"
       validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" 
@@ -40,11 +40,13 @@
       validation-confirm-password="true"
     />
 
-    <label for="state">Select support</label>
-    <select ng-model="user.state" name="state" id="state" ng-model="user.state"                   
+    <div class="Select">
+    <label for="state">State</label>
+    <select inline-input-label ng-model="user.state" name="state" id="state"                 
       ng-options="state for state in states"                  
       validation-field-required="true"
       validation-dynamically-defined="locallyDefinedValidations"<select/>
+    </div>
 
     <span class="help-block">Select support available only for validation-field-required and validation-dynamically-defined, user may augment with their own customValidationTypes where they see fit. But most use cases for validating selects should be sufficiently covered by validation-field-required and validation-dynamically-defined.</span>
   </form>
