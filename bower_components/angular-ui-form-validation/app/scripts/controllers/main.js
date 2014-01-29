@@ -1,8 +1,13 @@
-angular.module('angularUiFormValidationApp', [
-  'directives.customvalidation.customValidationTypes'
-])
+'use strict';
+
+angular.module('angularUiFormValidationApp')
 
 .controller('MainCtrl', function ($scope) {
+  $scope.awesomeThings = [
+    'HTML5 Boilerplate',
+    'AngularJS',
+    'Karma'
+  ];
 
   angular.extend($scope, {
       user: {

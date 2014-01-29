@@ -1,0 +1,27 @@
+<div class="header">
+  <ul class="nav nav-pills pull-right">
+    <li class="active"><a ng-href="#">Home</a></li>
+    <li><a ng-href="#">About</a></li>
+    <li><a ng-href="#">Contact</a></li>
+  </ul>
+  <h3 class="text-muted">angular ui form validation</h3>
+</div>
+
+<div class="jumbotron">
+  <h2>Form example | User account signup</h2>
+  <p>
+    Validations are displayed one at a time based on the order set in customValidations.js
+  </p>
+  <form novalidate="">    
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" ng-model="user.username" validation-min-length="5" validation-no-space="true" validation-field-required="true" validation-max-length="10" validation-no-special-chars="true">
+    <span class="help-block">username | validates min char = 5, max = 10, no special chars</span>
+
+    <label for="password">Password</label>
+    <input type="text" id="password" name="password" ng-model="user.password" validation-min-length="8" validation-one-number="true" validation-one-upper-case-letter="true" validation-one-lower-case-letter="true" validation-field-required="true" validation-no-space="true">
+    <span class="help-block">password | validates number required, lowercase required, uppercase...no space...</span>
+
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="text" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword" validation-confirm-password="true">
+  </form>
+</div>
