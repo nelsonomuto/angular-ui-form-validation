@@ -344,6 +344,70 @@ describe('directives.customvalidation.customValidations', function () {
             expect('Maximum of 5 characters').toEqual(visibleErrorMessages.html().trim());   
         });
     });
+    describe('support selects', function() {
+        var customValidationTypes;
+        beforeEach(function (){
+            inject(function ($injector, $rootScope, $compile, $timeout) {
+                element = angular.element('<form name="form">' +
+                    '<select ng-model="user.password" name="password" id="password" ng-model="user.password"'+                    
+                    'ng-options="option for option in selectOptions"'+                    
+                    'validation-field-required="true"'+
+                    'validation-dynamically-defined="locallyDefinedValidations"<select/>'+
+                    '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                angular.extend(scope, {
+                    selectOptions: ['validOption', 'invalidOption1'],
+                    user: {
+                        password: null,
+                        confirmPassword: null
+                    },
+                    locallyDefinedValidations: [                  
+                        {
+                            errorMessage: 'Cannot contain the number one',
+                            validator: function (errorMessageElement, val){
+                              return /1/.test(val) !== true;    
+                            }
+                        }
+                    ]
+                });
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+
+        it('should contain 2 hidden error messages', function () {
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+
+            expect(2).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+        });
+
+        it('should show errors when select value is changed to invalid option', function (){
+            scope.user.password = 'validOption';
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(2).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+            
+            scope.user.password = 'invalidOption1';
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(1).toEqual(visibleErrorMessages.length);
+            expect('Cannot contain the number one').toEqual(visibleErrorMessages.html().trim()); 
+        }); 
+    });
     describe('validationDynamicallyDefined', function() {
         var customValidationTypes;
         beforeEach(function (){
