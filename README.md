@@ -4,6 +4,7 @@
 
 **Supports angular versions 1.0.7 and greater.**
 
+Fully unit tested, see Look at [customValidationTypes.spec.js](/app/scripts/directives/customvalidation/customValidations.spec.js)
 
 ### [Plunker Demo](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview) ###
 
@@ -44,19 +45,40 @@ The end result is validation and error handling without convoluting your markup 
       validation-no-special-chars="true"
     />
     <label for="firstname">First Name</label>
-    <!-- The ability to specify a template will be there in the next release -->
+    
     <input type="text" id="firstname" name="firstname" ng-model="user.firstname"
-      validation-min-length="{ value: 5, template: 'extremeErrorTemplate.html' }"  
+      validation-min-length="{ value: 5, template: 'ErrorTemplateOne.html' }"  
+      validation-max-length="10"
+      validation-no-special-chars="true"
     />
                                   ...
 
 </form>
 ```
 
-####Validator method API
-  The validator method takes the following arguments:
+### API
+
+#### Custom validation types
+
+Look at [customValidationTypes.js](/app/scripts/directives/customvalidationtypes/customValidationTypes.js)
+ 
+Here's an example of what a validation object looks like. It has three properties, the **customValidationAttribute** is the name that will be used to construct the directive for the validation, the **errorMessage** and **validator** are self-descriptive:
 
   ```javascript
-    validator(value, validationAttributeValue, $element, model, ngModelController) { return true; }    
+    {
+            customValidationAttribute: 'validationConfirmPassword',
+            errorMessage: 'Passwords do not match.',
+            validator: function (errorMessageElement, val, attr, element, model, modelCtrl) {
+                return model.password.trimRight() === element.val().trimRight();
+            }
+    },  
   ```
-  It returns a boolean which upon the error message is toggled.
+#### Adding custom validation types
+
+To add your own custom validation types you will need to create a module that mirrors [directives.customvalidation.customValidationsTypes](/app/scripts/directives/customvalidationtypes/customValidationTypes.js) except for ofcourse you will have your own validations and simply add this module as a dependency to your app in addition to directives.customvalidation.customValidationsTypes
+
+#### Locally defined custom validation - validationDynamicallyDefined
+
+The validation-dynamically-defined directive gives you the ability to define a validation local to the scope alone.
+
+[Here's a plunker with an example of how to accomplish this.](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview)
