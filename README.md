@@ -1,4 +1,4 @@
-# Angular ui form validation &nbsp;[![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)&nbsp;![Dev dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)
+# Angular ui form validation &nbsp;[![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)&nbsp;[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation)&nbsp;[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 
 ## [Plunker Demo](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview) ##
 
