@@ -73,11 +73,15 @@ Here's an example of what a validation object looks like. It has three propertie
             }
     },  
   ```
-#### Adding custom validation types
+##### Validation order of priority
+
+The order of priority is given first to any validations defined locally on the validationDynamicallyDefined directive and thereafter based on the index position of the validation object in the array where it is defined. Ex: in [customValidationTypes.js](/app/scripts/directives/customvalidationtypes/customValidationTypes.js) validationFieldRequired is given priority over validationConfirmPassword, therefore in the case that both are invalid then validationFieldRequired message is the one displayed.
+
+##### Adding custom validation types
 
 To add your own custom validation types you will need to create a module that mirrors [directives.customvalidation.customValidationsTypes](/app/scripts/directives/customvalidationtypes/customValidationTypes.js) except for ofcourse you will have your own validations and simply add this module as a dependency to your app in addition to directives.customvalidation.customValidationsTypes
 
-#### Locally defined custom validation - validationDynamicallyDefined
+##### Locally defined custom validation - validationDynamicallyDefined
 
 The validation-dynamically-defined directive gives you the ability to define a validation local to the scope alone.
 
