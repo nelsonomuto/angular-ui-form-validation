@@ -12,6 +12,11 @@ form
 	input
 		@extend .form-control
 
+	.requiredFieldLabel
+		&:after
+			content: ' *'
+			color: red
+
 	.CustomValidationError
 		position: relative
 		font-size: 0.8em

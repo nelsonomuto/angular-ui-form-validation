@@ -39,6 +39,13 @@
     <input type="text" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword"
       validation-confirm-password="true"
     />
-    <span class="help-block">only validates when password is valid</span>
+
+    <label for="state">Select support</label>
+    <select ng-model="user.state" name="state" id="state" ng-model="user.state"                   
+      ng-options="state for state in states"                  
+      validation-field-required="true"
+      validation-dynamically-defined="locallyDefinedValidations"<select/>
+
+    <span class="help-block">Select support available only for validation-field-required and validation-dynamically-defined, user may augment with their own customValidationTypes where they see fit. But most use cases for validating selects should be sufficiently covered by validation-field-required and validation-dynamically-defined.</span>
   </form>
 </div>

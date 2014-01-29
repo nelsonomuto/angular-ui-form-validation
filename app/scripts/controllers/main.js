@@ -16,8 +16,10 @@ angular.module('angularUiFormValidationApp')
         confirmPassword: null,
         email: null,
         firstName: null,
-        lastName: null
+        lastName: null,
+        state: null
       },
+      states: ['validState', 'InvalidState1', 'InvalidState2'],
       locallyDefinedValidations: [                  
           {
               errorMessage: 'Cannot contain the number one',
