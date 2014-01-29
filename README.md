@@ -7,9 +7,30 @@
 
 ### [Plunker Demo](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview) ###
 
-#### A flexible approach to handling form validation and displaying field errors.
+## Getting Started
+>
+The idea behind this component is to allow you to be able to do three things that will encourage code reuse:
+
+**(1)** Provide a list of commonly used validations that you may plug in to your form fields.
+
+**(2)** Give you the flexibility to create your own custom validations. Either locally on your view/template controller or in a centralized customValidationTypes where you can re-use them across your application.
+
+**(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms.
+
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
+
+### Install:
+ - Either clone & build this repository
+ - [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
+ - or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
+ 
+ - Add the following single dependency to your app module:
+ ```javascript
+    angular.module('<your_app_module_name>', [
+      'directives.customvalidation.customValidationsTypes',
+    ])
+ ```
 
 ![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
 ```html
@@ -31,111 +52,7 @@ The end result is validation and error handling without convoluting your markup 
 
 </form>
 ```
->
-The idea behind this component is to allow you to be able to do three things:
 
-**(1)** Provide a list of commonly used validations that you may plug in to your form fields.
-
-**(2)** Give you the flexibility to create your own custom validations. Either locally on your template controller or in a centralized customValidationTypes where you can re-use them across your application.
-
-**(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms. 
-
-## Getting Started
-
-### Install:
- - Either clone & build this repository
- - [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
- - or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
- 
- - Add the three following dependencies to your app module:
- ```javascript
-    angular.module('<your_app_module_name>', [
-      'directives.customvalidation.customValidations',
-      'extendCustomValidations',
-      'directives.invalidinputformatter.invalidInputFormatter'
-    ])
- ```
-
-*For a sample example clone this repository and run the grunt serve task.
-
-###Creating your own custom validations
-
-  You need to copy paste the below module, you may rename it as whatever you like. Simply add/remove to the array of validations. Ensure that you include both this module and 'directives.customvalidation.customValidations' as dependencies in your application module.
-
-  ```js
-    //To create your own validations you need to copy paste this section
-    extendCustomValidationsModule = angular.module('extendCustomValidationsModule', ['directives.customvalidation.customValidations']);
-
-    angular.forEach([
-         {
-            customValidationAttribute: 'validationMinLength',
-            errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
-            validator: function (val, attr){
-                return val.length > parseInt(attr, 10);    
-            }   
-        },
-        {
-            customValidationAttribute: 'validationMaxLength',
-            errorMessage: function (attr) { return 'Maximum of ' + getValidationAttributeValue(attr) + ' characters'; },
-            validator: function (val, attr){
-                return val.length < parseInt(attr, 10);
-            }   
-        },
-        {
-            customValidationAttribute: 'validationOnlyAlphabets',
-            errorMessage: 'Valid characters are: A-Z, a-z',
-            validator: function (val){
-                return (/^[a-z]*$/i).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneUpperCaseLetter',
-            errorMessage: 'Must contain at least one uppercase letter',
-            validator: function (val){
-                return (/^(?=.*[A-Z]).+$/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneLowerCaseLetter',
-            errorMessage: 'Must contain at least one lowercase letter',
-            validator: function (val){
-                return (/^(?=.*[a-z]).+$/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneNumber',
-            errorMessage: 'Must contain at least one number',
-            validator: function (val){
-                return (/^(?=.*[0-9]).+$/).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationOneAlphabet',
-            errorMessage: 'Must contain at least one alphabet',
-            validator: function (val) {
-                return (/^(?=.*[a-z]).+$/i).test(val);    
-            }
-        },
-        {
-            customValidationAttribute: 'validationNoSpecialChars',
-            errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
-            validator: function (val){
-                return (/^[a-z0-9_\-\s]*$/i).test(val);
-            }
-        }
-    ], 
-
-    function(customValidation){
-        extendCustomValidationsModule.directive('input', function (customValidationLink) {
-            return {
-                require: '?ngModel',
-                restrict: 'E',
-                link: customValidationLink.create(customValidation)
-            };
-        });   
-    });
-    //**End section to create your own validations
-  ```
 ####Validator method API
   The validator method takes the following arguments:
 
