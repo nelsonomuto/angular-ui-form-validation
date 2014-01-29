@@ -13,7 +13,7 @@ Note that the **dev-**dependencies are NOT used nor present in the release.&nbsp
  
 ### [Interactive Preview Demo](http://nelsonomuto.github.io/angular-ui-form-validation) on github page ###
 
-[Plunker Demo](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview) (Plunker load times are slow)
+[Plunker Demo](http://plnkr.co/edit/z0DTSV?p=preview) (Plunker load times are slow)
 
 ## Getting Started
 >
