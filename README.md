@@ -1,4 +1,4 @@
-# Angular ui form validation 
+# Angular ui form validation v1.0.0 Heineken
 [MIT LICENSE](/LICENSE.txt)
 
 
