@@ -19895,6 +19895,11 @@ form label {
   display: block;
 }
 
+form .requiredFieldLabel:after {
+  content: " *";
+  color: red;
+}
+
 @media -sass-debug-info {
   filename {
     font-family: file\:\/\/\/home\/nomuto\/GitHub\/angular-ui-form-validation\/app\/styles\/form\.sass;
