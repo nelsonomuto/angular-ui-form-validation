@@ -29,9 +29,9 @@ The end result is validation and error handling without convoluting your markup 
 
 
 ### 2-step Install:
- 1. a. Either clone & build this repository
-    b. [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
-    c. or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
+ 1. a.) Either clone & build this repository
+    b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
+    c.) or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
  
  2. Add the following single dependency to your app module:
  ```javascript
