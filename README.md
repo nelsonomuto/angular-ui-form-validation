@@ -4,7 +4,7 @@
 
 **Supports angular versions 1.0.7 and greater.**
 
-Fully unit tested, see Look at [customValidationTypes.spec.js](/app/scripts/directives/customvalidation/customValidations.spec.js)
+Fully unit tested, see [customValidationTypes.spec.js](/app/scripts/directives/customvalidation/customValidations.spec.js)
 
 ### [Plunker Demo](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview) ###
 
