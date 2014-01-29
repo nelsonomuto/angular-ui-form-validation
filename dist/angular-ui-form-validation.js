@@ -395,6 +395,28 @@ angular_ui_form_validations = (function(){
             restrict: 'E',            
             link: customValidationUtil.createValidationLink(dynamicallyDefinedValidation)
         };
+    })
+
+    .directive('select', function (customValidationUtil) {
+        return {
+            require: '?ngModel',
+            restrict: 'E',            
+            link: customValidationUtil.createValidationLink(dynamicallyDefinedValidation)
+        };
+    })
+
+    .directive('select', function (customValidationUtil) {
+        return {
+            require: '?ngModel',
+            restrict: 'E',            
+            link: customValidationUtil.createValidationLink({        
+                customValidationAttribute: 'validationFieldRequired',
+                errorMessage: 'This is a required field',
+                validator: function (errorMessageElement, val){
+                    return (/\S/).test(val);    
+                }
+             })
+        };
     });
 
 
