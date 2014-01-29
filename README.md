@@ -1,8 +1,10 @@
-# Angular ui form validation &nbsp;[![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)&nbsp;[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation)&nbsp;[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
+# Angular ui form validation &nbsp;[![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
 
 [MIT LICENSE](/LICENSE.txt)
 
-**Supports angular versions 1.0.7 and greater.** Because there are no dependencies other than angular, we are able to be backwards compatible with angular all the way to version 1.0.7. Note that the **dev-**dependencies are NOT used nor present in the release.
+**Supports angular versions 1.0.7 and greater.** Because there are no dependencies other than angular, we are able to be backwards compatible with angular all the way to version 1.0.7.&nbsp;[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
+
+Note that the **dev-**dependencies are NOT used nor present in the release.&nbsp;[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 
 Fully unit tested, see [customValidationTypes.spec.js](/app/scripts/directives/customvalidation/customValidations.spec.js)
 
