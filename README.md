@@ -10,9 +10,10 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 
 Note that the **dev-**dependencies are NOT used nor present in the release.&nbsp;[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 
+ 
+### [Interactive Preview Demo](http://nelsonomuto.github.io/angular-ui-form-validation) on github page ###
 
-
-### [Plunker Demo](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview) ###
+[Plunker Demo](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview) (Plunker load times are slow)
 
 ## Getting Started
 >
