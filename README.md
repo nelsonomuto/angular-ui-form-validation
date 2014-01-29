@@ -12,9 +12,9 @@ Fully unit tested, see Look at [customValidationTypes.spec.js](/app/scripts/dire
 >
 The idea behind this component is to allow you to be able to do three things that will encourage code reuse:
 
-**(1)** Provide a list of commonly used validations that you may plug in to your form fields.
+**(1)** Provide a list of 12 commonly used validations that you may plug in to your form fields.
 
-**(2)** Give you the flexibility to create your own custom validations. Either locally on your view/template controller or in a centralized customValidationTypes where you can re-use them across your application.
+**(2)** Give you the flexibility to add your own custom validations. Either locally on your view/template controller or in a centralized customValidationTypes where you can re-use them across your application.
 
 **(3)** Create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms.
 
