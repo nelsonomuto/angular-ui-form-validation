@@ -21,12 +21,12 @@ The idea behind this component is to allow you to be able to do three things tha
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
 
-### Install:
- - Either clone & build this repository
- - [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
- - or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
+### 2-step Install:
+ 1. a. Either clone & build this repository
+    b. [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
+    c. or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
  
- - Add the following single dependency to your app module:
+ 2. Add the following single dependency to your app module:
  ```javascript
     angular.module('<your_app_module_name>', [
       'directives.customvalidation.customValidationsTypes',
@@ -81,4 +81,4 @@ To add your own custom validation types you will need to create a module that mi
 
 The validation-dynamically-defined directive gives you the ability to define a validation local to the scope alone.
 
-[Here's a plunker with an example of how to accomplish this.](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview)
+[Here's a plunker with an example of how to accomplish this.](http://plnkr.co/edit/owd9I1eNgFmQieaCg8Y8?p=preview)
