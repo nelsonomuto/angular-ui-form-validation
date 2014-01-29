@@ -92,4 +92,4 @@ To add your own custom validation types you will need to create a module that mi
 
 The validation-dynamically-defined directive gives you the ability to define a validation local to the scope alone.
 
-[Here's a plunker with an example of how to accomplish this.](http://plnkr.co/edit/owd9I1eNgFmQieaCg8Y8?p=preview)
+[Here's a plunker with an example of how to accomplish this.](http://plnkr.co/edit/LDoYUM?p=preview)
