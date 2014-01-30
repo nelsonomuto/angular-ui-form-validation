@@ -211,7 +211,7 @@ angular_ui_form_validations = (function(){
                         value = $element.val().trimRight();
                         
                         if((/select/).test($element[0].type)){
-                            value = $element[0].selectedOptions[0].innerHTML;
+                            value = $element[0].options[$element[0].selectedIndex].innerHTML;
                         }
 
                         isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
