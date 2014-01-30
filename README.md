@@ -13,7 +13,11 @@ Note that the **dev-**dependencies are NOT used nor present in the release.&nbsp
  
 ### [Interactive Preview Demo](http://nelsonomuto.github.io/angular-ui-form-validation) on github page ###
 
-[Plunker Demo](http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview) (Plunker load times are slow)
+(Plunker load times are slow)
+
+[Plunker Demo](http://plnkr.co/edit/z0DTSV?p=preview) 
+
+[Plunker Demo for select support](http://plnkr.co/edit/7Ct3X1?p=preview)
 
 ## Getting Started
 >
@@ -92,4 +96,4 @@ To add your own custom validation types you will need to create a module that mi
 
 The validation-dynamically-defined directive gives you the ability to define a validation local to the scope alone.
 
-[Here's a plunker with an example of how to accomplish this.](http://plnkr.co/edit/owd9I1eNgFmQieaCg8Y8?p=preview)
+[Here's a plunker with an example of how to accomplish this.](http://plnkr.co/edit/LDoYUM?p=preview)

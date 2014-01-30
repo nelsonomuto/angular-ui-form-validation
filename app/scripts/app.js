@@ -8,6 +8,7 @@ angular.module('angularUiFormValidationApp', [
   'fieldDirective',
   'formDirective',
   'ngRoute',  
+  'ngRoute', 
   'directives.customvalidation.customValidationTypes'
 ])
   .config(function ($routeProvider) {
