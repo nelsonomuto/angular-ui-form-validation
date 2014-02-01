@@ -1,8 +1,26 @@
 'use strict';
 
 angular.module('angularUiFormValidationApp')
+ 
+.service('emailAddressAvailable', function ($timeout, $q) {
+    return {
+        run: function(errorMessageElement, val) {
+            var deferred = $q.defer();
 
-.controller('MainCtrl', function ($scope) {
+            $timeout(function() {
+                if(val === 'unavailableemailaddress@gmail.com') {
+                    deferred.reject();
+                } else {
+                    deferred.resolve();
+                }
+            }, 1000);
+
+            return deferred.promise;
+        }
+    }
+})
+
+.controller('MainCtrl', function ($scope, emailAddressAvailable, $http) {
   $scope.awesomeThings = [
     'HTML5 Boilerplate',
     'AngularJS',
@@ -23,7 +41,7 @@ angular.module('angularUiFormValidationApp')
       locallyDefinedValidations: [                  
           {
               errorMessage: 'Cannot contain the number one',
-              validator: function (errorMessageElement, val){
+              validator: function (errorMessageElement, val) {
                   return /1/.test(val) !== true;    
               }
           },

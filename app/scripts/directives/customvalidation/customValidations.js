@@ -2,11 +2,30 @@ angular_ui_form_validations = (function(){
     
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
         getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate, dynamicallyDefinedValidation;        
+        currentlyDisplayedTemplate, dynamicallyDefinedValidation, callValidator;        
 
     customTemplates = [];
 
     customValidations = [];
+
+    callValidator = function (validator, scope, args, callback) {
+        var validatorReturnValue;
+
+        validatorReturnValue = validator.apply(scope, args);
+
+        if(validatorReturnValue && typeof(validatorReturnValue.then) === 'function') {
+            validatorReturnValue.then(function (){
+                callback(true);
+            })
+            .catch(function(){
+                callback(false);
+            });
+        } else if(typeof(validatorReturnValue) === 'boolean'){
+            callback(validatorReturnValue);
+        } else {
+            throw('validator must return a promise or a boolean');
+        }
+    };
 
     dynamicallyDefinedValidation = {
         customValidationAttribute: 'validationDynamicallyDefined',
@@ -18,12 +37,12 @@ angular_ui_form_validations = (function(){
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
-                valid = validation.validator.apply(scope, arguments);
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
+                valid = validation.validator.apply(scope, arguments);
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
                     break;
-                }                
+                }                          
             };
             
             return valid;
@@ -215,6 +234,8 @@ angular_ui_form_validations = (function(){
                         }
 
                         isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
+
+                        //TODO: callValidator implementation
 
                         ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
