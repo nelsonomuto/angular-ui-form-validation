@@ -134,7 +134,7 @@ describe('directives.customvalidation.customValidations', function () {
             expect(1).toEqual(visibleErrorMessages.length);
             expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim()); 
         });        
-    });
+    });    
 
     describe('validation false', function() {
         beforeEach(function (){
@@ -454,5 +454,83 @@ describe('directives.customvalidation.customValidations', function () {
             expect(1).toEqual(hiddenErrorMessages.length); //Multiple validations dynamically displayed using one error message element
             expect(0).toEqual(visibleErrorMessages.length);
         });
+    });
+
+    describe('asynchronous validation', function(){
+        beforeEach(function (){
+            inject(function ($injector, $rootScope, $compile, $timeout, $q) {
+                element = angular.element('<form name="form">' +
+                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+                    
+                    'validation-dynamically-defined="locallyDefinedValidations"/>'+
+                    '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                angular.extend(scope, {
+                    user: {
+                        password: null,
+                        confirmPassword: null
+                    },
+                    locallyDefinedValidations: [                  
+                        {
+                            errorMessage: 'Cannot contain the number one',
+                            validator: function (errorMessageElement, val){
+                                var deferred = $q.defer();
+
+                                $timeout(function() {
+                                    if(/1/.test(val) === true) {
+                                        deferred.reject();
+                                    } else {
+                                        deferred.resolve();
+                                    }
+                                }, 1000);
+                                $timeout.flush();
+                                return deferred.promise;   
+                            }
+                        },
+                        {
+                          errorMessage: 'Cannot contain the number two',
+                             validator: function (errorMessageElement, val){
+                                return /2/.test(val) !== true;      
+                            } 
+                        }
+                    ]
+                });
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+
+        it('should add dynamically defined validation to customvalidations', function () {
+            var label, labelClass;
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+
+            expect(1).toEqual(hiddenErrorMessages.length); //Multiple validations dynamically displayed using one error message element
+            expect(0).toEqual(visibleErrorMessages.length);
+        });
+
+        xit('should show errors when value is changed to invalid option', function (){
+            scope.user.password = 'validOption';
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+            
+            scope.user.password = 'invalidOption1';
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(1).toEqual(visibleErrorMessages.length);
+            expect('Cannot contain the number one').toEqual(visibleErrorMessages.html().trim()); 
+        });       
     });
 });

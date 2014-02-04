@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('angularUiFormValidationApp')
+
 .service('FormService', function FormService($http) {
 
     var formsJsonPath = './static-data/sample_forms.json';
@@ -63,11 +64,26 @@ angular.module('angularUiFormValidationApp')
 })
 
 .controller('MainCtrl', function ($scope, FormService) {
-  $scope.awesomeThings = [
-    'HTML5 Boilerplate',
-    'AngularJS',
-    'Karma'
-  ];
+ 
+.service('emailAddressAvailable', function ($timeout, $q) {
+    return {
+        run: function(errorMessageElement, val) {
+            var deferred = $q.defer();
+
+            $timeout(function() {
+                if(val === 'unavailableemailaddress@gmail.com') {
+                    deferred.reject();
+                } else {
+                    deferred.resolve();
+                }
+            }, 1000);
+
+            return deferred.promise;
+        }
+    }
+})
+
+.controller('MainCtrl', function ($scope, emailAddressAvailable, $http) {
 
   angular.extend($scope, {
       user: {
@@ -83,7 +99,7 @@ angular.module('angularUiFormValidationApp')
       locallyDefinedValidations: [                  
           {
               errorMessage: 'Cannot contain the number one',
-              validator: function (errorMessageElement, val){
+              validator: function (errorMessageElement, val) {
                   return /1/.test(val) !== true;    
               }
           },

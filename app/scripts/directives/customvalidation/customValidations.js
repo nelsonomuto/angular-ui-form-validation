@@ -18,8 +18,8 @@ angular_ui_form_validations = (function(){
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
-                valid = validation.validator.apply(scope, arguments);
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
+                valid = validation.validator.apply(scope, arguments);
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
                     break;
@@ -89,12 +89,15 @@ angular_ui_form_validations = (function(){
     };
 
     getValidationPriorityIndex = function (customValidationAttribute) {
-        var index;
-        angular.forEach(customValidations, function (validation, idx) {
-            if(validation.customValidationAttribute === customValidationAttribute){
-                index = idx;
+        var i, index;
+
+        for(i = 0; i < customValidations.length; i++ ){
+            if(customValidations[i].customValidationAttribute === customValidationAttribute){
+                index = i;
+                break;
             }
-        });
+        }
+
         return index;
     };
 
@@ -212,6 +215,14 @@ angular_ui_form_validations = (function(){
                         
                         if((/select/).test($element[0].type)){
                             value = $element[0].options[$element[0].selectedIndex].innerHTML;
+                        }
+
+                        if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
+                            if(value === '') {
+                                $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
+                            } else {
+                                $element.parents('form').find('label[for='+$element.attr('id')+']').removeClass('requiredFieldLabel');                                
+                            }
                         }
 
                         isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);

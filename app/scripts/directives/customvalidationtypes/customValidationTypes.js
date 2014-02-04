@@ -31,7 +31,7 @@
             customValidationAttribute: 'validationNoSpace',
             errorMessage: 'Cannot contain any spaces',
             validator: function (errorMessageElement, val){
-                return (/^[^\s]+$/).test(val);
+                return val !== '' && (/^[^\s]+$/).test(val);
             }
          },
          {
