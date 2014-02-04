@@ -2,30 +2,11 @@ angular_ui_form_validations = (function(){
     
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
         getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate, dynamicallyDefinedValidation, callValidator;        
+        currentlyDisplayedTemplate, dynamicallyDefinedValidation;        
 
     customTemplates = [];
 
     customValidations = [];
-
-    callValidator = function (validator, scope, args, callback) {
-        var validatorReturnValue;
-
-        validatorReturnValue = validator.apply(scope, args);
-
-        if(validatorReturnValue && typeof(validatorReturnValue.then) === 'function') {
-            validatorReturnValue.then(function (){
-                callback(true);
-            })
-            .catch(function(){
-                callback(false);
-            });
-        } else if(typeof(validatorReturnValue) === 'boolean'){
-            callback(validatorReturnValue);
-        } else {
-            throw('validator must return a promise or a boolean');
-        }
-    };
 
     dynamicallyDefinedValidation = {
         customValidationAttribute: 'validationDynamicallyDefined',
@@ -42,7 +23,7 @@ angular_ui_form_validations = (function(){
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
                     break;
-                }                          
+                }                
             };
             
             return valid;
@@ -108,12 +89,15 @@ angular_ui_form_validations = (function(){
     };
 
     getValidationPriorityIndex = function (customValidationAttribute) {
-        var index;
-        angular.forEach(customValidations, function (validation, idx) {
-            if(validation.customValidationAttribute === customValidationAttribute){
-                index = idx;
+        var i, index;
+
+        for(i = 0; i < customValidations.length; i++ ){
+            if(customValidations[i].customValidationAttribute === customValidationAttribute){
+                index = i;
+                break;
             }
-        });
+        }
+
         return index;
     };
 
@@ -233,9 +217,15 @@ angular_ui_form_validations = (function(){
                             value = $element[0].options[$element[0].selectedIndex].innerHTML;
                         }
 
-                        isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
+                        if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
+                            if(value === '') {
+                                $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
+                            } else {
+                                $element.parents('form').find('label[for='+$element.attr('id')+']').removeClass('requiredFieldLabel');                                
+                            }
+                        }
 
-                        //TODO: callValidator implementation
+                        isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
 
                         ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
