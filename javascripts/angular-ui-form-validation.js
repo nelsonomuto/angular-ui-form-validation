@@ -69,31 +69,31 @@
 angular.module('services.templateRetriever',[])
 
 .factory('templateRetriever', function ($http, $q){
-	return {
-		getTemplate: function (templateUrl, tracker) {
-			var deferred = $q.defer();
+    return {
+        getTemplate: function (templateUrl, tracker) {
+            var deferred = $q.defer();
 
-			$http({
-				url: templateUrl,
-				method: 'GET',
-				headers: {'Content-Type': 'text/html'},
-				tracker: tracker || 'promiseTracker'
-			})
-			.success(function(data){
-				deferred.resolve(data);
-			})
-			.error(function(data, status, headers, config){
-				deferred.reject({
-					data: data,
-					status: status,
-					headers: headers,
-					config: config
-				});
-			});
+            $http({
+                url: templateUrl,
+                method: 'GET',
+                headers: {'Content-Type': 'text/html'},
+                tracker: tracker || 'promiseTracker'
+            })
+            .success(function(data){
+                deferred.resolve(data);
+            })
+            .error(function(data, status, headers, config){
+                deferred.reject({
+                    data: data,
+                    status: status,
+                    headers: headers,
+                    config: config
+                });
+            });
 
-			return deferred.promise;
-		}
-	}
+            return deferred.promise;
+        }
+    }
 });
 angular_ui_form_validations = (function(){
     
@@ -115,8 +115,8 @@ angular_ui_form_validations = (function(){
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
-                valid = validation.validator.apply(scope, arguments);
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
+                valid = validation.validator.apply(scope, arguments);
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
                     break;
@@ -186,12 +186,15 @@ angular_ui_form_validations = (function(){
     };
 
     getValidationPriorityIndex = function (customValidationAttribute) {
-        var index;
-        angular.forEach(customValidations, function (validation, idx) {
-            if(validation.customValidationAttribute === customValidationAttribute){
-                index = idx;
+        var i, index;
+
+        for(i = 0; i < customValidations.length; i++ ){
+            if(customValidations[i].customValidationAttribute === customValidationAttribute){
+                index = i;
+                break;
             }
-        });
+        }
+
         return index;
     };
 
@@ -306,6 +309,18 @@ angular_ui_form_validations = (function(){
                         currentlyDisplayingAnErrorMessage = currentErrorMessage.length > 0;
 
                         value = $element.val().trimRight();
+                        
+                        if((/select/).test($element[0].type)){
+                            value = $element[0].options[$element[0].selectedIndex].innerHTML;
+                        }
+
+                        if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
+                            if(value === '') {
+                                $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
+                            } else {
+                                $element.parents('form').find('label[for='+$element.attr('id')+']').removeClass('requiredFieldLabel');                                
+                            }
+                        }
 
                         isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
 
@@ -395,6 +410,28 @@ angular_ui_form_validations = (function(){
             restrict: 'E',            
             link: customValidationUtil.createValidationLink(dynamicallyDefinedValidation)
         };
+    })
+
+    .directive('select', function (customValidationUtil) {
+        return {
+            require: '?ngModel',
+            restrict: 'E',            
+            link: customValidationUtil.createValidationLink(dynamicallyDefinedValidation)
+        };
+    })
+
+    .directive('select', function (customValidationUtil) {
+        return {
+            require: '?ngModel',
+            restrict: 'E',            
+            link: customValidationUtil.createValidationLink({        
+                customValidationAttribute: 'validationFieldRequired',
+                errorMessage: 'This is a required field',
+                validator: function (errorMessageElement, val){
+                    return (/\S/).test(val);    
+                }
+             })
+        };
     });
 
 
@@ -437,7 +474,7 @@ angular_ui_form_validations = (function(){
             customValidationAttribute: 'validationNoSpace',
             errorMessage: 'Cannot contain any spaces',
             validator: function (errorMessageElement, val){
-                return (/^[^\s]+$/).test(val);
+                return val !== '' && (/^[^\s]+$/).test(val);
             }
          },
          {
