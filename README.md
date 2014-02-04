@@ -2,7 +2,7 @@
 [MIT LICENSE](/LICENSE.txt)
 
 
-Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/customvalidation/customValidations.spec.js) | [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
+Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/customvalidation/customValidations.spec.js) | Master Build - [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
 
 
 
