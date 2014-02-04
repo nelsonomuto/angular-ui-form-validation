@@ -233,61 +233,70 @@ angular_ui_form_validations = (function(){
                             value = $element[0].options[$element[0].selectedIndex].innerHTML;
                         }
 
-                        isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
+                        // if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
+                        //     if(value.trim() === '') {
+                        //         $element.parents('form').find('label[for='+$element.attr('id')+']').removeClass('requiredFieldLabel');
+                        //     } else {
+                        //         $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');                                
+                        //     }
+                        // }
 
-                        //TODO: callValidator implementation
-
-                        ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
-
-                        customValidationBroadcastArg = {
-                            isValid: isValid,
-                            validation: formatterArgs.customValidationAttribute,
-                            model: model,
-                            controller: ngModelController,
-                            element: $element
-                        };
+                        // isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
                         
+                        callValidator(formatterArgs.validator, $scope, [errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope], function (isValid) {                         
+                            
+                            ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
-                        if(! currentlyDisplayingAnErrorMessage) {
-                            $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
-                                .toggle(!isValid);
-                        } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
-                            currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
-                            currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
+                            customValidationBroadcastArg = {
+                                isValid: isValid,
+                                validation: formatterArgs.customValidationAttribute,
+                                model: model,
+                                controller: ngModelController,
+                                element: $element
+                            };
                             
-                            currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
-                            currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
-                            
-                            if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid)) {
-                                currentErrorMessage.hide();
+
+                            if(! currentlyDisplayingAnErrorMessage) {
                                 $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
-                                    .toggle(!isValid);                        
-                            }                      
-                        }
+                                    .toggle(!isValid);
+                            } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
+                                currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
+                                currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
+                                
+                                currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
+                                currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
+                                
+                                if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid)) {
+                                    currentErrorMessage.hide();
+                                    $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
+                                        .toggle(!isValid);                        
+                                }                      
+                            }
 
-                        if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
-                            currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
-                            currentErrorMessageIsStale = currentErrorMessageValidator(
-                                errorMessageElement,
-                                value, 
-                                getValidationAttributeValue($attrs[currentErrorMessage.attr('data-custom-validation-attribute')]), 
-                                $element, model, ngModelController
-                            );
-                            
-                            currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
-                            currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
-                            
-                            if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid 
-                                && currentlyDisplayedTemplate.children().attr('class').indexOf(formatterArgs.customValidationAttribute) === -1)) {
-                                currentErrorMessage.hide();
-                                $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
-                                    .toggle(!isValid);                              
-                                $scope.$broadcast('errorMessageToggled');
-                            }                      
-                        }
+                            if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
+                                currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
+                                currentErrorMessageIsStale = currentErrorMessageValidator(
+                                    errorMessageElement,
+                                    value, 
+                                    getValidationAttributeValue($attrs[currentErrorMessage.attr('data-custom-validation-attribute')]), 
+                                    $element, model, ngModelController
+                                );
+                                
+                                currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
+                                currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
+                                
+                                if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid 
+                                    && currentlyDisplayedTemplate.children().attr('class').indexOf(formatterArgs.customValidationAttribute) === -1)) {
+                                    currentErrorMessage.hide();
+                                    $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
+                                        .toggle(!isValid);                              
+                                    $scope.$broadcast('errorMessageToggled');
+                                }                      
+                            }
 
-                        $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
-                        return value;
+                            $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
+                            return value;
+                        });
                     };
 
                     ngModelController.$parsers.push(function() {
