@@ -115,8 +115,8 @@ angular_ui_form_validations = (function(){
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
-                valid = validation.validator.apply(scope, arguments);
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
+                valid = validation.validator.apply(scope, arguments);
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
                     break;
@@ -153,6 +153,18 @@ angular_ui_form_validations = (function(){
         return value || attr;
     };
 
+    getValidationAttributeByPropertyName = function (attr, property) {
+        var value;
+
+        try{
+            value = JSOL.parse(attr)[property];
+        } catch (e) {
+            value = null;
+        }
+
+        return value;
+    };
+
     getCustomTemplate = function (attr, templateRetriever, $q) {
         var deferred, templateUrl, promise;
 
@@ -186,19 +198,22 @@ angular_ui_form_validations = (function(){
     };
 
     getValidationPriorityIndex = function (customValidationAttribute) {
-        var index;
-        angular.forEach(customValidations, function (validation, idx) {
-            if(validation.customValidationAttribute === customValidationAttribute){
-                index = idx;
+        var i, index;
+
+        for(i = 0; i < customValidations.length; i++ ){
+            if(customValidations[i].customValidationAttribute === customValidationAttribute){
+                index = i;
+                break;
             }
-        });
+        }
+
         return index;
     };
 
     createValidationFormatterLink = function (formatterArgs, templateRetriever, $q, $timeout, $log) {
         
         return function($scope, $element, $attrs, ngModelController) {
-            var errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue, customErrorTemplate;
+            var customErrorMessage, errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue, customErrorTemplate;
             $timeout(function() {
                 validationAttributeValue = getValidationAttributeValue($attrs[formatterArgs.customValidationAttribute]);
 
@@ -251,6 +266,11 @@ angular_ui_form_validations = (function(){
                         }, errorMessageToggled);     
                         $scope.$on('errorMessageToggled', errorMessageToggled);            
                     });
+                    
+                    customErrorMessage = getValidationAttributeByPropertyName($attrs[formatterArgs.customValidationAttribute], 'message');
+                    if(customErrorMessage !== null) {
+                        errorMessageElement.html(customErrorMessage);    
+                    }
 
                     if (formatterArgs.customValidationAttribute === 'validationNoSpace') {
                         $element.keyup(function (event){
@@ -308,7 +328,15 @@ angular_ui_form_validations = (function(){
                         value = $element.val().trimRight();
                         
                         if((/select/).test($element[0].type)){
-                            value = $element[0].selectedOptions[0].innerHTML;
+                            value = $element[0].options[$element[0].selectedIndex].innerHTML;
+                        }
+
+                        if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
+                            if(value === '') {
+                                $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
+                            } else {
+                                $element.parents('form').find('label[for='+$element.attr('id')+']').removeClass('requiredFieldLabel');                                
+                            }
                         }
 
                         isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
@@ -463,24 +491,24 @@ angular_ui_form_validations = (function(){
             customValidationAttribute: 'validationNoSpace',
             errorMessage: 'Cannot contain any spaces',
             validator: function (errorMessageElement, val){
-                return (/^[^\s]+$/).test(val);
+                return val !== '' && (/^[^\s]+$/).test(val);
             }
          },
          {
             customValidationAttribute: 'validationMinLength',
             errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
             validator: function (errorMessageElement, val, attr){
-                return val.length >= parseInt(attr, 10);    
+                return val.length >= parseInt(getValidationAttributeValue(attr), 10);    
             }   
         },
         {
             customValidationAttribute: 'validationMaxLength',            
             errorMessage: '',
             validator: function (errorMessageElement, val, attr) {                
-                if (val.length <= parseInt(attr, 10)) {
+                if (val.length <= parseInt(getValidationAttributeValue(attr), 10)) {
                     return true;
                 } else {
-                    errorMessageElement.html('Maximum of ' + attr + ' characters');
+                    errorMessageElement.html('Maximum of ' + getValidationAttributeValue(attr) + ' characters');
                     return false;
                 }
             }   
