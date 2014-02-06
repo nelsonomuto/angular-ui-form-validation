@@ -237,7 +237,9 @@ angular_ui_form_validations = (function(){
                             element: $element
                         };
                         
-                        ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
+                        callValidator(formatterArgs.validator, $scope, [errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope], function (isValid) {                         
+                            
+                            ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
                             customValidationBroadcastArg = {
                                 isValid: isValid,
@@ -287,6 +289,8 @@ angular_ui_form_validations = (function(){
                             }
 
                             $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
+                            return value;
+                        });
                     };
 
                     ngModelController.$parsers.push(function() {
