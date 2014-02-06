@@ -38,17 +38,17 @@
             customValidationAttribute: 'validationMinLength',
             errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
             validator: function (errorMessageElement, val, attr){
-                return val.length >= parseInt(attr, 10);    
+                return val.length >= parseInt(getValidationAttributeValue(attr), 10);    
             }   
         },
         {
             customValidationAttribute: 'validationMaxLength',            
             errorMessage: '',
             validator: function (errorMessageElement, val, attr) {                
-                if (val.length <= parseInt(attr, 10)) {
+                if (val.length <= parseInt(getValidationAttributeValue(attr), 10)) {
                     return true;
                 } else {
-                    errorMessageElement.html('Maximum of ' + attr + ' characters');
+                    errorMessageElement.html('Maximum of ' + getValidationAttributeValue(attr) + ' characters');
                     return false;
                 }
             }   
