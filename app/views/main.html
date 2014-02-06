@@ -16,7 +16,7 @@
     <label for="username">Username</label>
     <input type="text" id="username" name="username" ng-model="user.username"
       validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" 
-      validation-no-space="true"
+      validation-no-space="{message:'no space - custom message', value: true}"
       validation-field-required="true"
       validation-max-length="10"
       validation-no-special-chars="true"
