@@ -442,6 +442,7 @@ describe('directives.customvalidation.customValidations', function () {
             expect('Cannot contain the number one').toEqual(visibleErrorMessages.html().trim()); 
         }); 
     });
+
     describe('validationDynamicallyDefined', function() {
         var customValidationTypes;
         beforeEach(function (){
@@ -487,6 +488,58 @@ describe('directives.customvalidation.customValidations', function () {
 
             expect(1).toEqual(hiddenErrorMessages.length); //Multiple validations dynamically displayed using one error message element
             expect(0).toEqual(visibleErrorMessages.length);
+        });
+    });
+    
+    describe('live feedback | success', function() {
+        var successSpy;
+
+        beforeEach(function (){
+            inject(function ($injector, $rootScope, $compile, $timeout) {
+                element = angular.element('<form name="form">' +
+                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+        
+                    'validation-dynamically-defined="locallyDefinedValidations"/>'+
+                    '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                successSpy = jasmine.createSpy('successSpy');
+                angular.extend(scope, {
+                    user: {
+                        password: null,
+                        confirmPassword: null
+                    },
+                    locallyDefinedValidations: [                  
+                        {
+                            errorMessage: 'Cannot contain the number one',
+                            success: successSpy,
+                            validator: function (errorMessageElement, val){
+                              return /1/.test(val) !== true;    
+                            }
+                        }
+                    ]
+                });
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+
+        it('should add dynamically defined validation to customvalidations', function () {
+            var label, labelClass;
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+
+            scope.user.password = 'validOption';
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+
+            expect(1).toEqual(hiddenErrorMessages.length); //Multiple validations dynamically displayed using one error message element
+            expect(0).toEqual(visibleErrorMessages.length);
+
+            expect(successSpy).toHaveBeenCalled();
         });
     });
 

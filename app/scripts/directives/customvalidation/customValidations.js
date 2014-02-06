@@ -2,7 +2,7 @@ angular_ui_form_validations = (function(){
     
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
         getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate, dynamicallyDefinedValidation;        
+        currentlyDisplayedTemplate, dynamicallyDefinedValidation, defaultFieldIsValidSuccessFn;        
 
     customTemplates = [];
 
@@ -12,13 +12,20 @@ angular_ui_form_validations = (function(){
         customValidationAttribute: 'validationDynamicallyDefined',
         errorCount: 0,
         _errorMessage: 'Field is invalid',
-        errorMessage: function () { return dynamicallyDefinedValidation._errorMessage; },
+        _success: function () {},
+        success: function () { 
+            return dynamicallyDefinedValidation._success && dynamicallyDefinedValidation._success.apply(this, arguments); 
+        },
+        errorMessage: function () { 
+            return dynamicallyDefinedValidation._errorMessage; 
+        },
         validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope) {
             var valid, i, validation;            
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
+                dynamicallyDefinedValidation._success = validation.success;     
                 valid = validation.validator.apply(scope, arguments);
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
@@ -29,6 +36,15 @@ angular_ui_form_validations = (function(){
             return valid;
         }
     };    
+
+    onValidationComplete = function (fieldIsValid, value, validationAttributeValue, $element, model, ngModelController, $scope, customOnSuccess) {
+        if(fieldIsValid) {
+            $element.addClass('ValidationLiveSuccess');
+            customOnSuccess.call(this, value, validationAttributeValue, $element, model, ngModelController, $scope);
+        } else {
+            $element.removeClass('ValidationLiveSuccess');
+        }
+    };
 
     isCurrentlyDisplayingAnErrorMessageInATemplate = function (inputElement) {
         var isCurrentlyDisplayingAnErrorMessageInATemplate = false;
@@ -216,9 +232,11 @@ angular_ui_form_validations = (function(){
                         var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
                             currentErrorMessage, currentErrorMessageIsStale,
                             currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
-                            currentErrorMessageIsOfALowerPriority, fieldNameSelector;
+                            currentErrorMessageIsOfALowerPriority, successFn, fieldNameSelector;
 
                         fieldNameSelector = '[data-custom-field-name="'+ $element.attr('name') +'"]';
+
+                        successFn = formatterArgs.success || function(){};
 
                         currentErrorMessage = isCurrentlyDisplayingAnErrorMessageInATemplate($element) ?
                             currentlyDisplayedTemplate.children('.CustomValidationError[style="display: inline;"]'+fieldNameSelector+', '+
@@ -253,7 +271,6 @@ angular_ui_form_validations = (function(){
                             controller: ngModelController,
                             element: $element
                         };
-                        
 
                         if(! currentlyDisplayingAnErrorMessage) {
                             $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
@@ -294,6 +311,9 @@ angular_ui_form_validations = (function(){
                         }
 
                         $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
+
+                        onValidationComplete(!(currentlyDisplayingAnErrorMessage || isCurrentlyDisplayingAnErrorMessageInATemplate($element) || !isValid), value, validationAttributeValue, $element, model, ngModelController, $scope, successFn);
+
                         return value;
                     };
 
