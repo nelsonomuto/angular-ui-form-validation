@@ -291,8 +291,7 @@ angular_ui_form_validations = (function(){
 
                             confirmPasswordIsDirty = /dirty/.test(confirmPasswordElement.attr('class'));
                             passwordIsValid = /invalid/.test(passwordElement.attr('class')) === false;
-
-                            // if(confirmPasswordIsDirty && passwordIsValid){
+                            
                             if(passwordIsValid){
                                 passwordMatch =  $('[name=password]').val() === $element.val();                        
                                 
