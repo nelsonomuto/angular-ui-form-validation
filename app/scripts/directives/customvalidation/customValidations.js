@@ -2,11 +2,30 @@ angular_ui_form_validations = (function(){
     
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
         getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate, dynamicallyDefinedValidation;        
+        currentlyDisplayedTemplate, dynamicallyDefinedValidation, callValidator;        
 
     customTemplates = [];
 
     customValidations = [];
+
+    callValidator = function (validator, scope, args, callback) {
+        var validatorReturnValue;
+
+        validatorReturnValue = validator.apply(scope, args);
+
+        if(validatorReturnValue && typeof(validatorReturnValue.then) === 'function') {
+            validatorReturnValue.then(function (){
+                callback(true);
+            })
+            .catch(function(){
+                callback(false);
+            });
+        } else if(typeof(validatorReturnValue) === 'boolean'){
+            callback(validatorReturnValue);
+        } else {
+            throw('validator must return a promise or a boolean');
+        }
+    };
 
     dynamicallyDefinedValidation = {
         customValidationAttribute: 'validationDynamicallyDefined',
