@@ -257,6 +257,40 @@ describe('directives.customvalidation.customValidations', function () {
         });        
     });
 
+    describe('custom message', function(){
+        beforeEach(function (){
+            inject(function ($rootScope, $compile, $timeout){
+                element = angular.element('<form name="form">' +
+                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
+                    'validation-min-length="{ message: \'under min length\', value: 8}" '+
+                    '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                angular.extend(scope, {
+                    user: {
+                        password: null,
+                        confirmPassword: null
+                    }
+                });
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+
+        it('should show password errors when password is changed', function (){
+            passwordInput.val('ffasdf');
+            scope.$broadcast('runCustomValidations');
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(1).toEqual(visibleErrorMessages.length);
+            expect('under min length').toEqual(visibleErrorMessages.html().trim()); 
+        });        
+    });
+
     describe('custom error message template wrap', function () {
         beforeEach(function (){
             inject(function ($rootScope, $compile, $timeout){                    

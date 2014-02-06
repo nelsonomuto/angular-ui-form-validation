@@ -56,6 +56,18 @@ angular_ui_form_validations = (function(){
         return value || attr;
     };
 
+    getValidationAttributeByPropertyName = function (attr, property) {
+        var value;
+
+        try{
+            value = JSOL.parse(attr)[property];
+        } catch (e) {
+            value = null;
+        }
+
+        return value;
+    };
+
     getCustomTemplate = function (attr, templateRetriever, $q) {
         var deferred, templateUrl, promise;
 
@@ -104,7 +116,7 @@ angular_ui_form_validations = (function(){
     createValidationFormatterLink = function (formatterArgs, templateRetriever, $q, $timeout, $log) {
         
         return function($scope, $element, $attrs, ngModelController) {
-            var errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue, customErrorTemplate;
+            var customErrorMessage, errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue, customErrorTemplate;
             $timeout(function() {
                 validationAttributeValue = getValidationAttributeValue($attrs[formatterArgs.customValidationAttribute]);
 
@@ -157,6 +169,11 @@ angular_ui_form_validations = (function(){
                         }, errorMessageToggled);     
                         $scope.$on('errorMessageToggled', errorMessageToggled);            
                     });
+                    
+                    customErrorMessage = getValidationAttributeByPropertyName($attrs[formatterArgs.customValidationAttribute], 'message');
+                    if(customErrorMessage !== null) {
+                        errorMessageElement.html(customErrorMessage);    
+                    }
 
                     if (formatterArgs.customValidationAttribute === 'validationNoSpace') {
                         $element.keyup(function (event){
