@@ -6,9 +6,11 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 
 
 
-**Supports angular versions 1.0.7 and greater.** Because there are no dependencies other than angular, we are able to be backwards compatible with angular all the way to version 1.0.7.&nbsp;[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
+**Supports angular versions 1.0.7 and greater.** 
 
-Note that the **dev-**dependencies are NOT used nor present in the release.&nbsp;[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
+[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
+
+[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 
  
 ### [Interactive Preview Demo](http://nelsonomuto.github.io/angular-ui-form-validation) on github page ###
@@ -32,12 +34,14 @@ The idea behind this component is to encourage code reuse and eliminate boilerpl
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
 
-### 2-step Install:
+### Install:
  1. a.) Either clone & build this repository
     b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
     c.) or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
  
- 2. Add the following single dependency to your app module:
+ 2. Ensure jquery (any version >= 1.6.0) is loaded before your angular (any version >= 1.0.7) app is loaded.
+
+ 3. Add the following single dependency to your app module:
  ```javascript
     angular.module('<your_app_module_name>', [
       'directives.customvalidation.customValidationsTypes',
