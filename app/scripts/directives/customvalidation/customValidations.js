@@ -290,30 +290,10 @@ angular_ui_form_validations = (function(){
                             controller: ngModelController,
                             element: $element
                         };
-<<<<<<< HEAD
+
                         
                         callValidator(formatterArgs.validator, $scope, [errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope], function (isValid) {                         
-=======
-
-                        if(! currentlyDisplayingAnErrorMessage) {
-                            $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
-                                .toggle(!isValid);
-                        } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
-                            currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
-                            currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
->>>>>>> master
                             
-                            ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
-
-                            customValidationBroadcastArg = {
-                                isValid: isValid,
-                                validation: formatterArgs.customValidationAttribute,
-                                model: model,
-                                controller: ngModelController,
-                                element: $element
-                            };
-                            
-
                             if(! currentlyDisplayingAnErrorMessage) {
                                 $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
                                     .toggle(!isValid);
@@ -331,7 +311,6 @@ angular_ui_form_validations = (function(){
                                 }                      
                             }
 
-<<<<<<< HEAD
                             if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
                                 currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
                                 currentErrorMessageIsStale = currentErrorMessageValidator(
@@ -356,13 +335,12 @@ angular_ui_form_validations = (function(){
                             $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
                             return value;
                         });
-=======
+
                         $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
 
                         onValidationComplete(!(currentlyDisplayingAnErrorMessage || isCurrentlyDisplayingAnErrorMessageInATemplate($element) || !isValid), value, validationAttributeValue, $element, model, ngModelController, $scope, successFn);
 
                         return value;
->>>>>>> master
                     };
 
                     ngModelController.$parsers.push(function() {
