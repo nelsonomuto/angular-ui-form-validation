@@ -2,11 +2,25 @@ angular_ui_form_validations = (function(){
     
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
         getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate, dynamicallyDefinedValidation, defaultFieldIsValidSuccessFn;        
+        currentlyDisplayedTemplate, dynamicallyDefinedValidation, defaultFieldIsValidSuccessFn, runCustomValidations_util;        
 
     customTemplates = [];
 
     customValidations = [];
+
+    runCustomValidations_util = {
+        getAttributeValue: function (attribute, $attrs, $element){
+            var denormalizedAttribute;
+
+            if($attrs.type === 'radio' || $attrs.type === 'checkbox') {
+                $attrs.$set(attribute);
+                denormalizedAttribute = $attrs.$attr[attribute];
+                return $element.siblings('[name=' + $element.attr('name') + ']').attr(denormalizedAttribute);
+            } else {
+                return $attrs[attribute];
+            }
+        }
+    };
 
     dynamicallyDefinedValidation = {
         customValidationAttribute: 'validationDynamicallyDefined',
@@ -277,7 +291,8 @@ angular_ui_form_validations = (function(){
                                 .toggle(!isValid);
                         } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
                             currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
-                            currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
+                            // currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
+                            currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, runCustomValidations_util.getAttributeValue(currentErrorMessage.attr('data-custom-validation-attribute'), $attrs, $element), $element, model, ngModelController, $scope);
                             
                             currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
                             currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
