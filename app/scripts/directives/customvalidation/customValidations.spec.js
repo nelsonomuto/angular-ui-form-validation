@@ -203,6 +203,34 @@ describe('directives.customvalidation.customValidations', function () {
             labelClass = label.attr('class');
             expect(/requiredFieldLabel/.test(labelClass)).toBe(true);
         });
+
+        it('should toggle requiredFieldLabel class on label based on whether there is a field value or not', function () {
+            var label, labelClass;
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+
+            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+            label = element.find('label');
+            labelClass = label.attr('class');
+            expect(/requiredFieldLabel/.test(labelClass)).toBe(true);
+
+            passwordInput.val('sadffsdaadfsfsda');
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            label = element.find('label');
+            labelClass = label.attr('class');
+            expect(/requiredFieldLabel/.test(labelClass)).toBe(false);
+
+            passwordInput.val('');
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            label = element.find('label');
+            labelClass = label.attr('class');
+            expect(/requiredFieldLabel/.test(labelClass)).toBe(true);
+        });
     });    
 
     describe('object literal validation attribute value', function(){
@@ -348,6 +376,7 @@ describe('directives.customvalidation.customValidations', function () {
             expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim()); 
         });        
     });
+
     describe('error message modified by validator', function() {
         var customValidationTypes;
         beforeEach(function (){
@@ -482,7 +511,6 @@ describe('directives.customvalidation.customValidations', function () {
         });
 
         it('should add dynamically defined validation to customvalidations', function () {
-            var label, labelClass;
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
 
@@ -591,7 +619,6 @@ describe('directives.customvalidation.customValidations', function () {
         });
 
         it('should add dynamically defined validation to customvalidations', function () {
-            var label, labelClass;
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
 
