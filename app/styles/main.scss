@@ -26,13 +26,18 @@ body {
 /* Custom page header */
 .header {
     border-bottom: 1px solid #e5e5e5;
+    width: 50%;
+    background: lightblue;
+    opacity: 0.9;
+    position: fixed;
+    top: 0;
 }
 
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
     margin-top: 0;
     margin-bottom: 0;
-    line-height: 40px;
+    line-height: 22px;
     padding-bottom: 19px;
 }
 
