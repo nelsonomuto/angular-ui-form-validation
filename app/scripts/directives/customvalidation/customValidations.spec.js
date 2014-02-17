@@ -626,7 +626,7 @@ describe('directives.customvalidation.customValidations', function () {
             expect(0).toEqual(visibleErrorMessages.length);
         });
 
-        xit('should show errors when value is changed to invalid option', function (){
+        it('should show errors when value is changed to invalid option', function (){
             scope.user.password = 'validOption';
             element.scope().$apply();
             scope.$broadcast('runCustomValidations');

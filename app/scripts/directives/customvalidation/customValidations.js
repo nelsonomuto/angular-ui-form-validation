@@ -2,11 +2,40 @@ angular_ui_form_validations = (function(){
     
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
         getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate, dynamicallyDefinedValidation, callValidator;     
+        currentlyDisplayedTemplate, dynamicallyDefinedValidation, callValidator, customValidationIsValid;     
 
     customTemplates = [];
 
     customValidations = [];
+
+    customValidationIsValid = function (errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs) {
+        var isValid;
+
+        if (typeof(asynchronousIsValid) !== 'undefined') {
+            if(formatterArgs.validator === asynchronousIsValid.validator) {
+                isValid = true; //should always be true if asynchronousIsValid is defined
+            }
+        } else {
+            isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
+        }
+        
+        if(typeof(isValid.then) !== 'undefined') {
+            //then isValid is a promise
+            (function(validationPromise){
+                validationPromise.success(valid);
+                    $log.log('asynchronous validation success, isValid:', valid);
+                    if(valid === true){
+                        runCustomValidations(errorMessageElement, {validator: formatterArgs.validator});
+                    }
+                validationPromise.error(function(error){
+                    $log.error('asynchronous validation error', error);
+                });
+            })(isValid);
+            isValid  = false;
+        }
+
+        return isValid;
+    };
 
     callValidator = function (validator, scope, args, callback) {
         var validatorReturnValue;
@@ -247,17 +276,14 @@ angular_ui_form_validations = (function(){
                         $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
                     }
 
-                    runCustomValidations = function (errorMessageElement) {
+                    runCustomValidations = function (errorMessageElement, asynchronousIsValid) {
                         var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
                             currentErrorMessage, currentErrorMessageIsStale,
                             currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
                             currentErrorMessageIsOfALowerPriority, successFn, fieldNameSelector;
 
 
-                        //TODO: create interceptor to check if validator returns a promise, in which case replace it with a function returning true and if the promise resolves
-                        //as false(invalid) then re-run validations but now with a function returning false.
-                        //use closure to check whether value changed before returning false if promise resolve as false, if value changed return true as promise resolves again
-                        //think about performance and how often server calls will be made: ex for email check only make unique check call if email is valid     
+                         
 
                         fieldNameSelector = '[data-custom-field-name="'+ $element.attr('name') +'"]';
 
@@ -285,7 +311,36 @@ angular_ui_form_validations = (function(){
                             }
                         }
 
-                        isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
+                        //TODO: create interceptor to check if validator returns a promise, in which case replace it with a function returning true and if the promise resolves
+                        //as false(invalid) then re-run validations but now with a function returning false.
+                        //use closure to check whether value changed before returning false if promise resolve as false, if value changed return true as promise resolves again
+                        //think about performance and how often server calls will be made: ex for email check only make unique check call if email is valid   
+
+                        isValid = customValidationIsValid(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs);
+
+                        // if(typeof(asynchronousIsValid) !== 'undefined'){
+                        //     if(formatterArgs.validator === asynchronousIsValid.validator) {
+                        //         isValid = true; //should always be true if asynchronousIsValid is defined
+                        //     }
+                        // } else {
+                        //     isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
+                        // }
+                        
+                        // if(typeof(isValid.then) !== 'undefined') {
+                        //     //then isValid is a promise
+                        //     (function(validationPromise){
+                        //         validationPromise.success(valid);
+                        //             $log.log('asynchronous validation success, isValid:', valid);
+                        //             if(valid === true){
+                        //                 runCustomValidations(errorMessageElement, {validator: formatterArgs.validator});
+                        //             }
+                        //         validationPromise.error(function(error){
+                        //             $log.error('asynchronous validation error', error);
+                        //         });
+                        //     })(isValid);
+                        //     isValid  = false;
+                        // }
+
 
                         ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
