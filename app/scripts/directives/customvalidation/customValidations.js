@@ -8,7 +8,7 @@ angular_ui_form_validations = (function(){
 
     customValidations = [];
 
-    customValidationIsValid = function (errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs) {
+    customValidationIsValid = function (errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName) {
         var isValid;
 
         if (typeof(asynchronousIsValid) !== 'undefined') {
@@ -16,11 +16,11 @@ angular_ui_form_validations = (function(){
                 isValid = true; //should always be true if asynchronousIsValid is defined
             }
         } else {
-            isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
+            isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName);
         }
         
         if(typeof(isValid.then) !== 'undefined') {
-            //then isValid is a promise
+            //then isValid is a validationPromise                   
             (function(validationPromise){
                 validationPromise.success(valid);
                     $log.log('asynchronous validation success, isValid:', valid);
@@ -59,6 +59,20 @@ angular_ui_form_validations = (function(){
     dynamicallyDefinedValidation = {
         customValidationAttribute: 'validationDynamicallyDefined',
         errorCount: 0,
+        toggleErrorMessage: function (isValid, validatorArguments) {
+            var errorMessage, modelCtrl;
+
+            errorMessage = validatorArguments[0];
+            modelCtrl = validatorArguments[5];
+            
+            errorMessage.toggle(!isValid); 
+            modelCtrl.$setValidity('validationDynamicallyDefined', isValid);
+            errorMessage.html(dynamicallyDefinedValidation.errorMessage());
+
+            if (isValid) {
+                dynamicallyDefinedValidation.success.apply(this, validatorArguments);
+            }
+        },
         _errorMessage: 'Field is invalid',
         _success: function () {},
         success: function () { 
@@ -67,18 +81,36 @@ angular_ui_form_validations = (function(){
         errorMessage: function () { 
             return dynamicallyDefinedValidation._errorMessage; 
         },
-        validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope) {
-            var valid, i, validation;            
+        validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName) {
+            var valid, i, validation, inputElement, validatorArguments;            
+
+            validatorArguments = arguments;
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
                 dynamicallyDefinedValidation._success = validation.success;     
                 valid = validation.validator.apply(scope, arguments);
-                if(valid === false){
-                    dynamicallyDefinedValidation.errorCount++;
-                    break;
-                }                
+
+                if(valid && typeof(valid.then) === 'function') {//validator returns a promise
+                    valid.then(function (errorMessage, success) { 
+                        return function (isValid){
+                            inputElement = errorMessageElement.siblings(['ng-model='+propertyName]);
+                            if(inputElement.val() === val) {//value we made the asynch request with did not change
+                                dynamicallyDefinedValidation._errorMessage = errorMessage;  
+                                dynamicallyDefinedValidation.toggleErrorMessage(isValid, validatorArguments);
+                            }
+                        }
+                    }(validation.errorMessage, validation.success))
+                    .catch(function(){
+                        console.log('asynchronous validator deferred rejected');
+                    });
+                } else {//validator returns a boolean
+                    if(valid === false){
+                        dynamicallyDefinedValidation.toggleErrorMessage(valid, validatorArguments);
+                        break;
+                    }  
+                }              
             };
             
             return valid;
@@ -201,12 +233,6 @@ angular_ui_form_validations = (function(){
                         ' data-custom-field-name='+ $element.attr('name') +
                         ' class="CustomValidationError '+ formatterArgs.customValidationAttribute + ' '+ propertyName +'property">' +
                         errorMessage + '</span>');
-
-                    if(formatterArgs.customValidationAttribute === 'validationDynamicallyDefined') {
-                        $scope.$watch(function(){ return dynamicallyDefinedValidation.errorCount; }, function () {
-                            errorMessageElement.html(dynamicallyDefinedValidation.errorMessage());
-                        });
-                    }
                     
                     $element.after(errorMessageElement);
                     errorMessageElement.hide();
@@ -316,7 +342,7 @@ angular_ui_form_validations = (function(){
                         //use closure to check whether value changed before returning false if promise resolve as false, if value changed return true as promise resolves again
                         //think about performance and how often server calls will be made: ex for email check only make unique check call if email is valid   
 
-                        isValid = customValidationIsValid(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs);
+                        isValid = customValidationIsValid(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName);
 
                         // if(typeof(asynchronousIsValid) !== 'undefined'){
                         //     if(formatterArgs.validator === asynchronousIsValid.validator) {
