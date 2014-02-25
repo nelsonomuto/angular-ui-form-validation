@@ -19,7 +19,7 @@ angular_ui_form_validations = (function(){
             isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName);
         }
         
-        if(typeof(isValid.then) !== 'undefined') {
+        if(typeof(isValid.then) !== 'undefined' && formatterArgs.customValidationAttribute !== 'validationDynamicallyDefined') {
             //then isValid is a validationPromise                   
             (function(validationPromise){
                 validationPromise.success(valid);
@@ -66,7 +66,7 @@ angular_ui_form_validations = (function(){
             modelCtrl = validatorArguments[5];
             
             errorMessage.toggle(!isValid); 
-            modelCtrl.$setValidity('validationDynamicallyDefined', isValid);
+            // modelCtrl.$setValidity('validationDynamicallyDefined', isValid);
             errorMessage.html(dynamicallyDefinedValidation.errorMessage());
 
             if (isValid) {
@@ -81,8 +81,8 @@ angular_ui_form_validations = (function(){
         errorMessage: function () { 
             return dynamicallyDefinedValidation._errorMessage; 
         },
-        validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName) {
-            var valid, i, validation, inputElement, validatorArguments;            
+        validator: function (errorMessageElement, val, attr, inputElement, model, modelCtrl, scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName) {
+            var valid, i, validation, validatorArguments;            
 
             validatorArguments = arguments;
 
@@ -95,7 +95,6 @@ angular_ui_form_validations = (function(){
                 if(valid && typeof(valid.then) === 'function') {//validator returns a promise
                     valid.then(function (errorMessage, success) { 
                         return function (isValid){
-                            inputElement = errorMessageElement.siblings(['ng-model='+propertyName]);
                             if(inputElement.val() === val) {//value we made the asynch request with did not change
                                 dynamicallyDefinedValidation._errorMessage = errorMessage;  
                                 dynamicallyDefinedValidation.toggleErrorMessage(isValid, validatorArguments);

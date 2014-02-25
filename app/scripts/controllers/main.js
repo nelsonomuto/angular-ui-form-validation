@@ -20,7 +20,7 @@ angular.module('angularUiFormValidationApp')
     }
 })
 
-.controller('MainCtrl', function ($scope, emailAddressAvailable, $http) {
+.controller('MainCtrl', function ($scope, emailAddressAvailable, $http, $q, $timeout) {
   $scope.awesomeThings = [
     'HTML5 Boilerplate',
     'AngularJS',
@@ -51,6 +51,21 @@ angular.module('angularUiFormValidationApp')
               validator: function (errorMessageElement, val){
                   return /2/.test(val) !== true;      
               } 
+          },
+          {
+              errorMessage: 'Cannot contain the number three - asynchronous validation simulated with 1 second timeout',
+              validator: function (errorMessageElement, val){
+                  var deferred = $q.defer();
+
+                  $timeout(function() {
+                      if(/3/.test(val) === true) {
+                          deferred.resolve(false);
+                      } else {
+                          deferred.resolve(true);
+                      }
+                  }, 1000);
+                  return deferred.promise;   
+              }
           }
       ]
   });
