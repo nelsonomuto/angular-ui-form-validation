@@ -7,16 +7,14 @@
   "curly": true,
   "eqeqeq": true,
   "immed": true,
-  "indent": 2,
   "latedef": true,
   "newcap": true,
   "noarg": true,
-  "quotmark": "single",
   "regexp": true,
   "undef": true,
   "unused": true,
   "strict": true,
-  "trailing": true,
+  "trailing": false,
   "smarttabs": true,
   "globals": {
     "angular": false

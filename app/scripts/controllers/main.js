@@ -17,10 +17,10 @@ angular.module('angularUiFormValidationApp')
 
             return deferred.promise;
         }
-    }
+    };
 })
 
-.controller('MainCtrl', function ($scope, emailAddressAvailable, $http, $q, $timeout) {
+.controller('MainCtrl', function ($scope, emailAddressAvailable, $http, $q, $timeout, $log) {
   $scope.awesomeThings = [
     'HTML5 Boilerplate',
     'AngularJS',
@@ -56,11 +56,13 @@ angular.module('angularUiFormValidationApp')
               errorMessage: 'Cannot contain the number three - asynchronous validation simulated with 1 second timeout',
               validator: function (errorMessageElement, val){
                   var deferred = $q.defer();
-
+                  console.log('------------ called asynch validator');
                   $timeout(function() {
                       if(/3/.test(val) === true) {
+                          console.warn('FAIL  --------- called asynch validator');
                           deferred.resolve(false);
                       } else {
+                          console.debug('pass  --------- called asynch validator');
                           deferred.resolve(true);
                       }
                   }, 1000);

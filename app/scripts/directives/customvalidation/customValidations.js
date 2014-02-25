@@ -19,7 +19,7 @@ angular_ui_form_validations = (function(){
             isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName);
         }
         
-        if(typeof(isValid.then) !== 'undefined' && formatterArgs.customValidationAttribute !== 'validationDynamicallyDefined') {
+        if(isValid && typeof(isValid.then) !== 'undefined' && formatterArgs.customValidationAttribute !== 'validationDynamicallyDefined') {
             //then isValid is a validationPromise                   
             (function(validationPromise){
                 validationPromise.success(valid);
@@ -49,7 +49,7 @@ angular_ui_form_validations = (function(){
             .catch(function(){
                 callback(false);
             });
-        } else if(typeof(validatorReturnValue) === 'boolean'){
+        } else if(typeof(validatorReturnValue) === 'boolean') {
             callback(validatorReturnValue);
         } else {
             throw('validator must return a promise or a boolean');
@@ -65,11 +65,12 @@ angular_ui_form_validations = (function(){
             errorMessage = validatorArguments[0];
             modelCtrl = validatorArguments[5];
             
-            errorMessage.toggle(!isValid); 
-            // modelCtrl.$setValidity('validationDynamicallyDefined', isValid);
+            console.debug('toggling errorMessage', errorMessage, ! isValid);
+            errorMessage.toggle(! isValid); 
+
             errorMessage.html(dynamicallyDefinedValidation.errorMessage());
 
-            if (isValid) {
+            if (isValid === true) {
                 dynamicallyDefinedValidation.success.apply(this, validatorArguments);
             }
         },
@@ -98,6 +99,8 @@ angular_ui_form_validations = (function(){
                             if(inputElement.val() === val) {//value we made the asynch request with did not change
                                 dynamicallyDefinedValidation._errorMessage = errorMessage;  
                                 dynamicallyDefinedValidation.toggleErrorMessage(isValid, validatorArguments);
+                            } else {//re-do validation with new value
+
                             }
                         }
                     }(validation.errorMessage, validation.success))
@@ -376,9 +379,9 @@ angular_ui_form_validations = (function(){
                             controller: ngModelController,
                             element: $element
                         };
-
-                        
-                        callValidator(formatterArgs.validator, $scope, [errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope], function (isValid) {                         
+                                                
+                        // callValidator(formatterArgs.validator, $scope, [errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope], function (isValid) {                         
+                        (function (isValid) {                         
                             
                             if(! currentlyDisplayingAnErrorMessage) {
                                 $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
@@ -420,8 +423,8 @@ angular_ui_form_validations = (function(){
 
                             $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
                             return value;
-                        });
-
+                        })(formatterArgs.validator.apply($scope, [errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope]));
+                        
                         $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
 
                         onValidationComplete(!(currentlyDisplayingAnErrorMessage || isCurrentlyDisplayingAnErrorMessageInATemplate($element) || !isValid), value, validationAttributeValue, $element, model, ngModelController, $scope, successFn);
@@ -489,7 +492,18 @@ angular_ui_form_validations = (function(){
 
     //shared config functions
     return {
-        getValidationAttributeValue: getValidationAttributeValue
+        getValidationAttributeValue: getValidationAttributeValue,
+        debounce: function (func, delay) {
+            var now, lastCall;
+            lastCall = null;
+            return function () {
+                now = new Date();
+                if (now - lastCall >= delay) {
+                    lastCall = now;
+                    return func.apply(this, arguments);
+                }
+            }
+        }
     };
 
 })();
