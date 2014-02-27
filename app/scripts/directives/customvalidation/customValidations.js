@@ -1,41 +1,12 @@
 angular_ui_form_validations = (function(){
     
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
-        getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate, dynamicallyDefinedValidation, callValidator, customValidationIsValid;     
+        getValidatorByAttribute, getCustomTemplate, customTemplates,
+        currentlyDisplayedTemplate, dynamicallyDefinedValidation, callValidator;     
 
     customTemplates = [];
 
     customValidations = [];
-
-    customValidationIsValid = function (errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName) {
-        var isValid;
-
-        if (typeof(asynchronousIsValid) !== 'undefined') {
-            if(formatterArgs.validator === asynchronousIsValid.validator) {
-                isValid = true; //should always be true if asynchronousIsValid is defined
-            }
-        } else {
-            isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName);
-        }
-        
-        if(isValid && typeof(isValid.then) !== 'undefined' && formatterArgs.customValidationAttribute !== 'validationDynamicallyDefined') {
-            //then isValid is a validationPromise                   
-            (function(validationPromise){
-                validationPromise.success(valid);
-                    $log.log('asynchronous validation success, isValid:', valid);
-                    if(valid === true){
-                        runCustomValidations(errorMessageElement, {validator: formatterArgs.validator});
-                    }
-                validationPromise.error(function(error){
-                    $log.error('asynchronous validation error', error);
-                });
-            })(isValid);
-            isValid  = false;
-        }
-
-        return isValid;
-    };
 
     callValidator = function (validator, scope, args, callback) {
         var validatorReturnValue;
@@ -127,17 +98,6 @@ angular_ui_form_validations = (function(){
             $element.removeClass('ValidationLiveSuccess');
         }
     };
-
-    isCurrentlyDisplayingAnErrorMessageInATemplate = function (inputElement) {
-        var isCurrentlyDisplayingAnErrorMessageInATemplate = false;
-        angular.forEach(customTemplates, function (template){
-            if(template.parent().is(inputElement.parents('form'))){
-                isCurrentlyDisplayingAnErrorMessageInATemplate = true;  
-                currentlyDisplayedTemplate = template;
-            }
-        });
-        return isCurrentlyDisplayingAnErrorMessageInATemplate;
-    }
 
     getValidationAttributeValue = function (attr) {
         var value, property;
@@ -304,141 +264,27 @@ angular_ui_form_validations = (function(){
                         $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
                     }
 
-                    runCustomValidations = function (errorMessageElement, asynchronousIsValid) {
-                        var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
-                            currentErrorMessage, currentErrorMessageIsStale,
-                            currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
-                            currentErrorMessageIsOfALowerPriority, successFn, fieldNameSelector;
-
-
-                         
-
-                        fieldNameSelector = '[data-custom-field-name="'+ $element.attr('name') +'"]';
-
-                        successFn = formatterArgs.success || function(){};
-
-                        currentErrorMessage = isCurrentlyDisplayingAnErrorMessageInATemplate($element) ?
-                            currentlyDisplayedTemplate.children('.CustomValidationError[style="display: inline;"]'+fieldNameSelector+', '+
-                                '.CustomValidationError[style="display: block;"]'+fieldNameSelector)
-                            : $element.siblings('.CustomValidationError[style="display: inline;"]'+fieldNameSelector+', '+
-                                '.CustomValidationError[style="display: block;"]'+fieldNameSelector);
-
-                        currentlyDisplayingAnErrorMessage = currentErrorMessage.length > 0;
-
-                        value = $element.val().trimRight();
-                        
-                        if((/select/).test($element[0].type)){
-                            value = $element[0].options[$element[0].selectedIndex].innerHTML;
-                        }
-
-                        if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
-                            if(value === '') {
-                                $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
-                            } else {
-                                $element.parents('form').find('label[for='+$element.attr('id')+']').removeClass('requiredFieldLabel');                                
-                            }
-                        }
-
-                        //TODO: create interceptor to check if validator returns a promise, in which case replace it with a function returning true and if the promise resolves
-                        //as false(invalid) then re-run validations but now with a function returning false.
-                        //use closure to check whether value changed before returning false if promise resolve as false, if value changed return true as promise resolves again
-                        //think about performance and how often server calls will be made: ex for email check only make unique check call if email is valid   
-
-                        isValid = customValidationIsValid(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope, asynchronousIsValid, runCustomValidations, formatterArgs, propertyName);
-
-                        // if(typeof(asynchronousIsValid) !== 'undefined'){
-                        //     if(formatterArgs.validator === asynchronousIsValid.validator) {
-                        //         isValid = true; //should always be true if asynchronousIsValid is defined
-                        //     }
-                        // } else {
-                        //     isValid = formatterArgs.validator(errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope);
-                        // }
-                        
-                        // if(typeof(isValid.then) !== 'undefined') {
-                        //     //then isValid is a promise
-                        //     (function(validationPromise){
-                        //         validationPromise.success(valid);
-                        //             $log.log('asynchronous validation success, isValid:', valid);
-                        //             if(valid === true){
-                        //                 runCustomValidations(errorMessageElement, {validator: formatterArgs.validator});
-                        //             }
-                        //         validationPromise.error(function(error){
-                        //             $log.error('asynchronous validation error', error);
-                        //         });
-                        //     })(isValid);
-                        //     isValid  = false;
-                        // }
-
-
-                        ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
-
-                        customValidationBroadcastArg = {
-                            isValid: isValid,
-                            validation: formatterArgs.customValidationAttribute,
+                    runCustomValidations = function () {
+                        _runCustomValidations(errorMessageElement, {
+                            $element: $element,
+                            formatterArgs: formatterArgs,
+                            validationAttributeValue: validationAttributeValue,
                             model: model,
-                            controller: ngModelController,
-                            element: $element
-                        };
-                                                
-                        // callValidator(formatterArgs.validator, $scope, [errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope], function (isValid) {                         
-                        (function (isValid) {                         
-                            
-                            if(! currentlyDisplayingAnErrorMessage) {
-                                $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
-                                    .toggle(!isValid);
-                            } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
-                                currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
-                                currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
-                                
-                                currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
-                                currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
-                                
-                                if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid)) {
-                                    currentErrorMessage.hide();
-                                    $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
-                                        .toggle(!isValid);                        
-                                }                      
-                            }
+                            ngModelController: ngModelController,
+                            $scope: $scope,
+                            $attrs: $attrs,
+                            customTemplates: customTemplates,
+                            propertyName: propertyName,
+                            getValidatorByAttribute: getValidatorByAttribute,
+                            getValidationAttributeValue: getValidationAttributeValue,
+                            getValidationPriorityIndex: getValidationPriorityIndex,
+                            onValidationComplete: onValidationComplete
+                        });
+                    }
 
-                            if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
-                                currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
-                                currentErrorMessageIsStale = currentErrorMessageValidator(
-                                    errorMessageElement,
-                                    value, 
-                                    getValidationAttributeValue($attrs[currentErrorMessage.attr('data-custom-validation-attribute')]), 
-                                    $element, model, ngModelController
-                                );
-                                
-                                currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
-                                currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
-                                
-                                if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid 
-                                    && currentlyDisplayedTemplate.children().attr('class').indexOf(formatterArgs.customValidationAttribute) === -1)) {
-                                    currentErrorMessage.hide();
-                                    $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
-                                        .toggle(!isValid);                              
-                                    $scope.$broadcast('errorMessageToggled');
-                                }                      
-                            }
+                    ngModelController.$parsers.push(runCustomValidations);
 
-                            $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
-                            return value;
-                        })(formatterArgs.validator.apply($scope, [errorMessageElement, value, validationAttributeValue, $element, model, ngModelController, $scope]));
-                        
-                        $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
-
-                        onValidationComplete(!(currentlyDisplayingAnErrorMessage || isCurrentlyDisplayingAnErrorMessageInATemplate($element) || !isValid), value, validationAttributeValue, $element, model, ngModelController, $scope, successFn);
-
-                        return value;
-                    };
-
-                    ngModelController.$parsers.push(function() {
-                        return runCustomValidations(errorMessageElement);
-                    });
-
-                    $scope.$on('runCustomValidations', function () {
-                        runCustomValidations(errorMessageElement);
-                    });
+                    $scope.$on('runCustomValidations', runCustomValidations);
                 }    
 
             });
