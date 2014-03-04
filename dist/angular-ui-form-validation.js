@@ -99,25 +99,11 @@ angular_ui_form_validations = (function(){
     
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
         getValidatorByAttribute, getCustomTemplate, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate, dynamicallyDefinedValidation, defaultFieldIsValidSuccessFn, runCustomValidations_util;        
+        currentlyDisplayedTemplate, dynamicallyDefinedValidation, defaultFieldIsValidSuccessFn;        
 
     customTemplates = [];
 
     customValidations = [];
-
-    runCustomValidations_util = {
-        getAttributeValue: function (attribute, $attrs, $element){
-            var denormalizedAttribute;
-
-            if($attrs.type === 'radio' || $attrs.type === 'checkbox') {
-                $attrs.$set(attribute);
-                denormalizedAttribute = $attrs.$attr[attribute];
-                return $element.siblings('[name=' + $element.attr('name') + ']').attr(denormalizedAttribute);
-            } else {
-                return $attrs[attribute];
-            }
-        }
-    };
 
     dynamicallyDefinedValidation = {
         customValidationAttribute: 'validationDynamicallyDefined',
@@ -131,13 +117,22 @@ angular_ui_form_validations = (function(){
             return dynamicallyDefinedValidation._errorMessage; 
         },
         validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope) {
-            var valid, i, validation;            
+            var valid, i, validation, validationIdentifier;            
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
                 dynamicallyDefinedValidation._success = validation.success;     
                 valid = validation.validator.apply(scope, arguments);
+
+                validationIdentifier = 'validationdynamicallydefined';
+                if(validation.identifier && validation.identifier !== '' && validation.identifier !== null) {
+                    validationIdentifier += validation.identifier.charAt(0).toUpperCase() + validation.identifier.slice(1).toLowerCase();
+                } else {
+                    validationIdentifier += i;
+                }
+                modelCtrl.$setValidity(validationIdentifier, valid); 
+
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
                     break;
@@ -327,9 +322,7 @@ angular_ui_form_validations = (function(){
                                 passwordMatch =  $('[name=password]').val() === $element.val();                        
                                 
                                 ngModelController.$setValidity('validationconfirmpassword', passwordMatch); 
-                                   confirmPasswordElement
-                                    .siblings('.CustomValidationError.validationConfirmPassword:first')
-                                        .toggle(! passwordMatch);    
+                                confirmPasswordElement.siblings('.CustomValidationError.validationConfirmPassword:first').toggle(! passwordMatch);    
                             }                        
                         });
                         return;
@@ -344,6 +337,12 @@ angular_ui_form_validations = (function(){
                             currentErrorMessage, currentErrorMessageIsStale,
                             currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
                             currentErrorMessageIsOfALowerPriority, successFn, fieldNameSelector;
+
+
+                        //TODO: create interceptor to check if validator returns a promise, in which case replace it with a function returning true and if the promise resolves
+                        //as false(invalid) then re-run validations but now with a function returning false.
+                        //use closure to check whether value changed before returning false if promise resolve as false, if value changed return true as promise resolves again
+                        //think about performance and how often server calls will be made: ex for email check only make unique check call if email is valid     
 
                         fieldNameSelector = '[data-custom-field-name="'+ $element.attr('name') +'"]';
 
@@ -388,8 +387,7 @@ angular_ui_form_validations = (function(){
                                 .toggle(!isValid);
                         } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){ 
                             currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
-                            // currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
-                            currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, runCustomValidations_util.getAttributeValue(currentErrorMessage.attr('data-custom-validation-attribute'), $attrs, $element), $element, model, ngModelController, $scope);
+                            currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope);
                             
                             currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
                             currentErrorMessageIsOfALowerPriority = currentErrorMessagePriorityIndex >= getValidationPriorityIndex(formatterArgs.customValidationAttribute);
