@@ -20,13 +20,22 @@ angular_ui_form_validations = (function(){
             return dynamicallyDefinedValidation._errorMessage; 
         },
         validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope) {
-            var valid, i, validation;            
+            var valid, i, validation, validationIdentifier;            
 
             for(i = 0; i < scope[attr].length; i++ ){
                 validation = scope[attr][i];
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
                 dynamicallyDefinedValidation._success = validation.success;     
                 valid = validation.validator.apply(scope, arguments);
+
+                validationIdentifier = 'validationdynamicallydefined';
+                if(validation.identifier && validation.identifier !== '' && validation.identifier !== null) {
+                    validationIdentifier += validation.identifier.charAt(0).toUpperCase() + validation.identifier.slice(1).toLowerCase();
+                } else {
+                    validationIdentifier += i;
+                }
+                modelCtrl.$setValidity(validationIdentifier, valid); 
+
                 if(valid === false){
                     dynamicallyDefinedValidation.errorCount++;
                     break;
@@ -216,9 +225,7 @@ angular_ui_form_validations = (function(){
                                 passwordMatch =  $('[name=password]').val() === $element.val();                        
                                 
                                 ngModelController.$setValidity('validationconfirmpassword', passwordMatch); 
-                                   confirmPasswordElement
-                                    .siblings('.CustomValidationError.validationConfirmPassword:first')
-                                        .toggle(! passwordMatch);    
+                                confirmPasswordElement.siblings('.CustomValidationError.validationConfirmPassword:first').toggle(! passwordMatch);    
                             }                        
                         });
                         return;

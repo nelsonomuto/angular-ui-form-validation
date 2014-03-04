@@ -41,6 +41,7 @@ angular.module('angularUiFormValidationApp')
       states: ['', 'validState', 'invalidState1', 'invalidState2'],
       locallyDefinedValidations: [                  
           {
+              identifier: 'noOnes',
               errorMessage: 'Cannot contain the number one',
               validator: function (errorMessageElement, val) {
                   return /1/.test(val) !== true;    
