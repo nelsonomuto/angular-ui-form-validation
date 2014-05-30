@@ -1,8 +1,6 @@
 <div class="header">
   <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
+    <li class="active"><a ng-href="#">Reset Form</a></li>
   </ul>
   <h3 class="text-muted">angular ui form validation</h3>
 </div>
@@ -12,16 +10,27 @@
   <p>
     Validations are displayed one at a time based on the order set in customValidations.js
   </p>
-  <form novalidate="">    
+  <form novalidate="" name="demoForm">    
     <label for="username">Username</label>
-    <input type="text" id="username" name="username" ng-model="user.username" validation-min-length="5" validation-no-space="true" validation-field-required="true" validation-max-length="10" validation-no-special-chars="true">
-    <span class="help-block">username | validates min char = 5, max = 10, no special chars</span>
+    <input type="text" id="username" name="username" ng-model="user.username" validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" validation-no-space="{message:'no space - custom message', value: true}" validation-field-required="true" validation-max-length="10" validation-no-special-chars="true" validation-dynamically-defined="locallyDefinedValidations">
+    <span class="help-block">username | validates no ones, no twos, min char = 5, max = 10, no special chars</span>
 
     <label for="password">Password</label>
     <input type="text" id="password" name="password" ng-model="user.password" validation-min-length="8" validation-one-number="true" validation-one-upper-case-letter="true" validation-one-lower-case-letter="true" validation-field-required="true" validation-no-space="true">
     <span class="help-block">password | validates number required, lowercase required, uppercase...no space...</span>
 
     <label for="confirmPassword">Confirm Password</label>
-    <input type="text" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword" validation-confirm-password="true">
+    <input type="text" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword" validation-confirm-password="true" validation-field-required="true">
+
+    <div class="Select">
+    <label for="state">State</label>
+    <select inline-input-label="" ng-model="user.state" name="state" id="state" ng-options="state for state in states" validation-field-required="true" validation-dynamically-defined="locallyDefinedValidations">
+    </div>
+    <span class="help-block">Select support available only for validation-field-required and validation-dynamically-defined, user may augment with their own customValidationTypes where they see fit. But most use cases for validating selects should be sufficiently covered by validation-field-required and validation-dynamically-defined.</span>
+
+
+    <label for="isAdmin">IsAdmin</label>
+    <input id="isAdmin" type="checkbox" name="isAdmin" value="true" ng-model="user.isAdmin" validation-field-required="true">
+
   </form>
 </div>

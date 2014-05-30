@@ -275,11 +275,11 @@ angular_ui_form_validations = (function(){
                         customErrorTemplate.html('');
                         errorMessageToggled = function () {
                             if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
-                                $log.log('error showing');
+                                
                                 errorMessageElement.wrap(customErrorTemplate);
                                 customTemplates.push(angular.element(errorMessageElement.parents()[0]));
                             } else {
-                                $log.log('error NOT showing');
+                                
                                 if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
                                     errorMessageElement.unwrap(customErrorTemplate);
                                 }
