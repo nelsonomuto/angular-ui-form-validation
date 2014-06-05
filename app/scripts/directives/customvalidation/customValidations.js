@@ -264,6 +264,9 @@ angular_ui_form_validations = (function(){
                         if((/select/).test($element[0].type)){
                             value = $element[0].options[$element[0].selectedIndex].innerHTML;
                         }
+                        if((/checkbox|radio/).test($element[0].type)){
+                            value = $element[0].checked === true? 'true' : '';
+                        }
 
                         if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
                             if(value === '') {

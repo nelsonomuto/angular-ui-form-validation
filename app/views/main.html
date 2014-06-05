@@ -52,5 +52,11 @@
     <label for="isAdmin">IsAdmin</label>
     <input id="isAdmin" type="checkbox" name="isAdmin" value="true" ng-model="user.isAdmin" validation-field-required="true" />
 
+    <label for="bday">Birthdate</label>
+    <input type="date" id="bday" name="bday"
+           validation-date-before-today="true"
+           validation-date-after="09/25/1987"
+           ng-model="user.birthdate"
+    />
   </form>
 </div>

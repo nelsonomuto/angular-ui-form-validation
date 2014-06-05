@@ -94,6 +94,36 @@
             validator: function (errorMessageElement, val){
                 return (/^[a-z0-9_\-\s]*$/i).test(val);
             }
+        },
+        {
+            customValidationAttribute: 'validationDateBeforeToday',
+            errorMessage: 'Must be prior to today',
+            validator: function (errorMessageElement, val){
+                var now, dateValue;
+                now = new Date();
+                dateValue = new Date(val);
+                dateValue.setDate(dateValue.getDate() + 1);
+                return dateValue < now;
+            }
+        },
+        {
+            customValidationAttribute: 'validationDateBefore',
+            errorMessage: function (attr) { return 'Must be before ' + getValidationAttributeValue(attr); },
+            validator: function (errorMessageElement, val, beforeDate){
+                var dateValue = new Date(val);
+                dateValue.setDate(dateValue.getDate() + 1);
+                return dateValue < new Date(beforeDate);
+            }
+        },
+        {
+            customValidationAttribute: 'validationDateAfter',
+            errorMessage: function (attr) { return 'Must be after ' + getValidationAttributeValue(attr); },
+            validator: function (errorMessageElement, val, afterDate){
+                var dateValue = new Date(val);
+                dateValue.setDate(dateValue.getDate() + 1);
+                dateValue.setHours(0);
+                return dateValue > new Date(afterDate);
+            }
         }
     ], 
 
@@ -106,4 +136,4 @@
             };
         });   
     });    
-})()
+})();
