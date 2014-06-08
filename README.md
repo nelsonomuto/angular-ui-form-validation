@@ -25,7 +25,7 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 >
 The idea behind this component is to encourage code reuse and eliminate boilerplate redundancy by doing three basic things:
 
-**(1)** Provides a list of 12 commonly used validations that you may plug in to your form fields.
+**(1)** Provides a list of 12 commonly used validations that you may plug into your form fields.
 
 **(2)** Gives you the flexibility to add your own custom validations. Either locally on your view/template controller or in a centralized customValidationTypes where you can re-use them across your application.
 
