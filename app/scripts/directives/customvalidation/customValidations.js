@@ -83,12 +83,15 @@ angular_ui_form_validations = (function(){
 
     isCurrentlyDisplayingAnErrorMessageInATemplate = function (inputElement) {
         var isCurrentlyDisplayingAnErrorMessageInATemplate = false;
-        angular.forEach(customTemplates, function (template){
-            if(template.parent().is(inputElement.parents('form'))){
-                isCurrentlyDisplayingAnErrorMessageInATemplate = true;  
-                currentlyDisplayedTemplate = template;
-            }
-        });
+        Lazy(customTemplates)
+            .each(function(template){
+                if(template.parent().is(inputElement.parents('form'))){
+                    isCurrentlyDisplayingAnErrorMessageInATemplate = true;  
+                    currentlyDisplayedTemplate = template;
+                    return false;
+                }
+                return true;
+            });
         return isCurrentlyDisplayingAnErrorMessageInATemplate;
     }
 
@@ -143,23 +146,30 @@ angular_ui_form_validations = (function(){
     
     getValidatorByAttribute = function (customValidationAttribute) {
         var validator;
-        angular.forEach(customValidations, function (validation, idx) {
-            if(validation.customValidationAttribute === customValidationAttribute){
-                validator = validation.validator;
-            }
-        });
+
+        Lazy(customValidations)
+            .each(function (validation) {
+                if(validation.customValidationAttribute === customValidationAttribute){
+                    validator = validation.validator;
+                    return false;
+                }
+                return true;
+            });
+            
         return validator;
     };
 
     getValidationPriorityIndex = function (customValidationAttribute) {
-        var i, index;
+        var index;
 
-        for(i = 0; i < customValidations.length; i++ ){
-            if(customValidations[i].customValidationAttribute === customValidationAttribute){
-                index = i;
-                break;
-            }
-        }
+        Lazy(customValidations)
+            .each(function(validation, i){
+                if(validation.customValidationAttribute === customValidationAttribute){
+                    index = i;
+                    return false;
+                }
+                return true;
+            });
 
         return index;
     };

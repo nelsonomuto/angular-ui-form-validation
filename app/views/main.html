@@ -51,6 +51,7 @@
 
     <label for="isAdmin">IsAdmin</label>
     <input id="isAdmin" type="checkbox" name="isAdmin" value="true" ng-model="user.isAdmin" validation-field-required="true" />
+    <span class="help-block">admin | validates is required</span>
 
     <label for="bday">Birthdate</label>
     <input type="date" id="bday" name="bday"
@@ -58,5 +59,6 @@
            validation-date-after="09/25/1987"
            ng-model="user.birthdate"
     />
+    <span class="help-block">birthdate | validates must be before today, must be after 09/25/1987</span>
   </form>
 </div>
