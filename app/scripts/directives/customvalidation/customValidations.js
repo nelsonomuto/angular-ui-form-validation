@@ -155,7 +155,7 @@ angular_ui_form_validations = (function(){
                 }
                 return true;
             });
-            
+
         return validator;
     };
 
@@ -256,7 +256,6 @@ angular_ui_form_validations = (function(){
                             confirmPasswordIsDirty = /dirty/.test(confirmPasswordElement.attr('class'));
                             passwordIsValid = /invalid/.test(passwordElement.attr('class')) === false;
 
-                            // if(confirmPasswordIsDirty && passwordIsValid){
                             if(passwordIsValid){
                                 passwordMatch =  $('[name=password]').val() === $element.val();                        
                                 
@@ -276,7 +275,6 @@ angular_ui_form_validations = (function(){
                             currentErrorMessage, currentErrorMessageIsStale,
                             currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
                             currentErrorMessageIsOfALowerPriority, successFn, fieldNameSelector;
-
 
                         //TODO: create interceptor to check if validator returns a promise, in which case replace it with a function returning true and if the promise resolves
                         //as false(invalid) then re-run validations but now with a function returning false.
