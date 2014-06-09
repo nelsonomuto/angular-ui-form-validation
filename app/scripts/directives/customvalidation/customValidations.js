@@ -20,28 +20,54 @@ angular_ui_form_validations = (function(){
             return dynamicallyDefinedValidation._errorMessage; 
         },
         validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope) {
-            var valid, i, validation, validationIdentifier;            
+            var valid, hydrateDynamicallyDefinedValidation, scopeValidations, 
+                setErrorIdentifier, setValidity, validatorArgs;
 
-            for(i = 0; i < scope[attr].length; i++ ){
-                validation = scope[attr][i];
+            validatorArgs = arguments;
+            scopeValidations = scope[attr];
+
+            hydrateDynamicallyDefinedValidation = function (validation) {
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
-                dynamicallyDefinedValidation._success = validation.success;     
-                valid = validation.validator.apply(scope, arguments);
-
-                validationIdentifier = 'validationdynamicallydefined';
-                if(validation.identifier && validation.identifier !== '' && validation.identifier !== null) {
-                    validationIdentifier += validation.identifier.charAt(0).toUpperCase() + validation.identifier.slice(1).toLowerCase();
-                } else {
-                    validationIdentifier += i;
-                }
-                modelCtrl.$setValidity(validationIdentifier, valid); 
-
-                if(valid === false){
-                    dynamicallyDefinedValidation.errorCount++;
-                    break;
-                }                
+                dynamicallyDefinedValidation._success = validation.success;
+                return validation;  
             };
-            
+
+            setErrorIdentifier = function (validation, index) {
+                var identifier, clone;
+
+                identifier = 'validationdynamicallydefined';
+
+                if(validation.identifier && validation.identifier !== '' && validation.identifier !== null) {
+                    identifier += validation.identifier.charAt(0).toUpperCase() + validation.identifier.slice(1).toLowerCase();
+                } else {
+                    identifier += index;
+                }
+
+                clone = angular.copy(validation);
+                clone.identifier = identifier;
+
+                return clone;
+            };
+
+            setValidity = function (validation) {
+                valid = validation.validator.apply(scope, validatorArgs);
+                modelCtrl.$setValidity(validation.identifier, valid); 
+
+                return valid === true;
+            };
+
+            Lazy(scopeValidations)
+                .map(hydrateDynamicallyDefinedValidation)
+                .map(setErrorIdentifier)
+                .map(setValidity)
+                .each(function(valid){
+                    if(valid === false){
+                        dynamicallyDefinedValidation.errorCount++;
+                        return false;
+                    } 
+                    return true;
+                });
+
             return valid;
         }
     };    
