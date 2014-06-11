@@ -14,8 +14,7 @@
     "angular-sanitize": "~1.2.0",
     "angular-route": "~1.2.0",
     "angular-bootstrap": "~0.7.0",
-    "angular-template-retriever": "*",
-    "q": "~2.0.0"
+    "angular-template-retriever": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

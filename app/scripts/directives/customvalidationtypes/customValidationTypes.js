@@ -1,7 +1,7 @@
 (function(){
     var extendCustomValidations = angular.module('directives.customvalidation.customValidationTypes', [
         'directives.customvalidation.customValidations'
-    ])
+    ]);
 
     getValidationAttributeValue = angular_ui_form_validations.getValidationAttributeValue;
 
