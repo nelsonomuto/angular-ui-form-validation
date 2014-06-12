@@ -25,6 +25,7 @@ module.exports = function (grunt) {
             app: require('./bower.json').appPath || 'app',
             services: 'app/scripts/services',
             directives: 'app/scripts/directives',
+            bower: 'app/bower_components',
             dist: 'dist'
         },
 
@@ -293,7 +294,8 @@ module.exports = function (grunt) {
                             '.htaccess',
                             'bower_components/**/*',
                             'images/{,*/}*.{webp}',
-                            'fonts/*'
+                            'fonts/*',
+                            'angular-latest.js'
                         ]
                     },
                     {
@@ -363,6 +365,7 @@ module.exports = function (grunt) {
         concat: {
             distsourcefile: {
                 src: [
+                    '<%= yeoman.bower %>/lazy.js/lazy.js', //TODO: may move and rename this as it is modified to accept invalid JSOL
                     '<%= yeoman.app %>/scripts/JSOL/jsol.js', //TODO: may move and rename this as it is modified to accept invalid JSOL
                     '<%= yeoman.services %>/{,*}/*.js',
                     '<%= yeoman.directives %>/{,*}/*.js',
