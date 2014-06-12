@@ -6,7 +6,7 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 
 
 
-**Supports angular versions 1.0.7 and greater.** 
+**Supports and tested on angular versions from 1.0.7 through the latest snapshot 1.3.0-build.2810** 
 
 [![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
 
