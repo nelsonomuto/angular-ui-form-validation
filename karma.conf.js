@@ -22,8 +22,7 @@ module.exports = function(config) {
       'app/bower_components/angular-template-retriever/dist/angular-template-retriever.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
-      'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      'test/**/*.js',
     ],
 
     // list of files / patterns to exclude

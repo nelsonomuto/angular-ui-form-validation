@@ -294,8 +294,7 @@ module.exports = function (grunt) {
                             '.htaccess',
                             'bower_components/**/*',
                             'images/{,*/}*.{webp}',
-                            'fonts/*',
-                            'angular-latest.js'
+                            'fonts/*'
                         ]
                     },
                     {
@@ -379,9 +378,12 @@ module.exports = function (grunt) {
         uglify: {
            distsourcefile: {
              files: {
-               '<%= yeoman.dist %>/scripts/scripts.js': [
-                 '<%= yeoman.dist %>/scripts/scripts.js'
-               ]
+                '<%= yeoman.dist %>/scripts/scripts.js': [
+                  '<%= yeoman.dist %>/scripts/scripts.js'
+                 ],
+                '<%= yeoman.dist %>/<%= pkg.name %>.js': [
+                  '<%= yeoman.dist %>/<%= pkg.name %>.js'
+                ]     
              }
            }
         },
