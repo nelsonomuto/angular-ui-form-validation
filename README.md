@@ -26,11 +26,15 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 >
 The idea behind this component is to encourage code reuse and eliminate boilerplate redundancy by doing three basic things:
 
-**(1)** Provides a list of 12 commonly used validations that you may plug into your form fields.
+**(1)** Provides a list of more than 12 commonly used validations that you may plug into your form fields.
 
 **(2)** Gives you the flexibility to add your own custom validations. Either locally on your view/template controller or in a centralized customValidationTypes where you can re-use them across your application.
 
 **(3)** Allows you to create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms.
+
+**(4)**Enables you to have multiple validations on a single input element and lets you determine the order in which they are applied.
+
+**(5)**Exposes the controller scope to your validator function, so you have full access to its models and all its functions.
 
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
