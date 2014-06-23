@@ -35,7 +35,27 @@ The idea behind this component is to encourage code reuse and eliminate boilerpl
 **(4)**Enables you to have multiple validations on a single input element and lets you determine the order in which they are applied.
 
 **(5)**Exposes the controller scope to your validator function, so you have full access to its models and all its functions.
+```
+locallyDefinedValidations: [                  
+          {
+              errorMessage: 'Cannot contain the number one',
+              validator: function (errorMessageElement, val, attr, element, model, modelCtrl){
+                  /**
+                   * The model and modelCtrl(scope) are exposed in the validator function
+                   * */
+                  return /1/.test(val) !== true;    
+              }
+          },
+          {
+              errorMessage: 'Cannot contain the number two',
+              validator: function (errorMessageElement, val, attr, element, model, modelCtrl){
+                  return /2/.test(val) !== true;      
+              } 
+          }
+      ]
+});
 
+```
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
 
