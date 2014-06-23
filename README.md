@@ -24,7 +24,7 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 
 ## Getting Started
 >
-The idea behind this component is to encourage code reuse and eliminate boilerplate redundancy by doing three basic things:
+The idea behind this component is to encourage code reuse and eliminate boilerplate redundancy by doing five basic things:
 
 **(1)** Provides a list of more than 12 commonly used validations that you may plug into your form fields.
 
