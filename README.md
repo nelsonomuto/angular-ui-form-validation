@@ -32,9 +32,9 @@ The idea behind this component is to encourage code reuse and eliminate boilerpl
 
 **(3)** Allows you to create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms.
 
-**(4)**Enables you to have multiple validations on a single input element and lets you determine the order in which they are applied.
+**(4)** Enables you to have multiple validations on a single input element and lets you determine the order in which they are applied.
 
-**(5)**Exposes the controller scope to your validator function, so you have full access to its models and all its functions.
+**(5)** Exposes the controller scope to your validator function, so you have full access to its models and all its functions.
 ```
 locallyDefinedValidations: [                  
           {
