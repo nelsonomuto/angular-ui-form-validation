@@ -37,7 +37,8 @@ angular.module('angularUiFormValidationApp')
         lastName: null,
         state: '',
         isAdmin: null,
-        birthdate: new Date()
+        birthdate: new Date(),
+        hasKids: null
       },
       states: ['', 'validState', 'invalidState1', 'invalidState2'],
       locallyDefinedValidations: [                  
