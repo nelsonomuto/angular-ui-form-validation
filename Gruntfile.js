@@ -405,15 +405,14 @@ module.exports = function (grunt) {
         karma: {
             unit: {
                 configFile: 'karma.conf.js',
+                autoWatch: true,
                 singleRun: false
             },
             unitSingleRun: {
-                configFile: 'karma.conf.js',
-                singleRun: true
+                configFile: 'karma.conf.js'
             },
             firefox: {
                 configFile: 'karma.conf.js',
-                singleRun: true,
                 browsers: ['Firefox']
             }
         }
@@ -443,8 +442,7 @@ module.exports = function (grunt) {
         'clean:server',
         'concurrent:test',
         'autoprefixer',
-        // 'connect:test',
-        'connect:livereload',
+        'connect:test',
         'karma'
     ]);
 
