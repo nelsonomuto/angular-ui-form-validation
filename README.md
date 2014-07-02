@@ -1,4 +1,4 @@
-# Angular ui form validation v1.0.0 Heineken
+# Angular ui form validation v1.0.5 Heineken
 [MIT LICENSE](/LICENSE.txt)
 
 
@@ -7,6 +7,7 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 
 
 **Supports and tested on angular versions from 1.0.7 through the latest snapshot 1.3.0-build.2810** 
+**Supports multiple validation rules on one input element**
 
 [![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
 
@@ -23,14 +24,38 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 
 ## Getting Started
 >
-The idea behind this component is to encourage code reuse and eliminate boilerplate redundancy by doing three basic things:
+The idea behind this component is to encourage code reuse and eliminate boilerplate redundancy by doing five basic things:
 
-**(1)** Provides a list of 12 commonly used validations that you may plug into your form fields.
+**(1)** Provides a list of more than 12 commonly used validations that you may plug into your form fields.
 
 **(2)** Gives you the flexibility to add your own custom validations. Either locally on your view/template controller or in a centralized customValidationTypes where you can re-use them across your application.
 
 **(3)** Allows you to create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms.
 
+**(4)** Enables you to have multiple validations on a single input element and lets you determine the order in which they are applied.
+
+**(5)** Exposes the controller scope to your validator function, so you have full access to its models and all its functions.
+```
+locallyDefinedValidations: [                  
+          {
+              errorMessage: 'Cannot contain the number one',
+              validator: function (errorMessageElement, val, attr, element, model, modelCtrl){
+                  /**
+                   * The model and modelCtrl(scope) are exposed in the validator function
+                   * */
+                  return /1/.test(val) !== true;    
+              }
+          },
+          {
+              errorMessage: 'Cannot contain the number two',
+              validator: function (errorMessageElement, val, attr, element, model, modelCtrl){
+                  return /2/.test(val) !== true;      
+              } 
+          }
+      ]
+});
+
+```
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
 
