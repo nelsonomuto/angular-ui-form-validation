@@ -7,11 +7,17 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 
 
 **Supports and tested on angular versions from 1.0.7 through the latest snapshot 1.3.0-build.2810** 
+
 **Supports multiple validation rules on one input element**
+
 **Supports custom error message strings**
+
 **Supports custom error message templates as well for additional styling requirements**
+
 **Supports adding your own validation types**
+
 **Supports dynamically defining validation logic in the controller for complex business logic rules**
+
 ```html
  <form novalidate>    
     <label for="username">Username</label>
