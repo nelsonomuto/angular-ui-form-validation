@@ -8,7 +8,32 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 
 **Supports and tested on angular versions from 1.0.7 through the latest snapshot 1.3.0-build.2810** 
 **Supports multiple validation rules on one input element**
+**Supports custom error message strings**
+**Supports custom error message templates as well for additional styling requirements**
+**Supports adding your own validation types**
+**Supports dynamically defining validation logic in the controller for complex business logic rules**
+```html
+ <form novalidate>    
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" ng-model="user.username"
+      validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" 
+      validation-no-space="{message:'no space - custom message', value: true}"
+      validation-field-required="true"
+      validation-max-length="10"
+      validation-no-special-chars="true"
+      validation-dynamically-defined="locallyDefinedValidations"
+    />
+    <label for="firstname">First Name</label>
+    
+    <input type="text" id="firstname" name="firstname" ng-model="user.firstname"
+      validation-min-length="{ value: 5, template: 'ErrorTemplateOne.html' }"  
+      validation-max-length="10"
+      validation-no-special-chars="true"
+    />
+                                  ...
 
+</form>
+```
 [![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
 
 [![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
@@ -74,27 +99,6 @@ The end result is validation and error handling without convoluting your markup 
  ```
 
 ![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
-```html
- <form novalidate>    
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username" ng-model="user.username"
-      validation-max-length="10"
-      validation-min-length="5"
-      validation-no-space="true"
-      validation-field-required="true"
-      validation-no-special-chars="true"
-    />
-    <label for="firstname">First Name</label>
-    
-    <input type="text" id="firstname" name="firstname" ng-model="user.firstname"
-      validation-min-length="{ value: 5, template: 'ErrorTemplateOne.html' }"  
-      validation-max-length="10"
-      validation-no-special-chars="true"
-    />
-                                  ...
-
-</form>
-```
 
 ### API
 
