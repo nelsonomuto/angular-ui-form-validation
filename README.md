@@ -2,9 +2,12 @@
 [MIT LICENSE](/LICENSE.txt)
 
 
-Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/customvalidation/customValidations.spec.js) | Master Build - [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
+Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
 
+[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
+[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 
+ 
 
 **Supports and tested on angular versions from 1.0.7 through the latest snapshot 1.3.0-build.2810** 
 
@@ -40,11 +43,7 @@ Fully unit tested [customValidationTypes.spec.js](/app/scripts/directives/custom
 
 </form>
 ```
-[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
 
-[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
-
- 
 ### [Interactive Preview Demo](http://nelsonomuto.github.io/angular-ui-form-validation) on github page ###
 
 (Plunker load times are slow)
