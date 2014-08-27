@@ -11,6 +11,10 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 
 **Supports and tested on angular versions from 1.0.7 through the latest snapshot 1.3.0-build.2810** 
 
+**Provides out of the box more than 20 commonly used validations that are easily configured using attributes on the directive**
+
+**Enables users with the capacity to add to the library of re-usable validations**
+
 **Supports multiple validation rules on one input element**
 
 **Supports custom error message strings**
@@ -19,7 +23,7 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 
 **Supports adding your own validation types**
 
-**Supports dynamically defining validation logic in the controller for complex business logic rules**
+**For edge cases, supports dynamically defining validation logic in the controller for complex business logic rules**
 
 ```html
  <form novalidate>    
