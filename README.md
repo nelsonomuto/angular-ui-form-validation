@@ -3,10 +3,16 @@
 
 
 Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
-
+<!---
 [![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
 [![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
+-->
 
+There are 2 other angularjs validation plugins right now with a similar goal of reducing boilerplate code to ease the work of developers. One is Huei Tan's https://github.com/huei90/angular-validation and the other is kelp404's https://github.com/kelp404/angular-validator.
+
+I have forked both of these repos and analyzed them. Both Huei and Kelp's implementation are quite similar, down to the organization of the source code. I believe the former was heavily influenced by the latter. 
+
+There are a few important distinctions in my implementation, the first major difference is I am providing the developer with an api for creating directives (NOT a single validation directive - this greatly reduces the amount of code the developer has to write in his controller and encourages re-usability by forcing him to use a directive instead. However, I also provide leeway for edge cases with 'validationDynamicallyDefined' directive which allows the developer to create a validator on the fly and have the logic centralized in a controller), the second is that I provide out of the box over 20 commonly used validators to get you started asap, lastly and most importantly I believe is the flexibility through which my validator directives have (you can configure the max-length validator with an arbitrary value in the html directives for any number of inputs that may require a different max length, so instead of creating a new config object in your controller as you would be forced to do with other plugins, you would simply re-use the max-length validator and pass in a new max length). Support for having multiple validators in a single input was a top priority while designing my implementation and you will find that it is robust and well thought through, for example it contains as well the ability for the developer to not only define multiple validators on an input but also to determine the order of priority that they are applied. 
  
 
 **Supports and tested on angular versions from 1.0.7 through the latest snapshot 1.3.0-build.2810** 
