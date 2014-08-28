@@ -33,7 +33,6 @@ angular_ui_form_validations = (function(){
 
             setErrorIdentifier = function (validation, index) {
                 var identifier, clone;
-
                 identifier = 'validationdynamicallydefined';
 
                 if(validation.identifier && validation.identifier !== '' && validation.identifier !== null) {
@@ -349,10 +348,15 @@ angular_ui_form_validations = (function(){
                             ngModelController, $scope);
                     }
 
+                    function getPropertyNameClass (pname) {
+                        return pname.replace('.', '\\.');
+                    }
+
                     function whenIsNotCurrentlyDisplayingAnErrorMessage() {
                         $log.log('is not currently displaying an error message', customValidationBroadcastArg);
-                        $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
-                            .toggle(!isValid);
+                        var classNames = ".CustomValidationError."+ formatterArgs.customValidationAttribute + "." + getPropertyNameClass(propertyName) + "property:first";
+                        $log.log(classNames);
+                        $element.siblings(classNames).toggle(!isValid);
                     }
 
                     function whenIsNotCurrentlyDisplayingAnErrorMessageInATemplate(){
@@ -365,7 +369,7 @@ angular_ui_form_validations = (function(){
 
                         if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid)) {
                             currentErrorMessage.hide();
-                            $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
+                            $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + getPropertyNameClass(propertyName) + 'property:first')
                                 .toggle(!isValid);
                         }
                     }
@@ -386,7 +390,7 @@ angular_ui_form_validations = (function(){
                         if (currentErrorMessageIsStale || (!currentErrorMessageIsStale && currentErrorMessageIsOfALowerPriority && !isValid
                             && currentlyDisplayedTemplate.children().attr('class').indexOf(formatterArgs.customValidationAttribute) === -1)) {
                             currentErrorMessage.hide();
-                            $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + propertyName + 'property:first')
+                            $element.siblings('.CustomValidationError.'+ formatterArgs.customValidationAttribute + '.' + getPropertyNameClass(propertyName) + 'property:first')
                                 .toggle(!isValid);
                             $scope.$broadcast('errorMessageToggled');
                         }
