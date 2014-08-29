@@ -7,14 +7,24 @@
     "url": "https://github.com/nelsonomuto/angular-ui-form-validation.git"
   },
   "keywords": [
-    "angular validation directive",
-    "angularjs validation directive",
-    "validation directive",
-    "angular validation",
-    "angularjs validation",
-    "javascript input validation",
-    "multiple input validation",
-    "order of priority validation"
+      "angular",
+      "angular-validation",
+      "angular-ui-form-validation",
+      "angular-validator",
+      "validation",
+      "angularjs",
+      "directive",
+      "javascript",
+      "nelson",
+      "omuto",
+      "angular validation directive",
+      "angularjs validation directive",
+      "validation directive",
+      "angular validation",
+      "angularjs validation",
+      "javascript input validation",
+      "multiple input validation",
+      "order of priority validation"
   ],
   "devDependencies": {
     "grunt": "^0.4.5",
