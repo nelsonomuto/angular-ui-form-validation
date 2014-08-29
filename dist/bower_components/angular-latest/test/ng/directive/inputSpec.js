@@ -1,6 +1,7 @@
 'use strict';
 
 describe('NgModelController', function() {
+  /* global NgModelController: false */
   var ctrl, scope, ngModelAccessor, element, parentFormCtrl;
 
   beforeEach(inject(function($rootScope, $controller) {
@@ -9,7 +10,7 @@ describe('NgModelController', function() {
     parentFormCtrl = {
       $setValidity: jasmine.createSpy('$setValidity'),
       $setDirty: jasmine.createSpy('$setDirty')
-    }
+    };
 
     element = jqLite('<form><input></form>');
     element.data('$formController', parentFormCtrl);
@@ -17,7 +18,9 @@ describe('NgModelController', function() {
     scope = $rootScope;
     ngModelAccessor = jasmine.createSpy('ngModel accessor');
     ctrl = $controller(NgModelController, {
-      $scope: scope, $element: element.find('input'), $attrs: attrs
+      $scope: scope,
+      $element: element.find('input'),
+      $attrs: attrs
     });
   }));
 
@@ -387,37 +390,51 @@ describe('ngModel', function() {
   it('should keep previously defined watches consistent when changes in validity are made',
    inject(function($compile, $rootScope) {
 
-     var isFormValid;
-     $rootScope.$watch('myForm.$valid', function(value) { isFormValid = value; });
-
-     var element = $compile('<form name="myForm">' +
-      '<input  name="myControl" ng-model="value" required >' +
-      '</form>')($rootScope);
-
-     $rootScope.$apply();
-     expect(isFormValid).toBe(false);
-     expect($rootScope.myForm.$valid).toBe(false);
-
-     $rootScope.value='value';
-     $rootScope.$apply();
-     expect(isFormValid).toBe(true);
-     expect($rootScope.myForm.$valid).toBe(true);
-
-     dealoc(element);
-   }));
+    var isFormValid;
+    $rootScope.$watch('myForm.$valid', function(value) { isFormValid = value; });
+    var element = $compile('<form name="myForm">' +
+     '<input  name="myControl" ng-model="value" required >' +
+     '</form>')($rootScope);
+    $rootScope.$apply();
+    expect(isFormValid).toBe(false);
+    expect($rootScope.myForm.$valid).toBe(false);
+    $rootScope.value='value';
+    $rootScope.$apply();
+    expect(isFormValid).toBe(true);
+    expect($rootScope.myForm.$valid).toBe(true);
+    dealoc(element);
+  }));
 
 });
 
 
 describe('input', function() {
-  var formElm, inputElm, scope, $compile, $sniffer, $browser, changeInputValueTo;
+  var formElm, inputElm, scope, $compile, $sniffer, $browser, changeInputValueTo, currentSpec;
 
-  function compileInput(inputHtml) {
+  function compileInput(inputHtml, mockValidity) {
     inputElm = jqLite(inputHtml);
+    if (isObject(mockValidity)) {
+      VALIDITY_STATE_PROPERTY = 'ngMockValidity';
+      inputElm.prop(VALIDITY_STATE_PROPERTY, mockValidity);
+      currentSpec.after(function() {
+        VALIDITY_STATE_PROPERTY = 'validity';
+      });
+    }
     formElm = jqLite('<form name="form"></form>');
     formElm.append(inputElm);
     $compile(formElm)(scope);
   }
+
+  var attrs;
+  beforeEach(function() { currentSpec = this; });
+  afterEach(function() { currentSpec = null; });
+  beforeEach(module(function($compileProvider) {
+    $compileProvider.directive('attrCapture', function() {
+      return function(scope, element, $attrs) {
+        attrs = $attrs;
+      };
+    });
+  }));
 
   beforeEach(inject(function($injector, _$sniffer_, _$browser_) {
     $sniffer = _$sniffer_;
@@ -454,7 +471,7 @@ describe('input', function() {
         this.message = function() {
           return "Attribute '" + attributeName + "' expected to be off but was '" + actualValue +
             "' in: " + angular.mock.dump(this.actual);
-        }
+        };
 
         return !actualValue || actualValue == 'false';
       }
@@ -477,7 +494,7 @@ describe('input', function() {
     expect(scope.name).toEqual('adam');
   });
 
-  if (!(msie < 9)) {
+  if (!msie || msie >= 9) {
     describe('compositionevents', function() {
       it('should not update the model between "compositionstart" and "compositionend" on non android', inject(function($sniffer) {
         $sniffer.android = false;
@@ -511,7 +528,7 @@ describe('input', function() {
 
   it('should update the model on "compositionend"', function() {
     compileInput('<input type="text" ng-model="name" name="alias" />');
-    if (!(msie < 9)) {
+    if (!msie || msie >= 9) {
       browserTrigger(inputElm, 'compositionstart');
       changeInputValueTo('caitp');
       expect(scope.name).toBeUndefined();
@@ -844,6 +861,33 @@ describe('input', function() {
     });
 
 
+    it('should invalidate number if suffering from bad input', function() {
+      compileInput('<input type="number" ng-model="age" />', {
+        valid: false,
+        badInput: true
+      });
+
+      changeInputValueTo('10a');
+      expect(scope.age).toBeUndefined();
+      expect(inputElm).toBeInvalid();
+    });
+
+
+    it('should validate number if transition from bad input to empty string', function() {
+      var validity = {
+        valid: false,
+        badInput: true
+      };
+      compileInput('<input type="number" ng-model="age" />', validity);
+      changeInputValueTo('10a');
+      validity.badInput = false;
+      validity.valid = true;
+      changeInputValueTo('');
+      expect(scope.age).toBeNull();
+      expect(inputElm).toBeValid();
+    });
+
+
     describe('min', function() {
 
       it('should validate', function() {
@@ -931,7 +975,7 @@ describe('input', function() {
         });
 
         expect(inputElm).toBeValid();
-        expect(inputElm.val()).toBe('0')
+        expect(inputElm.val()).toBe('0');
         expect(scope.form.alias.$error.required).toBeFalsy();
       });
 
@@ -968,12 +1012,16 @@ describe('input', function() {
 
 
     describe('EMAIL_REGEXP', function() {
-
+      /* global EMAIL_REGEXP: false */
       it('should validate email', function() {
         expect(EMAIL_REGEXP.test('a@b.com')).toBe(true);
         expect(EMAIL_REGEXP.test('a@b.museum')).toBe(true);
         expect(EMAIL_REGEXP.test('a@B.c')).toBe(true);
         expect(EMAIL_REGEXP.test('a@.b.c')).toBe(false);
+        expect(EMAIL_REGEXP.test('a@-b.c')).toBe(false);
+        expect(EMAIL_REGEXP.test('a@b-.c')).toBe(false);
+        expect(EMAIL_REGEXP.test('a@3b.c')).toBe(true);
+        expect(EMAIL_REGEXP.test('a@b')).toBe(true);
       });
     });
   });
@@ -998,7 +1046,7 @@ describe('input', function() {
 
 
     describe('URL_REGEXP', function() {
-
+      /* global URL_REGEXP: false */
       it('should validate url', function() {
         expect(URL_REGEXP.test('http://server:123/path')).toBe(true);
         expect(URL_REGEXP.test('a@B.c')).toBe(false);
@@ -1498,6 +1546,30 @@ describe('input', function() {
       expect(scope.items[0].selected).toBe(false);
     });
   });
+
+
+  describe('password', function() {
+    // Under no circumstances should input[type=password] trim inputs
+    it('should not trim if ngTrim is unspecified', function() {
+      compileInput('<input type="password" ng-model="password">');
+      changeInputValueTo(' - - untrimmed - - ');
+      expect(scope.password.length).toBe(' - - untrimmed - - '.length);
+    });
+
+
+    it('should not trim if ngTrim !== false', function() {
+      compileInput('<input type="password" ng-model="password" ng-trim="true">');
+      changeInputValueTo(' - - untrimmed - - ');
+      expect(scope.password.length).toBe(' - - untrimmed - - '.length);
+    });
+
+
+    it('should not trim if ngTrim === false', function() {
+      compileInput('<input type="password" ng-model="password" ng-trim="false">');
+      changeInputValueTo(' - - untrimmed - - ');
+      expect(scope.password.length).toBe(' - - untrimmed - - '.length);
+    });
+  });
 });
 
 describe('NgModel animations', function() {
@@ -1513,7 +1585,7 @@ describe('NgModel animations', function() {
       }
     }
     return animations;
-  };
+  }
 
   function assertValidAnimation(animation, event, className) {
     expect(animation.event).toBe(event);

@@ -72,21 +72,22 @@ var ngOptionsMinErr = minErr('ngOptions');
  *     `value` variable (e.g. `value.propertyName`).
  *
  * @example
-    <example>
+    <example module="selectExample">
       <file name="index.html">
         <script>
-        function MyCntrl($scope) {
-          $scope.colors = [
-            {name:'black', shade:'dark'},
-            {name:'white', shade:'light'},
-            {name:'red', shade:'dark'},
-            {name:'blue', shade:'dark'},
-            {name:'yellow', shade:'light'}
-          ];
-          $scope.myColor = $scope.colors[2]; // red
-        }
+        angular.module('selectExample', [])
+          .controller('ExampleController', ['$scope', function($scope) {
+            $scope.colors = [
+              {name:'black', shade:'dark'},
+              {name:'white', shade:'light'},
+              {name:'red', shade:'dark'},
+              {name:'blue', shade:'dark'},
+              {name:'yellow', shade:'light'}
+            ];
+            $scope.myColor = $scope.colors[2]; // red
+          }]);
         </script>
-        <div ng-controller="MyCntrl">
+        <div ng-controller="ExampleController">
           <ul>
             <li ng-repeat="color in colors">
               Name: <input ng-model="color.name">
@@ -123,7 +124,7 @@ var ngOptionsMinErr = minErr('ngOptions');
       <file name="protractor.js" type="protractor">
          it('should check ng-options', function() {
            expect(element(by.binding('{selected_color:myColor}')).getText()).toMatch('red');
-           element.all(by.select('myColor')).first().click();
+           element.all(by.model('myColor')).first().click();
            element.all(by.css('select[ng-model="myColor"] option')).first().click();
            expect(element(by.binding('{selected_color:myColor}')).getText()).toMatch('black');
            element(by.css('.nullable select[ng-model="myColor"]')).click();
@@ -394,21 +395,37 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
                   value = valueFn(scope, locals);
                 }
               }
-              // Update the null option's selected property here so $render cleans it up correctly
-              if (optionGroupsCache[0].length > 1) {
-                if (optionGroupsCache[0][1].id !== key) {
-                  optionGroupsCache[0][1].selected = false;
-                }
-              }
             }
             ctrl.$setViewValue(value);
+            render();
           });
         });
 
         ctrl.$render = render;
 
-        // TODO(vojta): can't we optimize this ?
-        scope.$watch(render);
+        scope.$watchCollection(valuesFn, render);
+        if ( multiple ) {
+          scope.$watchCollection(function() { return ctrl.$modelValue; }, render);
+        }
+
+        function getSelectedSet() {
+          var selectedSet = false;
+          if (multiple) {
+            var modelValue = ctrl.$modelValue;
+            if (trackFn && isArray(modelValue)) {
+              selectedSet = new HashMap([]);
+              var locals = {};
+              for (var trackIndex = 0; trackIndex < modelValue.length; trackIndex++) {
+                locals[valueName] = modelValue[trackIndex];
+                selectedSet.put(trackFn(scope, locals), modelValue[trackIndex]);
+              }
+            } else {
+              selectedSet = new HashMap(modelValue);
+            }
+          }
+          return selectedSet;
+        }
+
 
         function render() {
               // Temporary location for the option groups before we render them
@@ -426,22 +443,11 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
               groupIndex, index,
               locals = {},
               selected,
-              selectedSet = false, // nothing is selected yet
+              selectedSet = getSelectedSet(),
               lastElement,
               element,
               label;
 
-          if (multiple) {
-            if (trackFn && isArray(modelValue)) {
-              selectedSet = new HashMap([]);
-              for (var trackIndex = 0; trackIndex < modelValue.length; trackIndex++) {
-                locals[valueName] = modelValue[trackIndex];
-                selectedSet.put(trackFn(scope, locals), modelValue[trackIndex]);
-              }
-            } else {
-              selectedSet = new HashMap(modelValue);
-            }
-          }
 
           // We now build up the list of options we need (we merge later)
           for (index = 0; length = keys.length, index < length; index++) {
@@ -537,8 +543,14 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
                   lastElement.val(existingOption.id = option.id);
                 }
                 // lastElement.prop('selected') provided by jQuery has side-effects
-                if (existingOption.selected !== option.selected) {
+                if (lastElement[0].selected !== option.selected) {
                   lastElement.prop('selected', (existingOption.selected = option.selected));
+                  if (msie) {
+                    // See #7692
+                    // The selected item wouldn't visually update on IE without this.
+                    // Tested on Win7: IE9, IE10 and IE11. Future IEs should be tested as well
+                    lastElement.prop('selected', existingOption.selected);
+                  }
                 }
               } else {
                 // grow elements
@@ -553,6 +565,7 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
                   // rather then the element.
                   (element = optionTemplate.clone())
                       .val(option.id)
+                      .prop('selected', option.selected)
                       .attr('selected', option.selected)
                       .text(option.label);
                 }

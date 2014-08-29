@@ -1,88 +1,88 @@
 'use strict';
 
 /* We need to tell jshint what variables are being exported */
-/* global
-    -angular,
-    -msie,
-    -jqLite,
-    -jQuery,
-    -slice,
-    -push,
-    -toString,
-    -ngMinErr,
-    -angularModule,
-    -nodeName_,
-    -uid,
+/* global angular: true,
+    msie: true,
+    jqLite: true,
+    jQuery: true,
+    slice: true,
+    push: true,
+    toString: true,
+    ngMinErr: true,
+    angularModule: true,
+    nodeName_: true,
+    uid: true,
+    VALIDITY_STATE_PROPERTY: true,
 
-    -lowercase,
-    -uppercase,
-    -manualLowercase,
-    -manualUppercase,
-    -nodeName_,
-    -isArrayLike,
-    -forEach,
-    -sortedKeys,
-    -forEachSorted,
-    -reverseParams,
-    -nextUid,
-    -setHashKey,
-    -extend,
-    -int,
-    -inherit,
-    -noop,
-    -identity,
-    -valueFn,
-    -isUndefined,
-    -isDefined,
-    -isObject,
-    -isString,
-    -isNumber,
-    -isDate,
-    -isArray,
-    -isFunction,
-    -isRegExp,
-    -isWindow,
-    -isScope,
-    -isFile,
-    -isBlob,
-    -isBoolean,
-    -trim,
-    -isElement,
-    -makeMap,
-    -map,
-    -size,
-    -includes,
-    -indexOf,
-    -arrayRemove,
-    -isLeafNode,
-    -copy,
-    -shallowCopy,
-    -equals,
-    -csp,
-    -concat,
-    -sliceArgs,
-    -bind,
-    -toJsonReplacer,
-    -toJson,
-    -fromJson,
-    -toBoolean,
-    -startingTag,
-    -tryDecodeURIComponent,
-    -parseKeyValue,
-    -toKeyValue,
-    -encodeUriSegment,
-    -encodeUriQuery,
-    -angularInit,
-    -bootstrap,
-    -snake_case,
-    -bindJQuery,
-    -assertArg,
-    -assertArgFn,
-    -assertNotHasOwnProperty,
-    -getter,
-    -getBlockElements,
-    -hasOwnProperty,
-
+    lowercase: true,
+    uppercase: true,
+    manualLowercase: true,
+    manualUppercase: true,
+    nodeName_: true,
+    isArrayLike: true,
+    forEach: true,
+    sortedKeys: true,
+    forEachSorted: true,
+    reverseParams: true,
+    nextUid: true,
+    setHashKey: true,
+    extend: true,
+    int: true,
+    inherit: true,
+    noop: true,
+    identity: true,
+    valueFn: true,
+    isUndefined: true,
+    isDefined: true,
+    isObject: true,
+    isString: true,
+    isNumber: true,
+    isDate: true,
+    isArray: true,
+    isFunction: true,
+    isRegExp: true,
+    isWindow: true,
+    isScope: true,
+    isFile: true,
+    isBlob: true,
+    isBoolean: true,
+    isPromiseLike: true,
+    trim: true,
+    isElement: true,
+    makeMap: true,
+    map: true,
+    size: true,
+    includes: true,
+    indexOf: true,
+    arrayRemove: true,
+    isLeafNode: true,
+    copy: true,
+    shallowCopy: true,
+    equals: true,
+    csp: true,
+    concat: true,
+    sliceArgs: true,
+    bind: true,
+    toJsonReplacer: true,
+    toJson: true,
+    fromJson: true,
+    toBoolean: true,
+    startingTag: true,
+    tryDecodeURIComponent: true,
+    parseKeyValue: true,
+    toKeyValue: true,
+    encodeUriSegment: true,
+    encodeUriQuery: true,
+    angularInit: true,
+    bootstrap: true,
+    snake_case: true,
+    bindJQuery: true,
+    assertArg: true,
+    assertArgFn: true,
+    assertNotHasOwnProperty: true,
+    getter: true,
+    getBlockElements: true,
+    hasOwnProperty: true,
 */
 
 ////////////////////////////////////
@@ -101,6 +101,10 @@
  *
  * <div doc-module-components="ng"></div>
  */
+
+// The name of a form control's ValidityState property.
+// This is used so that it's possible for internal tests to create mock ValidityStates.
+var VALIDITY_STATE_PROPERTY = 'validity';
 
 /**
  * @ngdoc function
@@ -237,11 +241,12 @@ function forEach(obj, iterator, context) {
           iterator.call(context, obj[key], key);
         }
       }
-    } else if (obj.forEach && obj.forEach !== forEach) {
-      obj.forEach(iterator, context);
-    } else if (isArrayLike(obj)) {
-      for (key = 0; key < obj.length; key++)
+    } else if (isArray(obj) || isArrayLike(obj)) {
+      for (key = 0; key < obj.length; key++) {
         iterator.call(context, obj[key], key);
+      }
+    } else if (obj.forEach && obj.forEach !== forEach) {
+        obj.forEach(iterator, context);
     } else {
       for (key in obj) {
         if (obj.hasOwnProperty(key)) {
@@ -510,10 +515,14 @@ function isDate(value) {
  * @param {*} value Reference to check.
  * @returns {boolean} True if `value` is an `Array`.
  */
-function isArray(value) {
-  return toString.call(value) === '[object Array]';
-}
-
+var isArray = (function() {
+  if (!isFunction(Array.isArray)) {
+    return function(value) {
+      return toString.call(value) === '[object Array]';
+    };
+  }
+  return Array.isArray;
+})();
 
 /**
  * @ngdoc function
@@ -571,6 +580,11 @@ function isBlob(obj) {
 
 function isBoolean(value) {
   return typeof value === 'boolean';
+}
+
+
+function isPromiseLike(obj) {
+  return obj && isFunction(obj.then);
 }
 
 
@@ -722,9 +736,9 @@ function isLeafNode (node) {
  * @returns {*} The copy or updated `destination`, if `destination` was specified.
  *
  * @example
- <example>
+ <example module="copyExample">
  <file name="index.html">
- <div ng-controller="Controller">
+ <div ng-controller="ExampleController">
  <form novalidate class="simple-form">
  Name: <input type="text" ng-model="user.name" /><br />
  E-mail: <input type="email" ng-model="user.email" /><br />
@@ -738,21 +752,22 @@ function isLeafNode (node) {
  </div>
 
  <script>
- function Controller($scope) {
-    $scope.master= {};
+  angular.module('copyExample', [])
+    .controller('ExampleController', ['$scope', function($scope) {
+      $scope.master= {};
 
-    $scope.update = function(user) {
-      // Example with 1 argument
-      $scope.master= angular.copy(user);
-    };
+      $scope.update = function(user) {
+        // Example with 1 argument
+        $scope.master= angular.copy(user);
+      };
 
-    $scope.reset = function() {
-      // Example with 2 arguments
-      angular.copy($scope.master, $scope.user);
-    };
+      $scope.reset = function() {
+        // Example with 2 arguments
+        angular.copy($scope.master, $scope.user);
+      };
 
-    $scope.reset();
-  }
+      $scope.reset();
+    }]);
  </script>
  </file>
  </example>
@@ -771,7 +786,8 @@ function copy(source, destination, stackSource, stackDest) {
       } else if (isDate(source)) {
         destination = new Date(source.getTime());
       } else if (isRegExp(source)) {
-        destination = new RegExp(source.source);
+        destination = new RegExp(source.source, source.toString().match(/[^\/]*$/)[0]);
+        destination.lastIndex = source.lastIndex;
       } else if (isObject(source)) {
         destination = copy(source, {}, stackSource, stackDest);
       }
@@ -804,9 +820,13 @@ function copy(source, destination, stackSource, stackDest) {
       }
     } else {
       var h = destination.$$hashKey;
-      forEach(destination, function(value, key) {
-        delete destination[key];
-      });
+      if (isArray(destination)) {
+        destination.length = 0;
+      } else {
+        forEach(destination, function(value, key) {
+          delete destination[key];
+        });
+      }
       for ( var key in source) {
         result = copy(source[key], null, stackSource, stackDest);
         if (isObject(source[key])) {
@@ -891,7 +911,8 @@ function equals(o1, o2) {
           return true;
         }
       } else if (isDate(o1)) {
-        return isDate(o2) && o1.getTime() == o2.getTime();
+        if (!isDate(o2)) return false;
+        return (isNaN(o1.getTime()) && isNaN(o2.getTime())) || (o1.getTime() === o2.getTime());
       } else if (isRegExp(o1) && isRegExp(o2)) {
         return o1.toString() == o2.toString();
       } else {
@@ -915,12 +936,25 @@ function equals(o1, o2) {
   return false;
 }
 
+var csp = function() {
+  if (isDefined(csp.isActive_)) return csp.isActive_;
 
-function csp() {
-  return (document.securityPolicy && document.securityPolicy.isActive) ||
-      (document.querySelector &&
-      !!(document.querySelector('[ng-csp]') || document.querySelector('[data-ng-csp]')));
-}
+  var active = !!(document.querySelector('[ng-csp]') ||
+                  document.querySelector('[data-ng-csp]'));
+
+  if (!active) {
+    try {
+      /* jshint -W031, -W054 */
+      new Function('');
+      /* jshint +W031, +W054 */
+    } catch (e) {
+      active = true;
+    }
+  }
+
+  return (csp.isActive_ = active);
+};
+
 
 
 function concat(array1, array2, index) {
@@ -1092,11 +1126,11 @@ function parseKeyValue(/**string*/keyValue) {
   var obj = {}, key_value, key;
   forEach((keyValue || "").split('&'), function(keyValue) {
     if ( keyValue ) {
-      key_value = keyValue.split('=');
+      key_value = keyValue.replace(/\+/g,'%20').split('=');
       key = tryDecodeURIComponent(key_value[0]);
       if ( isDefined(key) ) {
         var val = isDefined(key_value[1]) ? tryDecodeURIComponent(key_value[1]) : true;
-        if (!obj[key]) {
+        if (!hasOwnProperty.call(obj, key)) {
           obj[key] = val;
         } else if(isArray(obj[key])) {
           obj[key].push(val);
@@ -1270,7 +1304,7 @@ function angularInit(element, bootstrap) {
  *
  * Angular will detect if it has been loaded into the browser more than once and only allow the
  * first loaded script to be bootstrapped and will report a warning to the browser console for
- * each of the subsequent scripts.   This prevents strange results in applications, where otherwise
+ * each of the subsequent scripts. This prevents strange results in applications, where otherwise
  * multiple instances of Angular try to work on the DOM.
  *
  * <example name="multi-bootstrap" module="multi-bootstrap">
@@ -1316,7 +1350,11 @@ function bootstrap(element, modules) {
 
     if (element.injector()) {
       var tag = (element[0] === document) ? 'document' : startingTag(element);
-      throw ngMinErr('btstrpd', "App Already Bootstrapped with this Element '{0}'", tag);
+      //Encode angle brackets to prevent input from being sanitized to empty string #8683
+      throw ngMinErr(
+          'btstrpd',
+          "App Already Bootstrapped with this Element '{0}'",
+          tag.replace(/</,'&lt;').replace(/>/,'&gt;'));
     }
 
     modules = modules || [];
@@ -1400,7 +1438,7 @@ function assertArgFn(arg, name, acceptArrayAnnotation) {
   }
 
   assertArg(isFunction(arg), name, 'not a function, got ' +
-      (arg && typeof arg == 'object' ? arg.constructor.name || 'Object' : typeof arg));
+      (arg && typeof arg === 'object' ? arg.constructor.name || 'Object' : typeof arg));
   return arg;
 }
 

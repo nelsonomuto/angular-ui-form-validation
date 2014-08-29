@@ -1,3 +1,5 @@
+'use strict';
+
 describe('jqLite', function() {
   var scope, a, b, c;
 
@@ -57,7 +59,7 @@ describe('jqLite', function() {
     it('should allow construction with html', function() {
       var nodes = jqLite('<div>1</div><span>2</span>');
       expect(nodes[0].parentNode).toBeDefined();
-      expect(nodes[0].parentNode.nodeType).toBe(11); /** Document Fragment **/;
+      expect(nodes[0].parentNode.nodeType).toBe(11); /** Document Fragment **/
       expect(nodes[0].parentNode).toBe(nodes[1].parentNode);
       expect(nodes.length).toEqual(2);
       expect(nodes[0].innerHTML).toEqual('1');
@@ -68,7 +70,7 @@ describe('jqLite', function() {
     it('should allow construction of html with leading whitespace', function() {
       var nodes = jqLite('  \n\r   \r\n<div>1</div><span>2</span>');
       expect(nodes[0].parentNode).toBeDefined();
-      expect(nodes[0].parentNode.nodeType).toBe(11); /** Document Fragment **/;
+      expect(nodes[0].parentNode.nodeType).toBe(11); /** Document Fragment **/
       expect(nodes[0].parentNode).toBe(nodes[1].parentNode);
       expect(nodes.length).toBe(2);
       expect(nodes[0].innerHTML).toBe('1');
@@ -473,7 +475,7 @@ describe('jqLite', function() {
             span = div.find('span'),
             log = '';
 
-        span.on('click', function() { log+= 'click;'});
+        span.on('click', function() { log+= 'click;'; });
         browserTrigger(span);
         expect(log).toEqual('click;');
 
@@ -945,21 +947,21 @@ describe('jqLite', function() {
       if (jqLite.fn) return; // don't run in jQuery
       var eventFn;
       var window = {
-          document: {},
-          location: {},
-          alert: noop,
-          setInterval: noop,
-          length:10, // pretend you are an array
-          addEventListener: function(type, fn){
-            expect(type).toEqual('hashchange');
-            eventFn = fn;
-          },
-          removeEventListener: noop,
-          attachEvent: function(type, fn){
-            expect(type).toEqual('onhashchange');
-            eventFn = fn;
-          },
-          detachEvent: noop
+        document: {},
+        location: {},
+        alert: noop,
+        setInterval: noop,
+        length:10, // pretend you are an array
+        addEventListener: function(type, fn){
+          expect(type).toEqual('hashchange');
+          eventFn = fn;
+        },
+        removeEventListener: noop,
+        attachEvent: function(type, fn){
+          expect(type).toEqual('onhashchange');
+          eventFn = fn;
+        },
+        detachEvent: noop
       };
       var log;
       var jWindow = jqLite(window).on('hashchange', function() {
@@ -1046,16 +1048,17 @@ describe('jqLite', function() {
         if (window.jQuery) return;
         var browserMoveTrigger = function(from, to){
           var fireEvent = function(type, element, relatedTarget){
-            var msie = parseInt((/msie (\d+)/.exec(navigator.userAgent.toLowerCase()) || [])[1]);
+            var evnt, msie = parseInt((/msie (\d+)/.exec(navigator.userAgent.toLowerCase()) || [])[1]);
             if (msie < 9){
-              var evnt = document.createEventObject();
+              evnt = document.createEventObject();
               evnt.srcElement = element;
               evnt.relatedTarget = relatedTarget;
               element.fireEvent('on' + type, evnt);
               return;
-            };
-            var evnt = document.createEvent('MouseEvents'),
-            originalPreventDefault = evnt.preventDefault,
+            }
+            evnt = document.createEvent('MouseEvents');
+
+            var originalPreventDefault = evnt.preventDefault,
             appWindow = window,
             fakeProcessDefault = true,
             finalProcessDefault;
@@ -1394,32 +1397,37 @@ describe('jqLite', function() {
       expect(contents[1].data).toEqual('before-');
     });
 
-    // IE8 does not like this test, although the functionality may still work there.
-    if (!msie || msie > 8) {
-      it('should select all types iframe contents', function() {
-        var iframe_ = document.createElement('iframe'), tested,
-            iframe = jqLite(iframe_);
-        function test() {
-          var contents = iframe.contents();
-          expect(contents[0]).toBeTruthy();
-          expect(contents.length).toBe(1);
-          expect(contents.prop('nodeType')).toBe(9);
-          expect(contents[0].body).toBeTruthy();
-          expect(jqLite(contents[0].body).contents().length).toBe(3);
-          iframe.remove();
-          tested = true;
-        }
-        iframe_.onload = iframe_.onreadystatechange = function() {
-          if (iframe_.contentDocument) test();
-        };
-        iframe_.src = "/base/test/fixtures/iframe.html";
-        jqLite(document).find('body').append(iframe);
+    it('should select all types iframe contents', function() {
+      // IE8 does not like this test, although the functionality may still work there.
+      if (msie < 9) return;
+      var iframe_ = document.createElement('iframe');
+      var tested = false;
+      var iframe = jqLite(iframe_);
+      function test() {
+        var doc = iframe_.contentDocument || iframe_.contentWindow.document;
+        doc.body.innerHTML = '\n<span>Text</span>\n';
 
-        // This test is potentially flaky on CI cloud instances, so there is a generous
-        // wait period...
-        waitsFor(function() { return tested; }, 2000);
-      });
-    }
+        var contents = iframe.contents();
+        expect(contents[0]).toBeTruthy();
+        expect(contents.length).toBe(1);
+        expect(contents.prop('nodeType')).toBe(9);
+        expect(contents[0].body).toBeTruthy();
+        expect(jqLite(contents[0].body).contents().length).toBe(3);
+        iframe.remove();
+        doc = null;
+        tested = true;
+      }
+      iframe_.onload = iframe_.onreadystatechange = function() {
+        if (iframe_.contentDocument) test();
+      };
+      /* jshint scripturl:true */
+      iframe_.src = 'javascript:false';
+      jqLite(document).find('body').append(iframe);
+
+      // This test is potentially flaky on CI cloud instances, so there is a generous
+      // wait period...
+      waitsFor(function() { return tested; }, 5000);
+    });
   });
 
 
@@ -1639,9 +1647,11 @@ describe('jqLite', function() {
       element.triggerHandler('click');
       event = pokeSpy.mostRecentCall.args[0];
       expect(event.preventDefault).toBeDefined();
+      expect(event.target).toEqual(element[0]);
+      expect(event.type).toEqual('click');
     });
 
-    it('should pass data as an additional argument', function() {
+    it('should pass extra parameters as an additional argument', function() {
       var element = jqLite('<a>poke</a>'),
           pokeSpy = jasmine.createSpy('poke'),
           data;
@@ -1652,30 +1662,68 @@ describe('jqLite', function() {
       data = pokeSpy.mostRecentCall.args[1];
       expect(data.hello).toBe("world");
     });
+
+
+    it('should support handlers that deregister themselves', function() {
+      var element = jqLite('<a>poke</a>'),
+          clickSpy = jasmine.createSpy('click'),
+          clickOnceSpy = jasmine.createSpy('clickOnce').andCallFake(function() {
+            element.off('click', clickOnceSpy);
+          });
+
+      element.on('click', clickOnceSpy);
+      element.on('click', clickSpy);
+
+      element.triggerHandler('click');
+      expect(clickOnceSpy).toHaveBeenCalledOnce();
+      expect(clickSpy).toHaveBeenCalledOnce();
+
+      element.triggerHandler('click');
+      expect(clickOnceSpy).toHaveBeenCalledOnce();
+      expect(clickSpy.callCount).toBe(2);
+    });
+
+    it("should accept a custom event instead of eventName", function() {
+      var element = jqLite('<a>poke</a>'),
+          pokeSpy = jasmine.createSpy('poke'),
+          customEvent = {
+            type: 'click',
+            someProp: 'someValue'
+          },
+          actualEvent;
+
+      element.on('click', pokeSpy);
+      element.triggerHandler(customEvent);
+      actualEvent = pokeSpy.mostRecentCall.args[0];
+      expect(actualEvent.preventDefault).toBeDefined();
+      expect(actualEvent.someProp).toEqual('someValue');
+      expect(actualEvent.target).toEqual(element[0]);
+      expect(actualEvent.type).toEqual('click');
+    });
   });
 
 
   describe('camelCase', function() {
 
-   it('should leave non-dashed strings alone', function() {
-     expect(camelCase('foo')).toBe('foo');
-     expect(camelCase('')).toBe('');
-     expect(camelCase('fooBar')).toBe('fooBar');
-   });
+    it('should leave non-dashed strings alone', function() {
+      expect(camelCase('foo')).toBe('foo');
+      expect(camelCase('')).toBe('');
+      expect(camelCase('fooBar')).toBe('fooBar');
+    });
 
 
-   it('should covert dash-separated strings to camelCase', function() {
-     expect(camelCase('foo-bar')).toBe('fooBar');
-     expect(camelCase('foo-bar-baz')).toBe('fooBarBaz');
-     expect(camelCase('foo:bar_baz')).toBe('fooBarBaz');
-   });
+    it('should covert dash-separated strings to camelCase', function() {
+      expect(camelCase('foo-bar')).toBe('fooBar');
+      expect(camelCase('foo-bar-baz')).toBe('fooBarBaz');
+      expect(camelCase('foo:bar_baz')).toBe('fooBarBaz');
+    });
 
 
-   it('should covert browser specific css properties', function() {
-     expect(camelCase('-moz-foo-bar')).toBe('MozFooBar');
-     expect(camelCase('-webkit-foo-bar')).toBe('webkitFooBar');
-     expect(camelCase('-webkit-foo-bar')).toBe('webkitFooBar');
-   });
+    it('should covert browser specific css properties', function() {
+      expect(camelCase('-moz-foo-bar')).toBe('MozFooBar');
+      expect(camelCase('-webkit-foo-bar')).toBe('webkitFooBar');
+      expect(camelCase('-webkit-foo-bar')).toBe('webkitFooBar');
+    });
   });
 
 });

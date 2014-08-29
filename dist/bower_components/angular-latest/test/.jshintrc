@@ -1,20 +1,5 @@
 {
-  "bitwise": true,
-  "immed": true,
-  "newcap": true,
-  "noarg": true,
-  "noempty": true,
-  "nonew": true,
-  "trailing": true,
-  "maxlen": 200,
-  "boss": true,
-  "eqnull": true,
-  "expr": true,
-  "globalstrict": true,
-  "laxbreak": true,
-  "loopfunc": true,
-  "sub": true,
-  "undef": true,
+  "extends": "../.jshintrc-base",
   "browser": true,
   "globals": {
     /* auto/injector.js */
@@ -38,11 +23,9 @@
     "uppercase": false,
     "manualLowercase": false,
     "manualUppercase": false,
-    "nodeName_": false,
     "isArrayLike": false,
     "forEach": false,
     "sortedKeys": false,
-    "forEachSorted": false,
     "reverseParams": false,
     "nextUid": false,
     "setHashKey": false,
@@ -101,9 +84,7 @@
     "assertNotHasOwnProperty": false,
     "getter": false,
     "getBlockElements": false,
-
-    /* filters.js */
-    "getFirstThursdayOfYear": false,
+    "VALIDITY_STATE_PROPERTY": true,
 
     /* AngularPublic.js */
     "version": false,
@@ -147,24 +128,6 @@
     "urlResolve": false,
     "urlIsSameOrigin": false,
 
-    /* ng/compile.js */
-    "directiveNormalize": false,
-
-    /* ng/parse.js */
-    "setter": false,
-
-    /* ng/directive/directives.js */
-    "ngDirective": false,
-
-    /* ng/directive/input.js */
-    "VALID_CLASS": false,
-    "INVALID_CLASS": false,
-    "PRISTINE_CLASS": false,
-    "DIRTY_CLASS": false,
-
-    /* ng/directive/form.js */
-    "nullFormCtrl": false,
-
     /* jasmine / karma */
     "it": false,
     "iit": false,
@@ -175,10 +138,30 @@
     "expect": false,
     "jasmine": false,
     "spyOn": false,
+    "waits": false,
+    "waitsFor": false,
+    "runs": false,
+    "dump": false,
+
+    /* e2e */
+    "browser": false,
+    "element": false,
+    "by": false,
 
     /* testabilityPatch / matchers */
     "inject": false,
     "module": false,
-    "dealoc": false
+    "dealoc": false,
+    "dealoc": false,
+    "_jQuery": false,
+    "_jqLiteMode": false,
+    "sortedHtml": false,
+    "childrenTagsOf": false,
+    "assertHidden": false,
+    "assertVisible": false,
+    "provideLog": false,
+    "spyOnlyCallsWithArgs": false,
+    "createMockStyleSheet": false,
+    "browserTrigger": false
   }
 }

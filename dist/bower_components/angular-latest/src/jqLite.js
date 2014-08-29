@@ -1,11 +1,9 @@
 'use strict';
 
-/* global
-
-  -JQLitePrototype,
-  -addEventListenerFn,
-  -removeEventListenerFn,
-  -BOOLEAN_ATTR
+/* global JQLitePrototype: true,
+  addEventListenerFn: true,
+  removeEventListenerFn: true,
+  BOOLEAN_ATTR: true
 */
 
 //////////////////////////////////
@@ -98,8 +96,9 @@
  * @returns {Object} jQuery object.
  */
 
+JQLite.expando = 'ng339';
+
 var jqCache = JQLite.cache = {},
-    jqName = JQLite.expando = 'ng' + new Date().getTime(),
     jqId = 1,
     addEventListenerFn = (window.document.addEventListener
       ? function(element, type, fn) {element.addEventListener(type, fn, false);}
@@ -309,7 +308,7 @@ function jqLiteOff(element, type, fn, unsupported) {
 }
 
 function jqLiteRemoveData(element, name) {
-  var expandoId = element[jqName],
+  var expandoId = element.ng339,
       expandoStore = jqCache[expandoId];
 
   if (expandoStore) {
@@ -323,17 +322,17 @@ function jqLiteRemoveData(element, name) {
       jqLiteOff(element);
     }
     delete jqCache[expandoId];
-    element[jqName] = undefined; // ie does not allow deletion of attributes on elements.
+    element.ng339 = undefined; // don't delete DOM expandos. IE and Chrome don't like it
   }
 }
 
 function jqLiteExpandoStore(element, key, value) {
-  var expandoId = element[jqName],
+  var expandoId = element.ng339,
       expandoStore = jqCache[expandoId || -1];
 
   if (isDefined(value)) {
     if (!expandoStore) {
-      element[jqName] = expandoId = jqNextId();
+      element.ng339 = expandoId = jqNextId();
       expandoStore = jqCache[expandoId] = {};
     }
     expandoStore[key] = value;
@@ -418,25 +417,22 @@ function jqLiteController(element, name) {
 }
 
 function jqLiteInheritedData(element, name, value) {
-  element = jqLite(element);
-
   // if element is the document object work with the html element instead
   // this makes $(document).scope() possible
-  if(element[0].nodeType == 9) {
-    element = element.find('html');
+  if(element.nodeType == 9) {
+    element = element.documentElement;
   }
   var names = isArray(name) ? name : [name];
 
-  while (element.length) {
-    var node = element[0];
+  while (element) {
     for (var i = 0, ii = names.length; i < ii; i++) {
-      if ((value = element.data(names[i])) !== undefined) return value;
+      if ((value = jqLite.data(element, names[i])) !== undefined) return value;
     }
 
     // If dealing with a document fragment node with a host element, and no parent, use the host
     // element as the parent. This enables directives within a Shadow DOM or polyfilled Shadow DOM
     // to lookup parent controllers.
-    element = jqLite(node.parentNode || (node.nodeType === 11 && node.host));
+    element = element.parentNode || (element.nodeType === 11 && element.host);
   }
 }
 
@@ -513,16 +509,23 @@ function getBooleanAttrName(element, name) {
 
 forEach({
   data: jqLiteData,
+  removeData: jqLiteRemoveData
+}, function(fn, name) {
+  JQLite[name] = fn;
+});
+
+forEach({
+  data: jqLiteData,
   inheritedData: jqLiteInheritedData,
 
   scope: function(element) {
     // Can't use jqLiteData here directly so we stay compatible with jQuery!
-    return jqLite(element).data('$scope') || jqLiteInheritedData(element.parentNode || element, ['$isolateScope', '$scope']);
+    return jqLite.data(element, '$scope') || jqLiteInheritedData(element.parentNode || element, ['$isolateScope', '$scope']);
   },
 
   isolateScope: function(element) {
     // Can't use jqLiteData here directly so we stay compatible with jQuery!
-    return jqLite(element).data('$isolateScope') || jqLite(element).data('$isolateScopeNoTemplate');
+    return jqLite.data(element, '$isolateScope') || jqLite.data(element, '$isolateScopeNoTemplate');
   },
 
   controller: jqLiteController,
@@ -652,6 +655,7 @@ forEach({
    */
   JQLite.prototype[name] = function(arg1, arg2) {
     var i, key;
+    var nodeCount = this.length;
 
     // jqLiteHasClass has only two arguments, but is a getter-only fn, so we need to special-case it
     // in a way that survives minification.
@@ -661,7 +665,7 @@ forEach({
       if (isObject(arg1)) {
 
         // we are a write, but the object properties are the key/values
-        for (i = 0; i < this.length; i++) {
+        for (i = 0; i < nodeCount; i++) {
           if (fn === jqLiteData) {
             // data() takes the whole object in jQuery
             fn(this[i], arg1);
@@ -675,9 +679,10 @@ forEach({
         return this;
       } else {
         // we are a read, so read the first child.
+        // TODO: do we still need this?
         var value = fn.$dv;
         // Only if we have $dv do we iterate over all, otherwise it is just the first element.
-        var jj = (value === undefined) ? Math.min(this.length, 1) : this.length;
+        var jj = (value === undefined) ? Math.min(nodeCount, 1) : nodeCount;
         for (var j = 0; j < jj; j++) {
           var nodeValue = fn(this[j], arg1, arg2);
           value = value ? value + nodeValue : nodeValue;
@@ -686,7 +691,7 @@ forEach({
       }
     } else {
       // we are a write, so apply to all children
-      for (i = 0; i < this.length; i++) {
+      for (i = 0; i < nodeCount; i++) {
         fn(this[i], arg1, arg2);
       }
       // return self for chaining
@@ -947,19 +952,37 @@ forEach({
 
   clone: jqLiteClone,
 
-  triggerHandler: function(element, eventName, eventData) {
+  triggerHandler: function(element, event, extraParameters) {
+
+    var dummyEvent, eventFnsCopy, handlerArgs;
+    var eventName = event.type || event;
     var eventFns = (jqLiteExpandoStore(element, 'events') || {})[eventName];
 
-    eventData = eventData || [];
+    if (eventFns) {
 
-    var event = [{
-      preventDefault: noop,
-      stopPropagation: noop
-    }];
+      // Create a dummy event to pass to the handlers
+      dummyEvent = {
+        preventDefault: function() { this.defaultPrevented = true; },
+        isDefaultPrevented: function() { return this.defaultPrevented === true; },
+        stopPropagation: noop,
+        type: eventName,
+        target: element
+      };
 
-    forEach(eventFns, function(fn) {
-      fn.apply(element, event.concat(eventData));
-    });
+      // If a custom event was provided then extend our dummy event with it
+      if (event.type) {
+        dummyEvent = extend(dummyEvent, event);
+      }
+
+      // Copy event handlers in case event handlers array is modified during execution.
+      eventFnsCopy = shallowCopy(eventFns);
+      handlerArgs = extraParameters ? [dummyEvent].concat(extraParameters) : [dummyEvent];
+
+      forEach(eventFnsCopy, function(fn) {
+        fn.apply(element, handlerArgs);
+      });
+
+    }
   }
 }, function(fn, name){
   /**

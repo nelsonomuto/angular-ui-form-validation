@@ -22,7 +22,7 @@
     "branch": "master",
     "commit": "b9f15ee3ee53a99c338dd9471fe85fc1c8d42631"
   },
-  "_source": "git://github.com/nelsonomuto/angular-template-retriever.git",
+  "_source": "https://github.com/nelsonomuto/angular-template-retriever.git",
   "_target": "*",
   "_originalSource": "angular-template-retriever"
 }

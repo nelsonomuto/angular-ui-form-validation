@@ -1,3 +1,5 @@
+'use strict';
+
 var files = require('./angularFiles').files;
 var util = require('./lib/grunt/utils.js');
 var versionInfo = require('./lib/versions/version-info');
@@ -106,6 +108,12 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         jshintrc: true,
+      },
+      node: {
+        files: { src: ['*.js', 'lib/**/*.js'] },
+      },
+      tests: {
+        files: { src: 'test/**/*.js' },
       },
       ng: {
         files: { src: files['angularSrc'] },
@@ -220,8 +228,11 @@ module.exports = function(grunt) {
 
     "ddescribe-iit": {
       files: [
+        'src/**/*.js',
         'test/**/*.js',
-        '!test/ngScenario/DescribeSpec.js'
+        '!test/ngScenario/DescribeSpec.js',
+        '!src/ng/directive/booleanAttrs.js', // legitimate xit here
+        '!src/ngScenario/**/*.js'
       ]
     },
 
@@ -246,7 +257,11 @@ module.exports = function(grunt) {
     compress: {
       build: {
         options: {archive: 'build/' + dist +'.zip', mode: 'zip'},
-        src: ['**'], cwd: 'build', expand: true, dot: true, dest: dist + '/'
+        src: ['**'],
+        cwd: 'build',
+        expand: true,
+        dot: true,
+        dest: dist + '/'
       }
     },
 

@@ -427,13 +427,16 @@ LocationHashbangInHtml5Url.prototype =
    * If the argument is a hash object containing an array of values, these values will be encoded
    * as duplicate search parameters in the url.
    *
-   * @param {(string|Array<string>)=} paramValue If `search` is a string, then `paramValue` will
-   * override only a single search property.
+   * @param {(string|Array<string>|boolean)=} paramValue If `search` is a string, then `paramValue`
+   * will override only a single search property.
    *
    * If `paramValue` is an array, it will override the property of the `search` component of
    * `$location` specified via the first argument.
    *
    * If `paramValue` is `null`, the property specified via the first argument will be deleted.
+   *
+   * If `paramValue` is `true`, the property specified via the first argument will be added with no
+   * value nor trailing equal sign.
    *
    * @return {Object} If called with no arguments returns the parsed `search` object. If called with
    * one or more arguments returns `$location` object itself.
@@ -446,6 +449,11 @@ LocationHashbangInHtml5Url.prototype =
         if (isString(search)) {
           this.$$search = parseKeyValue(search);
         } else if (isObject(search)) {
+          // remove object undefined or null properties
+          forEach(search, function(value, key) {
+            if (value == null) delete search[key];
+          });
+
           this.$$search = search;
         } else {
           throw $locationMinErr('isrcharg',
@@ -551,7 +559,7 @@ function $LocationProvider(){
       html5Mode = false;
 
   /**
-   * @ngdoc property
+   * @ngdoc method
    * @name $locationProvider#hashPrefix
    * @description
    * @param {string=} prefix Prefix for hash part (containing path and search)
@@ -567,7 +575,7 @@ function $LocationProvider(){
   };
 
   /**
-   * @ngdoc property
+   * @ngdoc method
    * @name $locationProvider#html5Mode
    * @description
    * @param {boolean=} mode Use HTML5 strategy if available.
@@ -627,6 +635,8 @@ function $LocationProvider(){
     $location = new LocationMode(appBase, '#' + hashPrefix);
     $location.$$parse($location.$$rewrite(initialUrl));
 
+    var IGNORE_URI_REGEXP = /^\s*(javascript|mailto):/i;
+
     $rootElement.on('click', function(event) {
       // TODO(vojta): rewrite link when opening in new tab/window (in legacy browser)
       // currently we open nice url link and redirect then
@@ -649,6 +659,9 @@ function $LocationProvider(){
         absHref = urlResolve(absHref.animVal).href;
       }
 
+      // Ignore when url is started with javascript: or mailto:
+      if (IGNORE_URI_REGEXP.test(absHref)) return;
+
       // Make relative links work in HTML5 mode for legacy browsers (or at least IE8 & 9)
       // The href should be a regular url e.g. /link/somewhere or link/somewhere or ../somewhere or
       // somewhere#anchor or http://example.com/somewhere
@@ -657,7 +670,7 @@ function $LocationProvider(){
         // http://msdn.microsoft.com/en-us/library/ie/dd347148(v=vs.85).aspx
         var href = elm.attr('href') || elm.attr('xlink:href');
 
-        if (href.indexOf('://') < 0) {         // Ignore absolute URLs
+        if (href && href.indexOf('://') < 0) {         // Ignore absolute URLs
           var prefix = '#' + hashPrefix;
           if (href[0] == '/') {
             // absolute path - replace old path
@@ -669,6 +682,7 @@ function $LocationProvider(){
             // relative path - join with current path
             var stack = $location.path().split("/"),
               parts = href.split("/");
+            if (stack.length === 2 && !stack[1]) stack.length = 1;
             for (var i=0; i<parts.length; i++) {
               if (parts[i] == ".")
                 continue;

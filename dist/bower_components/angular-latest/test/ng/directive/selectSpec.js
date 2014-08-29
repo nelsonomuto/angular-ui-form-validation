@@ -218,7 +218,7 @@ describe('select', function() {
 
         it('should not break if both the select and repeater models change at once', function() {
           scope.robots = ['c3p0', 'r2d2'];
-          scope.robot = 'c3p0'
+          scope.robot = 'c3p0';
           compile('<select ng-model="robot">' +
                     '<option value="">--select--</option>' +
                     '<option ng-repeat="r in robots">{{r}}</option>' +
@@ -735,6 +735,8 @@ describe('select', function() {
 
     it('should not update selected property of an option element on digest with no change event',
         function() {
+      // ng-options="value.name for value in values"
+      // ng-model="selected"
       createSingleSelect();
 
       scope.$apply(function() {
@@ -743,6 +745,11 @@ describe('select', function() {
       });
 
       var options = element.find('option');
+
+      expect(scope.selected).toEqual({ name: 'A' });
+      expect(options.eq(0).prop('selected')).toBe(true);
+      expect(options.eq(1).prop('selected')).toBe(false);
+
       var optionToSelect = options.eq(1);
 
       expect(optionToSelect.text()).toBe('B');
@@ -987,6 +994,56 @@ describe('select', function() {
         expect(element.find('option').eq(0).prop('selected')).toBeTruthy();
         expect(element.find('option').length).toEqual(2);
       });
+
+
+      it('should ensure that at least one option element has the "selected" attribute', function() {
+        function countSelected() {
+          var count = 0;
+          forEach(element.find('option'), function(option) {
+            count += option.getAttribute('selected') ? 1 : 0;
+          });
+          return count;
+        }
+
+
+        createSelect({
+          'ng-model': 'selected',
+          'ng-options': 'item.id as item.name for item in values'
+        });
+
+        scope.$apply(function() {
+          scope.values = [{id: 10, name: 'A'}, {id: 20, name: 'B'}];
+        });
+        expect(element.val()).toEqual('?');
+        expect(countSelected()).toEqual(1);
+
+        scope.$apply(function() {
+          scope.selected = 10;
+        });
+        // Here the ? option should disappear and the first real option should have selected attribute
+        expect(element.val()).toEqual('0');
+        expect(countSelected()).toEqual(1);
+
+        // Here the selected value is changed but we don't change the selected attribute
+        scope.$apply(function() {
+          scope.selected = 20;
+        });
+        expect(element.val()).toEqual('1');
+        expect(countSelected()).toEqual(1);
+
+        scope.$apply(function() {
+          scope.values.push({id: 30, name: 'C'});
+        });
+        expect(element.val()).toEqual('1');
+        expect(countSelected()).toEqual(1);
+
+        // Here the ? option should reappear and have selected attribute
+        scope.$apply(function() {
+          scope.selected = undefined;
+        });
+        expect(element.val()).toEqual('?');
+        expect(countSelected()).toEqual(1);
+      });
     });
 
 
@@ -1134,8 +1191,73 @@ describe('select', function() {
         browserTrigger(element, 'change');
         expect(scope.selected).toEqual(null);
       });
+
+
+      // Regression https://github.com/angular/angular.js/issues/7855
+      it('should update the model with ng-change', function() {
+        createSelect({
+          'ng-change':'change()',
+          'ng-model':'selected',
+          'ng-options':'value for value in values'
+        });
+
+        scope.$apply(function() {
+          scope.values = ['A', 'B'];
+          scope.selected = 'A';
+        });
+
+        scope.change = function() {
+          scope.selected = 'A';
+        };
+
+        element.find('option')[1].selected = true;
+
+        browserTrigger(element, 'change');
+        expect(element.find('option')[0].selected).toBeTruthy();
+        expect(scope.selected).toEqual('A');
+      });
     });
 
+    describe('disabled blank', function() {
+      it('should select disabled blank by default', function() {
+        var html = '<select ng-model="someModel" ng-options="c for c in choices">' +
+                     '<option value="" disabled>Choose One</option>' +
+                   '</select>';
+        scope.$apply(function() {
+          scope.choices = ['A', 'B', 'C'];
+        });
+
+        compile(html);
+
+        var options = element.find('option');
+        var optionToSelect = options.eq(0);
+        expect(optionToSelect.text()).toBe('Choose One');
+        expect(optionToSelect.prop('selected')).toBe(true);
+        expect(element[0].value).toBe('');
+
+        dealoc(element);
+      });
+
+
+      it('should select disabled blank by default when select is required', function() {
+        var html = '<select ng-model="someModel" ng-options="c for c in choices" required>' +
+                     '<option value="" disabled>Choose One</option>' +
+                   '</select>';
+        scope.$apply(function() {
+          scope.choices = ['A', 'B', 'C'];
+        });
+
+        compile(html);
+
+        var options = element.find('option');
+        var optionToSelect = options.eq(0);
+        expect(optionToSelect.text()).toBe('Choose One');
+        expect(optionToSelect.prop('selected')).toBe(true);
+        expect(element[0].value).toBe('');
+
+        dealoc(element);
+      });
+    });
 
     describe('select-many', function() {
 
@@ -1183,6 +1305,7 @@ describe('select', function() {
         expect(scope.selected).toEqual([scope.values[0]]);
       });
 
+
       it('should select from object', function() {
         createSelect({
           'ng-model':'selected',
@@ -1206,7 +1329,7 @@ describe('select', function() {
 
       it('should deselect all options when model is emptied', function() {
         createMultiSelect();
-         scope.$apply(function() {
+        scope.$apply(function() {
           scope.values = [{name: 'A'}, {name: 'B'}];
           scope.selected = [scope.values[0]];
         });
@@ -1217,7 +1340,7 @@ describe('select', function() {
         });
 
         expect(element.find('option')[0].selected).toEqual(false);
-      })
+      });
     });
 
 
@@ -1325,7 +1448,7 @@ describe('select', function() {
     });
 
     it('should set value even if self closing HTML', function() {
-      scope.x = 'hello'
+      scope.x = 'hello';
       compile('<select ng-model="x"><option>hello</select>');
       expect(element).toEqualSelect(['hello']);
     });

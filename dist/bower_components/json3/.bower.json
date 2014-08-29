@@ -25,7 +25,7 @@
     "tag": "v3.2.6",
     "commit": "7b89fd94939f970f316420e157a836cc68aa2207"
   },
-  "_source": "git://github.com/bestiejs/json3.git",
+  "_source": "https://github.com/bestiejs/json3.git",
   "_target": "~3.2.4",
   "_originalSource": "json3"
 }

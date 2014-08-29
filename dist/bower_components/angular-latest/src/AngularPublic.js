@@ -1,11 +1,10 @@
 'use strict';
 
-/* global
-    angularModule: true,
-    version: true,
+/* global angularModule: true,
+  version: true,
 
-    $LocaleProvider,
-    $CompileProvider,
+  $LocaleProvider,
+  $CompileProvider,
 
     htmlAnchorDirective,
     inputDirective,
@@ -110,11 +109,11 @@ function publishExternalAPI(angular){
     'element': jqLite,
     'forEach': forEach,
     'injector': createInjector,
-    'noop':noop,
-    'bind':bind,
+    'noop': noop,
+    'bind': bind,
     'toJson': toJson,
     'fromJson': fromJson,
-    'identity':identity,
+    'identity': identity,
     'isUndefined': isUndefined,
     'isDefined': isDefined,
     'isString': isString,

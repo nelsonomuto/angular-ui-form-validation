@@ -45,7 +45,7 @@ forEach(
       return {
         compile: function($element, attr) {
           var fn = $parse(attr[directiveName]);
-          return function(scope, element, attr) {
+          return function ngEventHandler(scope, element) {
             element.on(lowercase(name), function(event) {
               scope.$apply(function() {
                 fn(scope, {$event:event});
@@ -307,27 +307,35 @@ forEach(
  * server and reloading the current page), but only if the form does not contain `action`,
  * `data-action`, or `x-action` attributes.
  *
+ * <div class="alert alert-warning">
+ * **Warning:** Be careful not to cause "double-submission" by using both the `ngClick` and
+ * `ngSubmit` handlers together. See the
+ * {@link form#submitting-a-form-and-preventing-the-default-action `form` directive documentation}
+ * for a detailed discussion of when `ngSubmit` may be triggered.
+ * </div>
+ *
  * @element form
  * @priority 0
  * @param {expression} ngSubmit {@link guide/expression Expression} to eval.
  * ({@link guide/expression#-event- Event object is available as `$event`})
  *
  * @example
-   <example>
+   <example module="submitExample">
      <file name="index.html">
       <script>
-        function Ctrl($scope) {
-          $scope.list = [];
-          $scope.text = 'hello';
-          $scope.submit = function() {
-            if ($scope.text) {
-              $scope.list.push(this.text);
-              $scope.text = '';
-            }
-          };
-        }
+        angular.module('submitExample', [])
+          .controller('ExampleController', ['$scope', function($scope) {
+            $scope.list = [];
+            $scope.text = 'hello';
+            $scope.submit = function() {
+              if ($scope.text) {
+                $scope.list.push(this.text);
+                $scope.text = '';
+              }
+            };
+          }]);
       </script>
-      <form ng-submit="submit()" ng-controller="Ctrl">
+      <form ng-submit="submit()" ng-controller="ExampleController">
         Enter text and hit enter:
         <input type="text" ng-model="text" name="text" />
         <input type="submit" id="submit" value="Submit" />
@@ -339,7 +347,7 @@ forEach(
          expect(element(by.binding('list')).getText()).toBe('list=[]');
          element(by.css('#submit')).click();
          expect(element(by.binding('list')).getText()).toContain('hello');
-         expect(element(by.input('text')).getAttribute('value')).toBe('');
+         expect(element(by.model('text')).getAttribute('value')).toBe('');
        });
        it('should ignore empty strings', function() {
          expect(element(by.binding('list')).getText()).toBe('list=[]');

@@ -1,9 +1,11 @@
+'use strict';
+
 exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
     'build/docs/ptore2e/**/*.js',
-    'test/e2e/docsAppE2E.js'
+    'docs/app/e2e/docsAppE2E.js'
   ],
 
   capabilities: {
@@ -15,6 +17,8 @@ exports.config = {
   framework: 'jasmine',
 
   onPrepare: function() {
+    /* global angular: false, browser: false, jasmine: false */
+
     // Disable animations so e2e tests run more quickly
     var disableNgAnimate = function() {
       angular.module('disableNgAnimate', []).run(function($animate) {

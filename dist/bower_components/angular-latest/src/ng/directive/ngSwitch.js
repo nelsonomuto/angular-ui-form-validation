@@ -55,9 +55,9 @@
  *
  *
  * @example
-  <example module="ngAnimate" deps="angular-animate.js" animations="true">
+  <example module="switchExample" deps="angular-animate.js" animations="true">
     <file name="index.html">
-      <div ng-controller="Ctrl">
+      <div ng-controller="ExampleController">
         <select ng-model="selection" ng-options="item for item in items">
         </select>
         <tt>selection={{selection}}</tt>
@@ -71,10 +71,11 @@
       </div>
     </file>
     <file name="script.js">
-      function Ctrl($scope) {
-        $scope.items = ['settings', 'home', 'other'];
-        $scope.selection = $scope.items[0];
-      }
+      angular.module('switchExample', ['ngAnimate'])
+        .controller('ExampleController', ['$scope', function($scope) {
+          $scope.items = ['settings', 'home', 'other'];
+          $scope.selection = $scope.items[0];
+        }]);
     </file>
     <file name="animations.css">
       .animate-switch-container {
@@ -117,11 +118,11 @@
         expect(switchElem.getText()).toMatch(/Settings Div/);
       });
       it('should change to home', function() {
-        select.element.all(by.css('option')).get(1).click();
+        select.all(by.css('option')).get(1).click();
         expect(switchElem.getText()).toMatch(/Home Span/);
       });
       it('should select default', function() {
-        select.element.all(by.css('option')).get(2).click();
+        select.all(by.css('option')).get(2).click();
         expect(switchElem.getText()).toMatch(/default/);
       });
     </file>

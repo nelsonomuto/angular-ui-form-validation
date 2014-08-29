@@ -13,7 +13,7 @@
  * Typically, you don't use `ngBind` directly, but instead you use the double curly markup like
  * `{{ expression }}` which is similar but less verbose.
  *
- * It is preferable to use `ngBind` instead of `{{ expression }}` when a template is momentarily
+ * It is preferable to use `ngBind` instead of `{{ expression }}` if a template is momentarily
  * displayed by the browser in its raw state before Angular compiles it. Since `ngBind` is an
  * element attribute, it makes the bindings invisible to the user while the page is loading.
  *
@@ -26,14 +26,15 @@
  *
  * @example
  * Enter a name in the Live Preview text box; the greeting below the text box changes instantly.
-   <example>
+   <example module="bindExample">
      <file name="index.html">
        <script>
-         function Ctrl($scope) {
-           $scope.name = 'Whirled';
-         }
+         angular.module('bindExample', [])
+           .controller('ExampleController', ['$scope', function($scope) {
+             $scope.name = 'Whirled';
+           }]);
        </script>
-       <div ng-controller="Ctrl">
+       <div ng-controller="ExampleController">
          Enter name: <input type="text" ng-model="name"><br>
          Hello <span ng-bind="name"></span>!
        </div>
@@ -50,14 +51,19 @@
      </file>
    </example>
  */
-var ngBindDirective = ngDirective(function(scope, element, attr) {
-  element.addClass('ng-binding').data('$binding', attr.ngBind);
-  scope.$watch(attr.ngBind, function ngBindWatchAction(value) {
-    // We are purposefully using == here rather than === because we want to
-    // catch when value is "null or undefined"
-    // jshint -W041
-    element.text(value == undefined ? '' : value);
-  });
+var ngBindDirective = ngDirective({
+  compile: function(templateElement) {
+    templateElement.addClass('ng-binding');
+    return function (scope, element, attr) {
+      element.data('$binding', attr.ngBind);
+      scope.$watch(attr.ngBind, function ngBindWatchAction(value) {
+        // We are purposefully using == here rather than === because we want to
+        // catch when value is "null or undefined"
+        // jshint -W041
+        element.text(value == undefined ? '' : value);
+      });
+    };
+  }
 });
 
 
@@ -79,15 +85,16 @@ var ngBindDirective = ngDirective(function(scope, element, attr) {
  *
  * @example
  * Try it here: enter text in text box and watch the greeting change.
-   <example>
+   <example module="bindExample">
      <file name="index.html">
        <script>
-         function Ctrl($scope) {
-           $scope.salutation = 'Hello';
-           $scope.name = 'World';
-         }
+         angular.module('bindExample', [])
+           .controller('ExampleController', ['$scope', function ($scope) {
+             $scope.salutation = 'Hello';
+             $scope.name = 'World';
+           }]);
        </script>
-       <div ng-controller="Ctrl">
+       <div ng-controller="ExampleController">
         Salutation: <input type="text" ng-model="salutation"><br>
         Name: <input type="text" ng-model="name"><br>
         <pre ng-bind-template="{{salutation}} {{name}}!"></pre>
@@ -143,22 +150,21 @@ var ngBindTemplateDirective = ['$interpolate', function($interpolate) {
  * @param {expression} ngBindHtml {@link guide/expression Expression} to evaluate.
  *
  * @example
-   Try it here: enter text in text box and watch the greeting change.
 
-   <example module="ngBindHtmlExample" deps="angular-sanitize.js">
+   <example module="bindHtmlExample" deps="angular-sanitize.js">
      <file name="index.html">
-       <div ng-controller="ngBindHtmlCtrl">
+       <div ng-controller="ExampleController">
         <p ng-bind-html="myHTML"></p>
        </div>
      </file>
 
      <file name="script.js">
-       angular.module('ngBindHtmlExample', ['ngSanitize'])
-
-       .controller('ngBindHtmlCtrl', ['$scope', function ngBindHtmlCtrl($scope) {
-         $scope.myHTML =
-            'I am an <code>HTML</code>string with <a href="#">links!</a> and other <em>stuff</em>';
-       }]);
+       angular.module('bindHtmlExample', ['ngSanitize'])
+         .controller('ExampleController', ['$scope', function($scope) {
+           $scope.myHTML =
+              'I am an <code>HTML</code>string with ' +
+              '<a href="#">links!</a> and other <em>stuff</em>';
+         }]);
      </file>
 
      <file name="protractor.js" type="protractor">
@@ -170,14 +176,23 @@ var ngBindTemplateDirective = ['$interpolate', function($interpolate) {
    </example>
  */
 var ngBindHtmlDirective = ['$sce', '$parse', function($sce, $parse) {
-  return function(scope, element, attr) {
-    element.addClass('ng-binding').data('$binding', attr.ngBindHtml);
+  return {
+    compile: function (tElement) {
+      tElement.addClass('ng-binding');
 
-    var parsed = $parse(attr.ngBindHtml);
-    function getStringValue() { return (parsed(scope) || '').toString(); }
+      return function (scope, element, attr) {
+        element.data('$binding', attr.ngBindHtml);
 
-    scope.$watch(getStringValue, function ngBindHtmlWatchAction(value) {
-      element.html($sce.getTrustedHtml(parsed(scope)) || '');
-    });
+        var parsed = $parse(attr.ngBindHtml);
+
+        function getStringValue() {
+          return (parsed(scope) || '').toString();
+        }
+
+        scope.$watch(getStringValue, function ngBindHtmlWatchAction(value) {
+          element.html($sce.getTrustedHtml(parsed(scope)) || '');
+        });
+      };
+    }
   };
 }];

@@ -12,7 +12,7 @@ describe('sanitizeUri', function() {
       };
       sanitizeImg = function(uri) {
         return $$sanitizeUri(uri, true);
-      }
+      };
     });
   });
 
@@ -25,8 +25,15 @@ describe('sanitizeUri', function() {
   describe('img[src] sanitization', function() {
 
     it('should sanitize javascript: urls', function() {
+      /* jshint scripturl:true */
       testUrl = "javascript:doEvilStuff()";
       expect(sanitizeImg(testUrl)).toBe('unsafe:javascript:doEvilStuff()');
+    });
+
+    it('should sanitize javascript: urls with comments', function() {
+      /* jshint scripturl:true */
+      testUrl = "javascript:alert(1)//data:image/";
+      expect(sanitizeImg(testUrl)).toBe('unsafe:javascript:alert(1)//data:image/');
     });
 
     it('should sanitize non-image data: urls', function() {
@@ -50,6 +57,7 @@ describe('sanitizeUri', function() {
     });
 
     it('should sanitize obfuscated javascript: urls', function() {
+      /* jshint scripturl:true */
       // case-sensitive
       testUrl = "JaVaScRiPt:doEvilStuff()";
       expect(sanitizeImg(testUrl)).toBe('unsafe:javascript:doEvilStuff()');
@@ -79,6 +87,7 @@ describe('sanitizeUri', function() {
     });
 
     it('should sanitize ng-src bindings as well', function() {
+      /* jshint scripturl:true */
       testUrl = "javascript:doEvilStuff()";
       expect(sanitizeImg(testUrl)).toBe('unsafe:javascript:doEvilStuff()');
     });
@@ -115,6 +124,7 @@ describe('sanitizeUri', function() {
 
 
     it('should allow reconfiguration of the src whitelist', function() {
+      /* jshint scripturl:true */
       var returnVal;
       expect(sanitizeUriProvider.imgSrcSanitizationWhitelist() instanceof RegExp).toBe(true);
       returnVal = sanitizeUriProvider.imgSrcSanitizationWhitelist(/javascript:/);
@@ -133,6 +143,7 @@ describe('sanitizeUri', function() {
   describe('a[href] sanitization', function() {
 
     it('should sanitize javascript: urls', inject(function() {
+      /* jshint scripturl:true */
       testUrl = "javascript:doEvilStuff()";
       expect(sanitizeHref(testUrl)).toBe('unsafe:javascript:doEvilStuff()');
     }));
@@ -145,6 +156,7 @@ describe('sanitizeUri', function() {
 
 
     it('should sanitize obfuscated javascript: urls', inject(function() {
+      /* jshint scripturl:true */
       // case-sensitive
       testUrl = "JaVaScRiPt:doEvilStuff()";
       expect(sanitizeHref(testUrl)).toBe('unsafe:javascript:doEvilStuff()');
@@ -175,6 +187,7 @@ describe('sanitizeUri', function() {
 
 
     it('should sanitize ngHref bindings as well', inject(function() {
+      /* jshint scripturl:true */
       testUrl = "javascript:doEvilStuff()";
       expect(sanitizeHref(testUrl)).toBe('unsafe:javascript:doEvilStuff()');
     }));
@@ -213,16 +226,17 @@ describe('sanitizeUri', function() {
     }));
 
     it('should allow reconfiguration of the href whitelist', function() {
+      /* jshint scripturl:true */
       var returnVal;
       expect(sanitizeUriProvider.aHrefSanitizationWhitelist() instanceof RegExp).toBe(true);
       returnVal = sanitizeUriProvider.aHrefSanitizationWhitelist(/javascript:/);
       expect(returnVal).toBe(sanitizeUriProvider);
 
       testUrl = "javascript:doEvilStuff()";
-        expect(sanitizeHref(testUrl)).toBe('javascript:doEvilStuff()');
+      expect(sanitizeHref(testUrl)).toBe('javascript:doEvilStuff()');
 
       testUrl = "http://recon/figured";
-        expect(sanitizeHref(testUrl)).toBe('unsafe:http://recon/figured');
+      expect(sanitizeHref(testUrl)).toBe('unsafe:http://recon/figured');
     });
 
   });

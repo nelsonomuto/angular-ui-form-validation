@@ -1,15 +1,13 @@
 'use strict';
 
-/* global
-
-    -VALID_CLASS,
-    -INVALID_CLASS,
-    -PRISTINE_CLASS,
-    -DIRTY_CLASS
+/* global VALID_CLASS: true,
+    INVALID_CLASS: true,
+    PRISTINE_CLASS: true,
+    DIRTY_CLASS: true
 */
 
 var URL_REGEXP = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
-var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i;
+var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 var NUMBER_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))\s*$/;
 
 var inputType = {
@@ -19,7 +17,9 @@ var inputType = {
    * @name input[text]
    *
    * @description
-   * Standard HTML text input with angular data binding.
+   * Standard HTML text input with angular data binding, inherited by most of the `input` elements.
+   *
+   * *NOTE* Not every feature offered is available for all input types.
    *
    * @param {string} ngModel Assignable angular expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
@@ -37,17 +37,20 @@ var inputType = {
    * @param {string=} ngChange Angular expression to be executed when input changes due to user
    *    interaction with the input element.
    * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trim the input.
+   *    This parameter is ignored for input[type=password] controls, which will never trim the
+   *    input.
    *
    * @example
-      <example name="text-input-directive">
+      <example name="text-input-directive" module="textInputExample">
         <file name="index.html">
          <script>
-           function Ctrl($scope) {
-             $scope.text = 'guest';
-             $scope.word = /^\s*\w*\s*$/;
-           }
+           angular.module('textInputExample', [])
+             .controller('ExampleController', ['$scope', function($scope) {
+               $scope.text = 'guest';
+               $scope.word = /^\s*\w*\s*$/;
+             }]);
          </script>
-         <form name="myForm" ng-controller="Ctrl">
+         <form name="myForm" ng-controller="ExampleController">
            Single word: <input type="text" name="input" ng-model="text"
                                ng-pattern="word" required ng-trim="false">
            <span class="error" ng-show="myForm.input.$error.required">
@@ -119,14 +122,15 @@ var inputType = {
    *    interaction with the input element.
    *
    * @example
-      <example name="number-input-directive">
+      <example name="number-input-directive" module="numberExample">
         <file name="index.html">
          <script>
-           function Ctrl($scope) {
-             $scope.value = 12;
-           }
+           angular.module('numberExample', [])
+             .controller('ExampleController', ['$scope', function($scope) {
+               $scope.value = 12;
+             }]);
          </script>
-         <form name="myForm" ng-controller="Ctrl">
+         <form name="myForm" ng-controller="ExampleController">
            Number: <input type="number" name="input" ng-model="value"
                           min="0" max="99" required>
            <span class="error" ng-show="myForm.input.$error.required">
@@ -194,14 +198,15 @@ var inputType = {
    *    interaction with the input element.
    *
    * @example
-      <example name="url-input-directive">
+      <example name="url-input-directive" module="urlExample">
         <file name="index.html">
          <script>
-           function Ctrl($scope) {
-             $scope.text = 'http://google.com';
-           }
+           angular.module('urlExample', [])
+             .controller('ExampleController', ['$scope', function($scope) {
+               $scope.text = 'http://google.com';
+             }]);
          </script>
-         <form name="myForm" ng-controller="Ctrl">
+         <form name="myForm" ng-controller="ExampleController">
            URL: <input type="url" name="input" ng-model="text" required>
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
@@ -270,14 +275,15 @@ var inputType = {
    *    interaction with the input element.
    *
    * @example
-      <example name="email-input-directive">
+      <example name="email-input-directive" module="emailExample">
         <file name="index.html">
          <script>
-           function Ctrl($scope) {
-             $scope.text = 'me@example.com';
-           }
+           angular.module('emailExample', [])
+             .controller('ExampleController', ['$scope', function($scope) {
+               $scope.text = 'me@example.com';
+             }]);
          </script>
-           <form name="myForm" ng-controller="Ctrl">
+           <form name="myForm" ng-controller="ExampleController">
              Email: <input type="email" name="input" ng-model="text" required>
              <span class="error" ng-show="myForm.input.$error.required">
                Required!</span>
@@ -336,18 +342,19 @@ var inputType = {
    *    be set when selected.
    *
    * @example
-      <example name="radio-input-directive">
+      <example name="radio-input-directive" module="radioExample">
         <file name="index.html">
          <script>
-           function Ctrl($scope) {
-             $scope.color = 'blue';
-             $scope.specialValue = {
-               "id": "12345",
-               "value": "green"
-             };
-           }
+           angular.module('radioExample', [])
+             .controller('ExampleController', ['$scope', function($scope) {
+               $scope.color = 'blue';
+               $scope.specialValue = {
+                 "id": "12345",
+                 "value": "green"
+               };
+             }]);
          </script>
-         <form name="myForm" ng-controller="Ctrl">
+         <form name="myForm" ng-controller="ExampleController">
            <input type="radio" ng-model="color" value="red">  Red <br/>
            <input type="radio" ng-model="color" ng-value="specialValue"> Green <br/>
            <input type="radio" ng-model="color" value="blue"> Blue <br/>
@@ -386,15 +393,16 @@ var inputType = {
    *    interaction with the input element.
    *
    * @example
-      <example name="checkbox-input-directive">
+      <example name="checkbox-input-directive" module="checkboxExample">
         <file name="index.html">
          <script>
-           function Ctrl($scope) {
-             $scope.value1 = true;
-             $scope.value2 = 'YES'
-           }
+           angular.module('checkboxExample', [])
+             .controller('ExampleController', ['$scope', function($scope) {
+               $scope.value1 = true;
+               $scope.value2 = 'YES'
+             }]);
          </script>
-         <form name="myForm" ng-controller="Ctrl">
+         <form name="myForm" ng-controller="ExampleController">
            Value1: <input type="checkbox" ng-model="value1"> <br/>
            Value2: <input type="checkbox" ng-model="value2"
                           ng-true-value="YES" ng-false-value="NO"> <br/>
@@ -435,15 +443,29 @@ function validate(ctrl, validatorName, validity, value){
   return validity ? value : undefined;
 }
 
+function testFlags(validity, flags) {
+  var i, flag;
+  if (flags) {
+    for (i=0; i<flags.length; ++i) {
+      flag = flags[i];
+      if (validity[flag]) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
-function addNativeHtml5Validators(ctrl, validatorName, element) {
-  var validity = element.prop('validity');
+// Pass validity so that behaviour can be mocked easier.
+function addNativeHtml5Validators(ctrl, validatorName, badFlags, ignoreFlags, validity) {
   if (isObject(validity)) {
+    ctrl.$$hasNativeValidators = true;
     var validator = function(value) {
       // Don't overwrite previous validation, don't consider valueMissing to apply (ng-required can
       // perform the required validation)
-      if (!ctrl.$error[validatorName] && (validity.badInput || validity.customError ||
-          validity.typeMismatch) && !validity.valueMissing) {
+      if (!ctrl.$error[validatorName] &&
+          !testFlags(validity, ignoreFlags) &&
+          testFlags(validity, badFlags)) {
         ctrl.$setValidity(validatorName, false);
         return;
       }
@@ -454,8 +476,10 @@ function addNativeHtml5Validators(ctrl, validatorName, element) {
 }
 
 function textInputType(scope, element, attr, ctrl, $sniffer, $browser) {
-  var validity = element.prop('validity');
+  var validity = element.prop(VALIDITY_STATE_PROPERTY);
   var placeholder = element[0].placeholder, noevent = {};
+  var type = lowercase(element[0].type);
+  ctrl.$$validityState = validity;
 
   // In composition mode, users are still inputing intermediate text buffer,
   // hold the listener until composition is done.
@@ -488,16 +512,16 @@ function textInputType(scope, element, attr, ctrl, $sniffer, $browser) {
 
     // By default we will trim the value
     // If the attribute ng-trim exists we will avoid trimming
-    // e.g. <input ng-model="foo" ng-trim="false">
-    if (toBoolean(attr.ngTrim || 'T')) {
+    // If input type is 'password', the value is never trimmed
+    if (type !== 'password' && (toBoolean(attr.ngTrim || 'T'))) {
       value = trim(value);
     }
 
-    if (ctrl.$viewValue !== value ||
-        // If the value is still empty/falsy, and there is no `required` error, run validators
-        // again. This enables HTML5 constraint validation errors to affect Angular validation
-        // even when the first character entered causes an error.
-        (validity && value === '' && !validity.valueMissing)) {
+    // If a control is suffering from bad input, browsers discard its value, so it may be
+    // necessary to revalidate even if the control's value is the same empty value twice in
+    // a row.
+    var revalidate = validity && ctrl.$$hasNativeValidators;
+    if (ctrl.$viewValue !== value || (value === '' && revalidate)) {
       if (scope.$$phase) {
         ctrl.$setViewValue(value);
       } else {
@@ -603,6 +627,8 @@ function textInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   }
 }
 
+var numberBadFlags = ['badInput'];
+
 function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   textInputType(scope, element, attr, ctrl, $sniffer, $browser);
 
@@ -617,7 +643,7 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
     }
   });
 
-  addNativeHtml5Validators(ctrl, 'number', element);
+  addNativeHtml5Validators(ctrl, 'number', numberBadFlags, null, ctrl.$$validityState);
 
   ctrl.$formatters.push(function(value) {
     return ctrl.$isEmpty(value) ? '' : '' + value;
@@ -749,6 +775,7 @@ function checkboxInputType(scope, element, attr, ctrl) {
  *    patterns defined as scope expressions.
  * @param {string=} ngChange Angular expression to be executed when input changes due to user
  *    interaction with the input element.
+ * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trim the input.
  */
 
 
@@ -760,6 +787,8 @@ function checkboxInputType(scope, element, attr, ctrl) {
  * @description
  * HTML input element control with angular data-binding. Input control follows HTML5 input types
  * and polyfills the HTML5 validation behavior for older browsers.
+ *
+ * *NOTE* Not every feature offered is available for all input types.
  *
  * @param {string} ngModel Assignable angular expression to data-bind to.
  * @param {string=} name Property name of the form under which the control is published.
@@ -774,16 +803,20 @@ function checkboxInputType(scope, element, attr, ctrl) {
  *    patterns defined as scope expressions.
  * @param {string=} ngChange Angular expression to be executed when input changes due to user
  *    interaction with the input element.
+ * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trim the input.
+ *    This parameter is ignored for input[type=password] controls, which will never trim the
+ *    input.
  *
  * @example
-    <example name="input-directive">
+    <example name="input-directive" module="inputExample">
       <file name="index.html">
        <script>
-         function Ctrl($scope) {
-           $scope.user = {name: 'guest', last: 'visitor'};
-         }
+          angular.module('inputExample', [])
+            .controller('ExampleController', ['$scope', function($scope) {
+              $scope.user = {name: 'guest', last: 'visitor'};
+            }]);
        </script>
-       <div ng-controller="Ctrl">
+       <div ng-controller="ExampleController">
          <form name="myForm">
            User name: <input type="text" name="userName" ng-model="user.name" required>
            <span class="error" ng-show="myForm.userName.$error.required">
@@ -1098,7 +1131,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * This method should be called by validators - i.e. the parser or formatter functions.
    *
    * @param {string} validationErrorKey Name of the validator. the `validationErrorKey` will assign
-   *        to `$error[validationErrorKey]=isValid` so that it is available for data-binding.
+   *        to `$error[validationErrorKey]=!isValid` so that it is available for data-binding.
    *        The `validationErrorKey` should be in camelCase and will get converted into dash-case
    *        for class name. Example: `myError` will result in `ng-valid-my-error` and `ng-invalid-my-error`
    *        class and can be bound to as  `{{someForm.someControl.$error.myError}}` .
@@ -1301,12 +1334,13 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  * </pre>
  *
  * @example
- * <example deps="angular-animate.js" animations="true" fixBase="true">
+ * <example deps="angular-animate.js" animations="true" fixBase="true" module="inputExample">
      <file name="index.html">
        <script>
-        function Ctrl($scope) {
-          $scope.val = '1';
-        }
+        angular.module('inputExample', [])
+          .controller('ExampleController', ['$scope', function($scope) {
+            $scope.val = '1';
+          }]);
        </script>
        <style>
          .my-input {
@@ -1321,7 +1355,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
        </style>
        Update input to see transitions when valid/invalid.
        Integer is a valid value.
-       <form name="testForm" ng-controller="Ctrl">
+       <form name="testForm" ng-controller="ExampleController">
          <input ng-model="val" ng-pattern="/^\d+$/" name="anim" class="my-input" />
        </form>
      </file>
@@ -1365,17 +1399,18 @@ var ngModelDirective = function() {
  * in input value.
  *
  * @example
- * <example name="ngChange-directive">
+ * <example name="ngChange-directive" module="changeExample">
  *   <file name="index.html">
  *     <script>
- *       function Controller($scope) {
- *         $scope.counter = 0;
- *         $scope.change = function() {
- *           $scope.counter++;
- *         };
- *       }
+ *       angular.module('changeExample', [])
+ *         .controller('ExampleController', ['$scope', function($scope) {
+ *           $scope.counter = 0;
+ *           $scope.change = function() {
+ *             $scope.counter++;
+ *           };
+ *         }]);
  *     </script>
- *     <div ng-controller="Controller">
+ *     <div ng-controller="ExampleController">
  *       <input type="checkbox" ng-model="confirmed" ng-change="change()" id="ng-change-example1" />
  *       <input type="checkbox" ng-model="confirmed" id="ng-change-example2" />
  *       <label for="ng-change-example2">Confirmed</label><br />
@@ -1456,14 +1491,15 @@ var requiredDirective = function() {
  *   specified in form `/something/` then the value will be converted into a regular expression.
  *
  * @example
-    <example name="ngList-directive">
+    <example name="ngList-directive" module="listExample">
       <file name="index.html">
        <script>
-         function Ctrl($scope) {
-           $scope.names = ['igor', 'misko', 'vojta'];
-         }
+         angular.module('listExample', [])
+           .controller('ExampleController', ['$scope', function($scope) {
+             $scope.names = ['igor', 'misko', 'vojta'];
+           }]);
        </script>
-       <form name="myForm" ng-controller="Ctrl">
+       <form name="myForm" ng-controller="ExampleController">
          List: <input name="namesInput" ng-model="names" ng-list required>
          <span class="error" ng-show="myForm.namesInput.$error.required">
            Required!</span>
@@ -1555,15 +1591,16 @@ var CONSTANT_VALUE_REGEXP = /^(true|false|\d+)$/;
  *   of the `input` element
  *
  * @example
-    <example name="ngValue-directive">
+    <example name="ngValue-directive" module="valueExample">
       <file name="index.html">
        <script>
-          function Ctrl($scope) {
-            $scope.names = ['pizza', 'unicorns', 'robots'];
-            $scope.my = { favorite: 'unicorns' };
-          }
+          angular.module('valueExample', [])
+            .controller('ExampleController', ['$scope', function($scope) {
+              $scope.names = ['pizza', 'unicorns', 'robots'];
+              $scope.my = { favorite: 'unicorns' };
+            }]);
        </script>
-        <form ng-controller="Ctrl">
+        <form ng-controller="ExampleController">
           <h2>Which is your favorite?</h2>
             <label ng-repeat="name in names" for="{{name}}">
               {{name}}

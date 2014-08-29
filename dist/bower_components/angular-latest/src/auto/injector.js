@@ -72,7 +72,7 @@ function annotate(fn) {
       argDecl,
       last;
 
-  if (typeof fn == 'function') {
+  if (typeof fn === 'function') {
     if (!($inject = fn.$inject)) {
       $inject = [];
       if (fn.length) {
@@ -285,7 +285,7 @@ function annotate(fn) {
 
 
 /**
- * @ngdoc object
+ * @ngdoc service
  * @name $provide
  *
  * @description
@@ -591,7 +591,7 @@ function createInjector(modulesToLoad) {
   var INSTANTIATING = {},
       providerSuffix = 'Provider',
       path = [],
-      loadedModules = new HashMap(),
+      loadedModules = new HashMap([], true),
       providerCache = {
         $provide: {
             provider: supportObject(provider),
@@ -724,7 +724,8 @@ function createInjector(modulesToLoad) {
     function getService(serviceName) {
       if (cache.hasOwnProperty(serviceName)) {
         if (cache[serviceName] === INSTANTIATING) {
-          throw $injectorMinErr('cdep', 'Circular dependency found: {0}', path.join(' <- '));
+          throw $injectorMinErr('cdep', 'Circular dependency found: {0}',
+                    serviceName + ' <- ' + path.join(' <- '));
         }
         return cache[serviceName];
       } else {
@@ -761,8 +762,7 @@ function createInjector(modulesToLoad) {
           : getService(key)
         );
       }
-      if (!fn.$inject) {
-        // this means that we must be an array.
+      if (isArray(fn)) {
         fn = fn[length];
       }
 

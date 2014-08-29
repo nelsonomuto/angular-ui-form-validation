@@ -29,9 +29,6 @@ angular.module('angularUiFormValidationApp')
 
   angular.extend($scope, {
       user: {
-        data: {
-            username: null
-        },
         username: null,
         password: null,
         confirmPassword: null,

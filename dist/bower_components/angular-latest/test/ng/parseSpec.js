@@ -3,6 +3,7 @@
 describe('parser', function() {
 
   beforeEach(function() {
+    /* global getterFnCache: true, promiseWarningCache: true */
     // clear caches
     getterFnCache = {};
     promiseWarningCache = {};
@@ -13,6 +14,7 @@ describe('parser', function() {
     var lex;
 
     beforeEach(function () {
+      /* global Lexer: false */
       lex = function () {
         var lexer = new Lexer({csp: false, unwrapPromises: false});
         return lexer.lex.apply(lexer, arguments);
@@ -225,6 +227,7 @@ describe('parser', function() {
         }));
 
         it('should parse expressions', function() {
+          /*jshint -W006, -W007 */
           expect(scope.$eval("-1")).toEqual(-1);
           expect(scope.$eval("1 + 2.5")).toEqual(3.5);
           expect(scope.$eval("1 + -2.5")).toEqual(-1.5);
@@ -235,6 +238,7 @@ describe('parser', function() {
         });
 
         it('should parse comparison', function() {
+          /* jshint -W041 */
           expect(scope.$eval("false")).toBeFalsy();
           expect(scope.$eval("!true")).toBeFalsy();
           expect(scope.$eval("1==1")).toBeTruthy();
@@ -367,11 +371,11 @@ describe('parser', function() {
             // Assign to x1 and build path 'x1.x2.x3. ... .x[n]' to access the final value.
             scope.x1 = obj;
             var path = 'x1';
-            for (var i = 2; i <= pathLength; i++) {
+            for (i = 2; i <= pathLength; i++) {
               path += '.x' + i;
             }
             expect(scope.$eval(path)).toBe(42);
-            locals['x' + pathLength] = 'not 42'
+            locals['x' + pathLength] = 'not 42';
             expect(scope.$eval(path, locals)).toBe(42);
           });
         });
@@ -430,6 +434,17 @@ describe('parser', function() {
           expect(scope.b).toEqual(234);
         });
 
+        it('should evaluate assignments in ternary operator', function() {
+          scope.$eval('a = 1 ? 2 : 3');
+          expect(scope.a).toBe(2);
+
+          scope.$eval('0 ? a = 2 : a = 3');
+          expect(scope.a).toBe(3);
+
+          scope.$eval('1 ? a = 2 : a = 3');
+          expect(scope.a).toBe(2);
+        });
+
         it('should evaluate function call without arguments', function() {
           scope['const'] =  function(a,b){return 123;};
           expect(scope.$eval("const()")).toEqual(123);
@@ -444,7 +459,7 @@ describe('parser', function() {
 
         it('should evaluate function call from a return value', function() {
           scope.val = 33;
-          scope.getter = function() { return function() { return this.val; }};
+          scope.getter = function() { return function() { return this.val; }; };
           expect(scope.$eval("getter()()")).toBe(33);
         });
 
@@ -580,6 +595,7 @@ describe('parser', function() {
         });
 
         it('should evaluate negation', function() {
+          /* jshint -W018 */
           expect(scope.$eval("!false || true")).toEqual(!false || true);
           expect(scope.$eval("!11 == 10")).toEqual(!11 == 10);
           expect(scope.$eval("12/6/2")).toEqual(12/6/2);
@@ -637,90 +653,52 @@ describe('parser', function() {
           expect(scope.$eval('a + \n b.c + \r "\td" + \t \r\n\r "\r\n\n"')).toEqual("abc\td\r\n\n");
         });
 
+
         describe('sandboxing', function() {
           describe('Function constructor', function() {
             it('should NOT allow access to Function constructor in getter', function() {
-              expect(function() {
-                scope.$eval('{}.toString.constructor');
-              }).toThrowMinErr(
-                      '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
-                      'Expression: {}.toString.constructor');
 
               expect(function() {
                 scope.$eval('{}.toString.constructor("alert(1)")');
               }).toThrowMinErr(
-                      '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
+                  '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
                       'Expression: {}.toString.constructor("alert(1)")');
 
-              expect(function() {
-                scope.$eval('[].toString.constructor.foo');
-              }).toThrowMinErr(
-                      '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
-                      'Expression: [].toString.constructor.foo');
-
-              expect(function() {
-                scope.$eval('{}.toString["constructor"]');
-              }).toThrowMinErr(
-                      '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
-                      'Expression: {}.toString["constructor"]');
-              expect(function() {
-                scope.$eval('{}["toString"]["constructor"]');
-              }).toThrowMinErr(
-                      '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
-                      'Expression: {}["toString"]["constructor"]');
-
-              scope.a = [];
-              expect(function() {
-                scope.$eval('a.toString.constructor', scope);
-              }).toThrowMinErr(
-                      '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
-                      'Expression: a.toString.constructor');
-              expect(function() {
-                scope.$eval('a.toString["constructor"]', scope);
-              }).toThrowMinErr(
-                      '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
-                      'Expression: a.toString["constructor"]');
             });
 
             it('should NOT allow access to Function constructor in setter', function() {
-              expect(function() {
-                scope.$eval('{}.toString.constructor = 1');
-              }).toThrowMinErr(
-                      '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
-                      'Expression: {}.toString.constructor = 1');
 
               expect(function() {
                 scope.$eval('{}.toString.constructor.a = 1');
               }).toThrowMinErr(
-                      '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
+                  '$parse', 'isecfn','Referencing Function in Angular expressions is disallowed! ' +
                       'Expression: {}.toString.constructor.a = 1');
 
               expect(function() {
                 scope.$eval('{}.toString["constructor"]["constructor"] = 1');
               }).toThrowMinErr(
-                      '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
+                  '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
                       'Expression: {}.toString["constructor"]["constructor"] = 1');
-
 
               scope.key1 = "const";
               scope.key2 = "ructor";
               expect(function() {
                 scope.$eval('{}.toString[key1 + key2].foo = 1');
               }).toThrowMinErr(
-                      '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
-                          'Expression: {}.toString[key1 + key2].foo = 1');
+                  '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
+                      'Expression: {}.toString[key1 + key2].foo = 1');
 
               expect(function() {
                 scope.$eval('{}.toString["constructor"]["a"] = 1');
               }).toThrowMinErr(
-                      '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
+                  '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
                       'Expression: {}.toString["constructor"]["a"] = 1');
 
               scope.a = [];
               expect(function() {
                 scope.$eval('a.toString.constructor = 1', scope);
               }).toThrowMinErr(
-                      '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
+                  '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
                       'Expression: a.toString.constructor = 1');
             });
 
@@ -730,21 +708,84 @@ describe('parser', function() {
               expect(function() {
                 scope.$eval('foo["bar"]');
               }).toThrowMinErr(
-                      '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
+                  '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
                       'Expression: foo["bar"]');
 
             });
-
-
-            it('should NOT allow access to Function constructor in getter', function() {
-              expect(function() {
-                scope.$eval('{}.toString.constructor');
-              }).toThrowMinErr(
-                      '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
-                      'Expression: {}.toString.constructor');
-            });
           });
 
+          describe('Function prototype functions', function () {
+            it('should NOT allow invocation to Function.call', function() {
+              scope.fn = Function.prototype.call;
+
+              expect(function() {
+                scope.$eval('$eval.call()');
+              }).toThrowMinErr(
+                  '$parse', 'isecff', 'Referencing call, apply or bind in Angular expressions is disallowed! ' +
+                      'Expression: $eval.call()');
+
+              expect(function() {
+                scope.$eval('fn()');
+              }).toThrowMinErr(
+                  '$parse', 'isecff', 'Referencing call, apply or bind in Angular expressions is disallowed! ' +
+                      'Expression: fn()');
+            });
+
+            it('should NOT allow invocation to Function.apply', function() {
+              scope.apply = Function.prototype.apply;
+
+              expect(function() {
+                scope.$eval('$eval.apply()');
+              }).toThrowMinErr(
+                  '$parse', 'isecff', 'Referencing call, apply or bind in Angular expressions is disallowed! ' +
+                      'Expression: $eval.apply()');
+
+              expect(function() {
+                scope.$eval('apply()');
+              }).toThrowMinErr(
+                  '$parse', 'isecff', 'Referencing call, apply or bind in Angular expressions is disallowed! ' +
+                      'Expression: apply()');
+            });
+
+
+            // IE8 doesn't have Function.prototype.bind
+            if (!msie || msie > 8) {
+              it('should NOT allow invocation to Function.bind', function () {
+                scope.bind = Function.prototype.bind;
+
+                expect(function () {
+                  scope.$eval('$eval.bind()');
+                }).toThrowMinErr(
+                    '$parse', 'isecff', 'Referencing call, apply or bind in Angular expressions is disallowed! ' +
+                        'Expression: $eval.bind()');
+
+                expect(function () {
+                  scope.$eval('bind()');
+                }).toThrowMinErr(
+                    '$parse', 'isecff', 'Referencing call, apply or bind in Angular expressions is disallowed! ' +
+                        'Expression: bind()');
+              });
+            }
+          });
+
+          describe('Object constructor', function() {
+
+            it('should NOT allow access to Object constructor that has been aliased', function() {
+              scope.foo = { "bar": Object };
+
+              expect(function() {
+                scope.$eval('foo.bar.keys(foo)');
+              }).toThrowMinErr(
+                  '$parse', 'isecobj', 'Referencing Object in Angular expressions is disallowed! ' +
+                      'Expression: foo.bar.keys(foo)');
+
+              expect(function() {
+                scope.$eval('foo["bar"]["keys"](foo)');
+              }).toThrowMinErr(
+                  '$parse', 'isecobj', 'Referencing Object in Angular expressions is disallowed! ' +
+                      'Expression: foo["bar"]["keys"](foo)');
+            });
+          });
 
           describe('Window and $element/node', function() {
             it('should NOT allow access to the Window or DOM when indexing', inject(function($window, $document) {
@@ -753,14 +794,15 @@ describe('parser', function() {
               expect(function() {
                 scope.$eval('wrap["w"]', scope);
               }).toThrowMinErr(
-                      '$parse', 'isecwindow', 'Referencing the Window in Angular expressions is ' +
+                  '$parse', 'isecwindow', 'Referencing the Window in Angular expressions is ' +
                       'disallowed! Expression: wrap["w"]');
               expect(function() {
                 scope.$eval('wrap["d"]', scope);
               }).toThrowMinErr(
-                      '$parse', 'isecdom', 'Referencing DOM nodes in Angular expressions is ' +
+                  '$parse', 'isecdom', 'Referencing DOM nodes in Angular expressions is ' +
                       'disallowed! Expression: wrap["d"]');
             }));
+
 
             it('should NOT allow access to the Window or DOM returned from a function', inject(function($window, $document) {
               scope.getWin = valueFn($window);
@@ -769,12 +811,12 @@ describe('parser', function() {
               expect(function() {
                 scope.$eval('getWin()', scope);
               }).toThrowMinErr(
-                      '$parse', 'isecwindow', 'Referencing the Window in Angular expressions is ' +
+                  '$parse', 'isecwindow', 'Referencing the Window in Angular expressions is ' +
                       'disallowed! Expression: getWin()');
               expect(function() {
                 scope.$eval('getDoc()', scope);
               }).toThrowMinErr(
-                      '$parse', 'isecdom', 'Referencing DOM nodes in Angular expressions is ' +
+                  '$parse', 'isecdom', 'Referencing DOM nodes in Angular expressions is ' +
                       'disallowed! Expression: getDoc()');
             }));
 
@@ -783,12 +825,12 @@ describe('parser', function() {
               expect(function() {
                 scope.$eval('a.b.win.alert(1)', scope);
               }).toThrowMinErr(
-                      '$parse', 'isecwindow', 'Referencing the Window in Angular expressions is ' +
+                  '$parse', 'isecwindow', 'Referencing the Window in Angular expressions is ' +
                       'disallowed! Expression: a.b.win.alert(1)');
               expect(function() {
                 scope.$eval('a.b.doc.on("click")', scope);
               }).toThrowMinErr(
-                      '$parse', 'isecdom', 'Referencing DOM nodes in Angular expressions is ' +
+                  '$parse', 'isecdom', 'Referencing DOM nodes in Angular expressions is ' +
                       'disallowed! Expression: a.b.doc.on("click")');
             }));
 
@@ -814,38 +856,144 @@ describe('parser', function() {
               expect(function() { scope.$eval('array'); }).not.toThrow();
             });
           });
-        });
 
-        describe('overriding constructor', function() {
-          it('should evaluate grouped expressions', function() {
-            scope.foo = function foo() {
-              return "foo";
-            };
-            // When not overridden, access should be restricted both by the dot operator and by the
-            // index operator.
-            expect(function() {
-              scope.$eval('foo.constructor()', scope)
-            }).toThrowMinErr(
-                    '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
-                    'Expression: foo.constructor()');
-            expect(function() {
-              scope.$eval('foo["constructor"]()', scope)
-            }).toThrowMinErr(
-                    '$parse', 'isecfn', 'Referencing Function in Angular expressions is disallowed! ' +
-                    'Expression: foo["constructor"]()');
+          describe('Disallowed fields', function() {
+            it('should NOT allow access or invocation of __defineGetter__', function() {
+              expect(function() {
+                scope.$eval('{}.__defineGetter__');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}.__defineGetter__("a", "".charAt)');
+              }).toThrowMinErr('$parse', 'isecfld');
 
-            // User defined value assigned to constructor.
-            scope.foo.constructor = function constructor() {
-              return "custom constructor";
-            };
-            // Dot operator should still block it.
+              expect(function() {
+                scope.$eval('{}["__defineGetter__"]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}["__defineGetter__"]("a", "".charAt)');
+              }).toThrowMinErr('$parse', 'isecfld');
+
+              scope.a = "__define";
+              scope.b = "Getter__";
+              expect(function() {
+                scope.$eval('{}[a + b]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}[a + b]("a", "".charAt)');
+              }).toThrowMinErr('$parse', 'isecfld');
+            });
+
+            it('should NOT allow access or invocation of __defineSetter__', function() {
+              expect(function() {
+                scope.$eval('{}.__defineSetter__');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}.__defineSetter__("a", "".charAt)');
+              }).toThrowMinErr('$parse', 'isecfld');
+
+              expect(function() {
+                scope.$eval('{}["__defineSetter__"]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}["__defineSetter__"]("a", "".charAt)');
+              }).toThrowMinErr('$parse', 'isecfld');
+
+              scope.a = "__define";
+              scope.b = "Setter__";
+              expect(function() {
+                scope.$eval('{}[a + b]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}[a + b]("a", "".charAt)');
+              }).toThrowMinErr('$parse', 'isecfld');
+            });
+
+            it('should NOT allow access or invocation of __lookupGetter__', function() {
+              expect(function() {
+                scope.$eval('{}.__lookupGetter__');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}.__lookupGetter__("a")');
+              }).toThrowMinErr('$parse', 'isecfld');
+
+              expect(function() {
+                scope.$eval('{}["__lookupGetter__"]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}["__lookupGetter__"]("a")');
+              }).toThrowMinErr('$parse', 'isecfld');
+
+              scope.a = "__lookup";
+              scope.b = "Getter__";
+              expect(function() {
+                scope.$eval('{}[a + b]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}[a + b]("a")');
+              }).toThrowMinErr('$parse', 'isecfld');
+            });
+
+            it('should NOT allow access or invocation of __lookupSetter__', function() {
+              expect(function() {
+                scope.$eval('{}.__lookupSetter__');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}.__lookupSetter__("a")');
+              }).toThrowMinErr('$parse', 'isecfld');
+
+              expect(function() {
+                scope.$eval('{}["__lookupSetter__"]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}["__lookupSetter__"]("a")');
+              }).toThrowMinErr('$parse', 'isecfld');
+
+              scope.a = "__lookup";
+              scope.b = "Setter__";
+              expect(function() {
+                scope.$eval('{}[a + b]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}[a + b]("a")');
+              }).toThrowMinErr('$parse', 'isecfld');
+            });
+
+            it('should NOT allow access to __proto__', function() {
+              expect(function() {
+                scope.$eval('{}.__proto__');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}.__proto__.foo = 1');
+              }).toThrowMinErr('$parse', 'isecfld');
+
+              expect(function() {
+                scope.$eval('{}["__proto__"]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}["__proto__"].foo = 1');
+              }).toThrowMinErr('$parse', 'isecfld');
+
+              scope.a = "__pro";
+              scope.b = "to__";
+              expect(function() {
+                scope.$eval('{}[a + b]');
+              }).toThrowMinErr('$parse', 'isecfld');
+              expect(function() {
+                scope.$eval('{}[a + b].foo = 1');
+              }).toThrowMinErr('$parse', 'isecfld');
+            });
+          });
+
+          it('should prevent the exploit', function() {
             expect(function() {
-              scope.$eval('foo.constructor()', scope)
-            }).toThrowMinErr(
-                    '$parse', 'isecfld', 'Referencing "constructor" field in Angular expressions is disallowed! ' +
-                    'Expression: foo.constructor()');
-            // However, the index operator should allow it.
-            expect(scope.$eval('foo["constructor"]()', scope)).toBe('custom constructor');
+              scope.$eval('' +
+                  ' "".sub.call.call(' +
+                  '({})["constructor"].getOwnPropertyDescriptor("".sub.__proto__, "constructor").value,' +
+                  'null,' +
+                  '"alert(1)"' +
+                  ')()' +
+                  '');
+            }).toThrow();
           });
         });
 
@@ -952,6 +1100,22 @@ describe('parser', function() {
             fn.assign(scope, 123);
             expect(scope).toEqual({a:123});
           }));
+
+          it('should expose working assignment function for expressions ending with brackets', inject(function($parse) {
+            var fn = $parse('a.b["c"]');
+            expect(fn.assign).toBeTruthy();
+            var scope = {};
+            fn.assign(scope, 123);
+            expect(scope.a.b.c).toEqual(123);
+          }));
+
+          it('should expose working assignment function for expressions with brackets in the middle', inject(function($parse) {
+            var fn = $parse('a["b"].c');
+            expect(fn.assign).toBeTruthy();
+            var scope = {};
+            fn.assign(scope, 123);
+            expect(scope.a.b.c).toEqual(123);
+          }));
         });
 
 
@@ -1004,6 +1168,7 @@ describe('parser', function() {
             expect($parse('[].length').literal).toBe(false);
           }));
         });
+
 
         describe('constant', function() {
           it('should mark scalar value expressions as constant', inject(function($parse) {
