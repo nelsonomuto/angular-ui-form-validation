@@ -1,4 +1,4 @@
-# Angular ui form validation v1.1.9
+# Angular ui form validation v1.1.10
 [MIT LICENSE](/LICENSE.txt)
 
 
