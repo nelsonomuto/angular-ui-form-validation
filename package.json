@@ -1,64 +1,64 @@
 {
-    "name": "angular-ui-form-validation",
-    "version": "1.1.5",
-    "dependencies": {},
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/nelsonomuto/angular-ui-form-validation.git"
-    },
-    "keywords": [
-        "angular validation directive",
-        "angularjs validation directive",
-        "validation directive",
-        "angular validation",
-        "angularjs validation",
-        "javascript input validation",
-        "multiple input validation",
-        "order of priority validation"
-    ],
-    "devDependencies": {
-        "grunt": "^0.4.5",
-        "grunt-autoprefixer": "^0.8",
-        "grunt-concurrent": "^0.5",
-        "grunt-contrib-clean": "^0.5",
-        "grunt-contrib-coffee": "^0.10",
-        "grunt-contrib-compass": "^0.9",
-        "grunt-contrib-concat": "^0.4",
-        "grunt-contrib-connect": "^0.8",
-        "grunt-contrib-copy": "^0.5",
-        "grunt-contrib-cssmin": "^0.10",
-        "grunt-contrib-htmlmin": "^0.3",
-        "grunt-contrib-imagemin": "^0.7",
-        "grunt-contrib-jshint": "^0.10",
-        "grunt-contrib-uglify": "^0.5",
-        "grunt-contrib-watch": "^0.6",
-        "grunt-google-cdn": "^0.4",
-        "grunt-newer": "^0.7",
-        "grunt-ngmin": "0.0.3",
-        "grunt-rev": "^0.1",
-        "grunt-svgmin": "^0.4",
-        "grunt-usemin": "^2.3",
-        "jshint-stylish": "^0.4",
-        "load-grunt-tasks": "^0.6",
-        "time-grunt": "^0.4",
-        "underscore": "^1.6",
-        "karma-script-launcher": "^0.1",
-        "karma-chrome-launcher": "^0.1",
-        "karma-html2js-preprocessor": "^0.1",
-        "karma-firefox-launcher": "^0.1",
-        "karma-jasmine": "^0.1",
-        "karma-coffee-preprocessor": "^0.2",
-        "requirejs": "^2.1",
-        "karma-requirejs": "^0.2",
-        "karma-phantomjs-launcher": "^0.1",
-        "karma": "^0.12",
-        "grunt-karma": "^0.8",
-        "grunt-remove-logging": "^0.2.0"
-    },
-    "engines": {
-        "node": ">=0.8.0"
-    },
-    "scripts": {
-        "test": "grunt test"
-    }
+  "name": "angular-ui-form-validation",
+  "version": "1.1.4",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nelsonomuto/angular-ui-form-validation.git"
+  },
+  "keywords": [
+    "angular validation directive",
+    "angularjs validation directive",
+    "validation directive",
+    "angular validation",
+    "angularjs validation",
+    "javascript input validation",
+    "multiple input validation",
+    "order of priority validation"
+  ],
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^0.8",
+    "grunt-concurrent": "^0.5",
+    "grunt-contrib-clean": "^0.5",
+    "grunt-contrib-coffee": "^0.10",
+    "grunt-contrib-compass": "^0.9",
+    "grunt-contrib-concat": "^0.4",
+    "grunt-contrib-connect": "^0.8",
+    "grunt-contrib-copy": "^0.5",
+    "grunt-contrib-cssmin": "^0.10",
+    "grunt-contrib-htmlmin": "^0.3",
+    "grunt-contrib-imagemin": "^0.7",
+    "grunt-contrib-jshint": "^0.10",
+    "grunt-contrib-uglify": "^0.5",
+    "grunt-contrib-watch": "^0.6",
+    "grunt-google-cdn": "^0.4",
+    "grunt-newer": "^0.7",
+    "grunt-ngmin": "0.0.3",
+    "grunt-rev": "^0.1",
+    "grunt-svgmin": "^0.4",
+    "grunt-usemin": "^2.3",
+    "jshint-stylish": "^0.4",
+    "load-grunt-tasks": "^0.6",
+    "time-grunt": "^0.4",
+    "underscore": "^1.6",
+    "karma-script-launcher": "^0.1",
+    "karma-chrome-launcher": "^0.1",
+    "karma-html2js-preprocessor": "^0.1",
+    "karma-firefox-launcher": "^0.1",
+    "karma-jasmine": "^0.1",
+    "karma-coffee-preprocessor": "^0.2",
+    "requirejs": "^2.1",
+    "karma-requirejs": "^0.2",
+    "karma-phantomjs-launcher": "^0.1",
+    "karma": "^0.12",
+    "grunt-karma": "^0.8",
+    "grunt-remove-logging": "^0.2.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
 }
