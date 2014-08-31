@@ -41,27 +41,14 @@
         </span>
       </header>
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/nelsonomuto/angular-ui-form-validation/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/nelsonomuto/angular-ui-form-validation/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
 
 
       <span class="banner-fix"></span>
 
 
       <section id="main_content">
-        <h1>
-<a name="angular-ui-form-validation" class="anchor" href="#angular-ui-form-validation"><span class="octicon octicon-link"></span></a>Angular ui form validation</h1>
 
-<p><a href="/LICENSE.txt">MIT LICENSE</a></p>
 
-<p>Fully unit tested <a href="/app/scripts/directives/customvalidation/customValidations.spec.js">customValidationTypes.spec.js</a> | <a href="https://travis-ci.org/nelsonomuto/angular-ui-form-validation"><img src="https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master" alt="Build Status"></a></p>
-
-<p><strong>Supports angular versions 1.0.7 and greater.</strong> Because there are no dependencies other than angular, we are able to be backwards compatible with angular all the way to version 1.0.7. <a href="https://david-dm.org/nelsonomuto/angular-ui-form-validation"><img src="https://david-dm.org/nelsonomuto/angular-ui-form-validation.png" alt="Dependencies status"></a> </p>
-
-<p>Note that the <strong>dev-</strong>dependencies are NOT used nor present in the release. <a href="https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies"><img src="https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png" alt="devDependency Status"></a></p>
 <h3>Interactive Demo</h3>
 <form ng-controller="MainCtrl" novalidate>
         <label for="username">Username</label>
@@ -76,43 +63,11 @@
         <input type="text" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword" validation-confirm-password="true" />
         <span class="help-block">only validates when password is valid</span>
 </form>
-<h4>
-See <a name="plunker-demo" class="anchor" href="#plunker-demo"><span class="octicon octicon-link"></span></a><a href="http://plnkr.co/edit/eDgcM0X0R2z0P8q1BGVK?p=preview">Plunker Demo</a>
-</h4>
 
-<h2>
-<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
-<blockquote>
-<p>The idea behind this component is to encourage code reuse and eliminate boilerplate redundancy by doing three basic things:</p>
-</blockquote>
 
-<p><strong>(1)</strong> Provides a list of 12 commonly used validations that you may plug in to your form fields.</p>
 
-<p><strong>(2)</strong> Gives you the flexibility to add your own custom validations. Either locally on your view/template controller or in a centralized customValidationTypes where you can re-use them across your application.</p>
-
-<p><strong>(3)</strong> Allows you to create the markup for how your errors will be displayed separately in any number of isolated templates that can be easily re-used across different forms.</p>
-
-<p>The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.</p>
-
-<h3>
-<a name="2-step-install" class="anchor" href="#2-step-install"><span class="octicon octicon-link"></span></a>2-step Install:</h3>
-
-<ol>
-<li><p>a. Either clone &amp; build this repository
-b. <a href="https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js">or Download the release</a>
-c. or via bower <code>$ bower install angular-ui-form-validation</code> (current release is 0.0.2)</p></li>
-<li>
-<p>Add the following single dependency to your app module:</p>
-
-<div class="highlight highlight-javascript"><pre>  <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'&lt;your_app_module_name&gt;'</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">'directives.customvalidation.customValidationsTypes'</span><span class="p">,</span>
-  <span class="p">])</span>
-</pre></div>
-</li>
-</ol><p><img src="/errorMessageNoSpace.png" alt="custom validation message for no space" title="validation-no-space"></p>
-
-<div class="highlight highlight-html"><pre> <span class="nt">&lt;form</span> <span class="na">novalidate</span><span class="nt">&gt;</span>    
+<div class="highlight highlight-html"><pre> <span class="nt">&lt;form</span> <span class="na">novalidate</span><span class="nt">&gt;</span>
     <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"username"</span><span class="nt">&gt;</span>Username<span class="nt">&lt;/label&gt;</span>
     <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"username"</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">ng-model=</span><span class="s">"user.username"</span>
       <span class="na">validation-max-length=</span><span class="s">"10"</span>
@@ -124,7 +79,7 @@ c. or via bower <code>$ bower install angular-ui-form-validation</code> (current
     <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"firstname"</span><span class="nt">&gt;</span>First Name<span class="nt">&lt;/label&gt;</span>
 
     <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"firstname"</span> <span class="na">name=</span><span class="s">"firstname"</span> <span class="na">ng-model=</span><span class="s">"user.firstname"</span>
-      <span class="na">validation-min-length=</span><span class="s">"{ value: 5, template: 'ErrorTemplateOne.html' }"</span>  
+      <span class="na">validation-min-length=</span><span class="s">"{ value: 5, template: 'ErrorTemplateOne.html' }"</span>
       <span class="na">validation-max-length=</span><span class="s">"10"</span>
       <span class="na">validation-no-special-chars=</span><span class="s">"true"</span>
     <span class="nt">/&gt;</span>
@@ -133,41 +88,7 @@ c. or via bower <code>$ bower install angular-ui-form-validation</code> (current
 <span class="nt">&lt;/form&gt;</span>
 </pre></div>
 
-<h3>
-<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h3>
 
-<h4>
-<a name="custom-validation-types" class="anchor" href="#custom-validation-types"><span class="octicon octicon-link"></span></a>Custom validation types</h4>
-
-<p>Look at <a href="/app/scripts/directives/customvalidationtypes/customValidationTypes.js">customValidationTypes.js</a></p>
-
-<p>Here's an example of what a validation object looks like. It has three properties, the <strong>customValidationAttribute</strong> is the name that will be used to construct the directive for the validation, the <strong>errorMessage</strong> and <strong>validator</strong> are self-descriptive:</p>
-
-<div class="highlight highlight-javascript"><pre>    <span class="p">{</span>
-            <span class="nx">customValidationAttribute</span><span class="o">:</span> <span class="s1">'validationConfirmPassword'</span><span class="p">,</span>
-            <span class="nx">errorMessage</span><span class="o">:</span> <span class="s1">'Passwords do not match.'</span><span class="p">,</span>
-            <span class="nx">validator</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">errorMessageElement</span><span class="p">,</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">attr</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">modelCtrl</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">model</span><span class="p">.</span><span class="nx">password</span><span class="p">.</span><span class="nx">trimRight</span><span class="p">()</span> <span class="o">===</span> <span class="nx">element</span><span class="p">.</span><span class="nx">val</span><span class="p">().</span><span class="nx">trimRight</span><span class="p">();</span>
-            <span class="p">}</span>
-    <span class="p">},</span>  
-</pre></div>
-
-<h5>
-<a name="validation-order-of-priority" class="anchor" href="#validation-order-of-priority"><span class="octicon octicon-link"></span></a>Validation order of priority</h5>
-
-<p>The order of priority is given first to any validations defined locally on the validationDynamicallyDefined directive and thereafter based on the index position of the validation object in the array where it is defined. Ex: in <a href="/app/scripts/directives/customvalidationtypes/customValidationTypes.js">customValidationTypes.js</a> validationFieldRequired is given priority over validationConfirmPassword, therefore in the case that both are invalid then validationFieldRequired message is the one displayed.</p>
-
-<h5>
-<a name="adding-custom-validation-types" class="anchor" href="#adding-custom-validation-types"><span class="octicon octicon-link"></span></a>Adding custom validation types</h5>
-
-<p>To add your own custom validation types you will need to create a module that mirrors <a href="/app/scripts/directives/customvalidationtypes/customValidationTypes.js">directives.customvalidation.customValidationsTypes</a> except for ofcourse you will have your own validations and simply add this module as a dependency to your app in addition to directives.customvalidation.customValidationsTypes</p>
-
-<h5>
-<a name="locally-defined-custom-validation---validationdynamicallydefined" class="anchor" href="#locally-defined-custom-validation---validationdynamicallydefined"><span class="octicon octicon-link"></span></a>Locally defined custom validation - validationDynamicallyDefined</h5>
-
-<p>The validation-dynamically-defined directive gives you the ability to define a validation local to the scope alone.</p>
-
-<p><a href="http://plnkr.co/edit/owd9I1eNgFmQieaCg8Y8?p=preview">Here's a plunker with an example of how to accomplish this.</a></p>
       </section>
 
       <footer>
