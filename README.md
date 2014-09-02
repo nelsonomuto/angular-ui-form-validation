@@ -7,7 +7,23 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 [![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
 [![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 -->
-
+### Install:
+ 1. a.) Either clone & build this repository
+    b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
+    c.) or via bower `$ bower install angular-ui-form-validation`
+    d.) or via npm `$ npm install angular-ui-form-validation`
+ 
+ 2. Ensure jquery (any version >= 1.6.0) is loaded before your angular (any version >= 1.0.7) app is loaded.
+ 3. Add jquery as a dependency before the angular script tag. Example ```<script src="bower_components/jquery/jquery.js"></script>``` or from wherever you are pulling jquery. 
+ 4. Add a script the validation dependency script tag to the source after the angular script tag, if you used bower install it will be ```<script src="bower_components/angular-ui-form-validation/dist/angular-ui-form-validation.js"></script>```
+    with npm install it will be ```<script src="node_modules/angular-ui-form-validation/dist/angular-ui-form-validation.js"></script>```
+ 5. Add the following single dependency to your app module:
+ ```javascript
+    angular.module('<your_app_module_name>', [
+      'directives.customvalidation.customValidationsTypes',
+    ])
+ ```
+ 
 There are 2 other angularjs validation plugins right now with a similar goal of reducing boilerplate code to ease the work of developers. One is Huei Tan's https://github.com/huei90/angular-validation and the other is kelp404's https://github.com/kelp404/angular-validator.
 
 I have forked both of these repos and analyzed them. Both Huei and Kelp's implementation are quite similar, down to the organization of the source code. I believe the former was heavily influenced by the latter. 
@@ -102,20 +118,6 @@ locallyDefinedValidations: [
 ```
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
-
-### Install:
- 1. a.) Either clone & build this repository
-    b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
-    c.) or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
- 
- 2. Ensure jquery (any version >= 1.6.0) is loaded before your angular (any version >= 1.0.7) app is loaded.
-
- 3. Add the following single dependency to your app module:
- ```javascript
-    angular.module('<your_app_module_name>', [
-      'directives.customvalidation.customValidationsTypes',
-    ])
- ```
 
 ![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
 
