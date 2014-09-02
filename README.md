@@ -10,11 +10,12 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 ### Install:
  1. a.) Either clone & build this repository
     b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
-    c.) or via bower `$ bower install angular-ui-form-validation` (current release is 0.0.2)
+    c.) or via bower `$ bower install angular-ui-form-validation`
+    d.) or via npm `$ npm install angular-ui-form-validation`
  
  2. Ensure jquery (any version >= 1.6.0) is loaded before your angular (any version >= 1.0.7) app is loaded.
- 3. Add a script tag to the source, example if you used bower it will be ````<script src="bower_components/angular-ui-form-validation/dist/angular-ui-form-validation.js"></script>```
-    with npm it will be ```<script src="node_modules/angular-ui-form-validation/dist/angular-ui-form-validation.js"></script>```
+ 3. Add a script tag to the source, if you used bower install it will be ```<script src="bower_components/angular-ui-form-validation/dist/angular-ui-form-validation.js"></script>```
+    with npm install it will be ```<script src="node_modules/angular-ui-form-validation/dist/angular-ui-form-validation.js"></script>```
  4. Add the following single dependency to your app module:
  ```javascript
     angular.module('<your_app_module_name>', [
