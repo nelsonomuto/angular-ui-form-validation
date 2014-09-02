@@ -273,6 +273,17 @@ module.exports = function (grunt) {
             }
         },
 
+        ngAnnotate: {
+            options: {
+                singleQuotes: true
+            },
+            release: {
+                files: {
+                    '<%= yeoman.dist %>/<%= pkg.name %>.js': '<%= yeoman.dist %>/<%= pkg.name %>.js'
+                }
+            }
+        },
+
         // Replace Google CDN references
         cdnify: {
             dist: {
@@ -376,16 +387,16 @@ module.exports = function (grunt) {
         },
 
         uglify: {
-           distsourcefile: {
-             files: {
-                '<%= yeoman.dist %>/scripts/scripts.js': [
-                  '<%= yeoman.dist %>/scripts/scripts.js'
-                 ],
-                '<%= yeoman.dist %>/<%= pkg.name %>.js': [
-                  '<%= yeoman.dist %>/<%= pkg.name %>.js'
-                ]     
-             }
-           }
+            distsourcefile: {
+                files: {
+                    '<%= yeoman.dist %>/scripts/scripts.js': [
+                        '<%= yeoman.dist %>/scripts/scripts.js'
+                    ],
+                    '<%= yeoman.dist %>/<%= pkg.name %>.js': [
+                        '<%= yeoman.dist %>/<%= pkg.name %>.js'
+                    ]
+                }
+            }
         },
 
 
@@ -454,6 +465,7 @@ module.exports = function (grunt) {
         'concat',
         'removelogging',
         'ngmin',
+        'ngAnnotate',
         'copy:dist',
         'cdnify',
         'cssmin',
