@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-form-validation",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "dependencies": {
     "jquery": "^2.1.1"
   },
