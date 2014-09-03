@@ -41,7 +41,8 @@ angular.module('angularUiFormValidationApp')
         hasKids: null
       },
       states: ['', 'validState', 'invalidState1', 'invalidState2'],
-      locallyDefinedValidations: [                  
+      cities: ['', 'validCity', 'invalidCity1', 'invalidCity2'],
+      locallyDefinedValidations: [
           {
               identifier: 'noOnes',
               errorMessage: 'Cannot contain the number one',

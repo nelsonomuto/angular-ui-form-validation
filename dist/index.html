@@ -11,7 +11,10 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="styles/6d6164af.main.css">
+        <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/form.css">
+        <!-- endbuild -->
 </head>
   <body ng-app="angularUiFormValidationApp">
     <!--[if lt IE 7]>
@@ -38,14 +41,44 @@
     </script>
 
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="bower_components/jquery/jquery.js"></script>
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
 
-        <script src="scripts/a91d5f71.plugins.js"></script>
+        <!-- build:js scripts/plugins.js -->
+        <script src="bower_components/sass-bootstrap/js/affix.js"></script>
+        <script src="bower_components/sass-bootstrap/js/alert.js"></script>
+        <script src="bower_components/sass-bootstrap/js/button.js"></script>
+        <script src="bower_components/sass-bootstrap/js/carousel.js"></script>
+        <script src="bower_components/sass-bootstrap/js/transition.js"></script>
+        <script src="bower_components/sass-bootstrap/js/collapse.js"></script>
+        <script src="bower_components/sass-bootstrap/js/dropdown.js"></script>
+        <script src="bower_components/sass-bootstrap/js/modal.js"></script>
+        <script src="bower_components/sass-bootstrap/js/scrollspy.js"></script>
+        <script src="bower_components/sass-bootstrap/js/tab.js"></script>
+        <script src="bower_components/sass-bootstrap/js/tooltip.js"></script>
+        <script src="bower_components/sass-bootstrap/js/popover.js"></script>
+        <!-- endbuild -->
 
-        <script src="scripts/8f97cc36.modules.js"></script>
+        <!-- build:js scripts/modules.js -->
+        <script src="bower_components/lazy.js/lazy.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+        <script src="bower_components/angular-template-retriever/dist/angular-template-retriever.js"></script>
+        <!-- endbuild -->
 
-        <script src="scripts/5c511395.scripts.js"></script>
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/JSOL/jsol.js"></script>
+        <!--<script src="scripts/directives/invalidinputformatter/invalidInputFormatter.js"></script>-->
+        <!--<script src="scripts/directives/customvalidation/customValidations.js"></script>-->
+        <!--<script src="scripts/directives/customvalidationtypes/customValidationTypes.js"></script>-->
+    <script src="bower_components/angular-ui-form-validation/dist/angular-ui-form-validation.js"></script>
+        
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <!-- endbuild -->
 </body>
 </html>
