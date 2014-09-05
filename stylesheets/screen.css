@@ -532,7 +532,7 @@ dd p:first-child {
   text-align: center;
   font-style: italic;
   margin: 1.1em 0 .38em;
-  line-height: 1.2;
+  line-height: 3;
   padding-bottom: 10px
 }
 

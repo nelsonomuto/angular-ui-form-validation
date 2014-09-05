@@ -11,20 +11,25 @@ angular.module('angularUiFormValidationApp', [
         confirmPassword: null,
         email: null,
         firstName: null,
-        lastName: null
+        lastName: null,
+        city: null,
+        state: null
       },
-      locallyDefinedValidations: [                  
+      states: ['', 'validState', 'invalidState1', 'invalidState2'],
+      cities: ['', 'validCity', 'invalidCity1', 'invalidCity2'],
+      locallyDefinedValidations: [
           {
+              identifier: 'noOnes',
               errorMessage: 'Cannot contain the number one',
-              validator: function (errorMessageElement, val){
-                  return /1/.test(val) !== true;    
+              validator: function (errorMessageElement, val) {
+                  return /1/.test(val) !== true;
               }
           },
           {
               errorMessage: 'Cannot contain the number two',
               validator: function (errorMessageElement, val){
-                  return /2/.test(val) !== true;      
-              } 
+                  return /2/.test(val) !== true;
+              }
           }
       ]
   });
