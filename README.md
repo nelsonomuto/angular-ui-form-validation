@@ -7,7 +7,7 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 [![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.svg?style=flat)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
 [![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.svg?style=flat)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 
-### Install:
+### Install
  1. a.) Either clone & build this repository
     b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
     c.) or via bower `$ bower install angular-ui-form-validation`
