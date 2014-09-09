@@ -3,10 +3,10 @@
 
 
 Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.png?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
-<!---
-[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
-[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.png)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
--->
+
+[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.svg?style=flat)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
+[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.svg?style=flat)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
+
 ### Install:
  1. a.) Either clone & build this repository
     b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
@@ -23,7 +23,8 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
       'directives.customvalidation.customValidationsTypes',
     ])
  ```
- 
+###Comparison with similar projects
+
 There are 2 other angularjs validation plugins right now with a similar goal of reducing boilerplate code to ease the work of developers. One is Huei Tan's https://github.com/huei90/angular-validation and the other is kelp404's https://github.com/kelp404/angular-validator.
 
 I have forked both of these repos and analyzed them. Both Huei and Kelp's implementation are quite similar, down to the organization of the source code. I believe the former was heavily influenced by the latter. 
