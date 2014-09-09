@@ -23,7 +23,8 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
       'directives.customvalidation.customValidationsTypes',
     ])
  ```
-###Comparison with similar projects
+ 
+### Comparison with similar projects
 
 There are 2 other angularjs validation plugins right now with a similar goal of reducing boilerplate code to ease the work of developers. One is Huei Tan's https://github.com/huei90/angular-validation and the other is kelp404's https://github.com/kelp404/angular-validator.
 
