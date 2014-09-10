@@ -20,7 +20,7 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
  5. Add the following single dependency to your app module:
  ```javascript
     angular.module('<your_app_module_name>', [
-      'directives.customvalidation.customValidationsTypes',
+      'directives.customvalidation.customValidationTypes',
     ])
  ```
  
