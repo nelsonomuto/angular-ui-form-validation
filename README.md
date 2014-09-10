@@ -146,7 +146,7 @@ The order of priority is given first to any validations defined locally on the v
 
 ##### Adding custom validation types
 
-To add your own custom validation types you will need to create a module that mirrors [directives.customvalidation.customValidationsTypes](/app/scripts/directives/customvalidationtypes/customValidationTypes.js) except for ofcourse you will have your own validations and simply add this module as a dependency to your app in addition to directives.customvalidation.customValidationsTypes
+To add your own custom validation types you will need to create a module that mirrors [directives.customvalidation.customValidationTypes](/app/scripts/directives/customvalidationtypes/customValidationTypes.js) except for ofcourse you will have your own validations and simply add this module as a dependency to your app in addition to directives.customvalidation.customValidationTypes
 
 ##### Locally defined custom validation - validationDynamicallyDefined
 
