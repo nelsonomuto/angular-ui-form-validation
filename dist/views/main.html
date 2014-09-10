@@ -25,8 +25,10 @@
     <div class="Select">
     <label for="state">State</label>
     <select inline-input-label ng-model="user.state" name="state" id="state" ng-options="state for state in states" validation-field-required="true" validation-dynamically-defined="locallyDefinedValidations">
+    </select>
     <label for="city">City</label>
     <select inline-input-label ng-model="user.city" name="city" id="city" ng-options="city for city in cities" validation-field-required="true" validation-dynamically-defined="locallyDefinedValidations">
+    </select>
     </div>
     <span class="help-block">Select support available only for validation-field-required and validation-dynamically-defined, user may augment with their own customValidationTypes where they see fit. But most use cases for validating selects should be sufficiently covered by validation-field-required and validation-dynamically-defined.</span>
 
