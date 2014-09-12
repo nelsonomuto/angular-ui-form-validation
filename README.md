@@ -8,6 +8,9 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 [![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.svg?style=flat&breakCache=0)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 
 ### Install
+
+[See Youtube Install Video](https://www.youtube.com/watch?v=0wG5ZNogY-s)
+
  1. a.) Either clone & build this repository
     b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
     c.) or via bower `$ bower install angular-ui-form-validation`
@@ -23,7 +26,7 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
       'directives.customvalidation.customValidationTypes',
     ])
  ```
- 
+
 ### Comparison with similar projects
 
 There are 2 other angularjs validation plugins right now with a similar goal of reducing boilerplate code to ease the work of developers. One is Huei Tan's https://github.com/huei90/angular-validation and the other is kelp404's https://github.com/kelp404/angular-validator.
