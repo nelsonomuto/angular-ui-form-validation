@@ -939,8 +939,8 @@ describe('ngRepeat', function() {
     it('should throw error on adding existing duplicates and recover', function() {
       scope.items = [a, a, a];
       scope.$digest();
-      expect($exceptionHandler.errors.shift().message).
-          toMatch(/^\[ngRepeat:dupes\] Duplicates in a repeater are not allowed\. Use 'track by' expression to specify unique keys\. Repeater: item in items, Duplicate key: object:003/);
+      expect($exceptionHandler.errors.shift().message).toMatch(
+          /^\[ngRepeat:dupes\] Duplicates in a repeater are not allowed\. Use 'track by' expression to specify unique keys\. Repeater: item in items, Duplicate key: object:003, Duplicate value: {}/);
 
       // recover
       scope.items = [a];
@@ -959,8 +959,8 @@ describe('ngRepeat', function() {
     it('should throw error on new duplicates and recover', function() {
       scope.items = [d, d, d];
       scope.$digest();
-      expect($exceptionHandler.errors.shift().message).
-          toMatch(/^\[ngRepeat:dupes\] Duplicates in a repeater are not allowed\. Use 'track by' expression to specify unique keys\. Repeater: item in items, Duplicate key: object:009/);
+      expect($exceptionHandler.errors.shift().message).toMatch(
+          /^\[ngRepeat:dupes\] Duplicates in a repeater are not allowed\. Use 'track by' expression to specify unique keys\. Repeater: item in items, Duplicate key: object:009, Duplicate value: {}/);
 
       // recover
       scope.items = [a];

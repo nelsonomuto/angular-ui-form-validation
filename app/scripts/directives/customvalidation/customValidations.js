@@ -11,6 +11,7 @@ angular_ui_form_validations = (function(){
     dynamicallyDefinedValidation = {
         customValidationAttribute: 'validationDynamicallyDefined',
         errorCount: 0,
+        latestElement: null,
         _errorMessage: 'Field is invalid',
         _success: function () {},
         success: function () { 
@@ -61,6 +62,7 @@ angular_ui_form_validations = (function(){
                 .each(function(valid){
                     if(valid === false){
                         dynamicallyDefinedValidation.errorCount++;
+                        dynamicallyDefinedValidation.latestElement = element;
                         return false;
                     } 
                     return true;
@@ -83,7 +85,7 @@ angular_ui_form_validations = (function(){
         var isCurrentlyDisplayingAnErrorMessageInATemplate = false;
         Lazy(customTemplates)
             .each(function(template){
-                if(template.parent().is(inputElement.parents('form'))){
+                if(template.attr('templateUid') === inputElement.attr('templateUid')){
                     isCurrentlyDisplayingAnErrorMessageInATemplate = true;  
                     currentlyDisplayedTemplate = template;
                     return false;
@@ -200,7 +202,14 @@ angular_ui_form_validations = (function(){
 
                 addWatcherForDynamicallyDefinedValidations = function () {
                     $scope.$watch(function(){ return dynamicallyDefinedValidation.errorCount; }, function () {
-                        errorMessageElement.html(dynamicallyDefinedValidation.errorMessage());
+                        if (dynamicallyDefinedValidation.errorCount === 0) {
+                            return;
+                        }
+                        var currentElementFieldName = errorMessageElement.attr('data-custom-field-name');
+                        var latestValidatedFieldName = dynamicallyDefinedValidation.latestElement.attr('name');
+                        if(latestValidatedFieldName === currentElementFieldName) {
+                            errorMessageElement.html(dynamicallyDefinedValidation.errorMessage());
+                        }
                     });
                 };
 
@@ -209,12 +218,16 @@ angular_ui_form_validations = (function(){
                     customErrorTemplate = angular.element(template);
                     customErrorTemplate.html('');
                     errorMessageToggled = function () {
+                        var templateUid = Math.random();
                         if(errorMessageElement.css('display') === 'inline' || errorMessageElement.css('display') === 'block') {
                             $log.log('error showing');
+                            $element.attr('templateUid', templateUid);
+                            customErrorTemplate.attr('templateUid', templateUid);
                             errorMessageElement.wrap(customErrorTemplate);
                             customTemplates.push(angular.element(errorMessageElement.parents()[0]));
                         } else {
                             $log.log('error NOT showing');
+                            $element.removeAttr('templateUid');
                             if(errorMessageElement.parent().is('.' + customErrorTemplate.attr('class'))){
                                 errorMessageElement.unwrap(customErrorTemplate);
                             }
@@ -410,9 +423,11 @@ angular_ui_form_validations = (function(){
 
                     ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
+                    var status = isValid === true ? ' passed' : ' failed';
+
                     customValidationBroadcastArg = {
                         isValid: isValid,
-                        validation: formatterArgs.customValidationAttribute,
+                        validation: $element.attr('id') + ' ' + formatterArgs.customValidationAttribute + status,
                         model: model,
                         controller: ngModelController,
                         element: $element

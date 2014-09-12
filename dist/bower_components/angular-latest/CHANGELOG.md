@@ -1,3 +1,549 @@
+# NOTICE: Pending Breaking Change
+
+The next 1.3.0 release candidate (1.3.0-rc.2) will contain a perf-related change that is likely to
+introduce breakages in some applications. The change will affect filters and function call
+expressions, and will not call the function if the variables passed to the function are primitive
+values and have not changed since the last digest loop.
+
+Example:
+
+```html
+//date filter would only be called if the 'timeCreated' property has changed
+<span ng-bind="timeCreated|date"></span>
+
+//custom filter would break if depends on data changed by user other than 'cost'
+<span ng-bind="cost|i18nLocalizer">
+```
+
+
+<a name="1.3.0-rc.1"></a>
+# 1.3.0-rc.1 backyard-atomicity (2014-09-09)
+
+
+## Bug Fixes
+
+- **$location:**
+  - don't call toString on null values
+  ([c3a58a9f](https://github.com/angular/angular.js/commit/c3a58a9f34919f121587540e03ecbd51b25198d4))
+  - remove an unused parameter of $location.url
+  ([99d95f16](https://github.com/angular/angular.js/commit/99d95f1639b64c39231448d77209676b54e6f0be))
+  - allow numeric location setter arguments
+  ([adb5c6d6](https://github.com/angular/angular.js/commit/adb5c6d6cc76b928436743707727ab0974d6810b),
+   [#7054](https://github.com/angular/angular.js/issues/7054))
+  - set `baseHref` in mock browser to `/`
+  ([fc706d13](https://github.com/angular/angular.js/commit/fc706d13d80bb40eb3dade58ea4b92dca33ce4e7),
+   [#8866](https://github.com/angular/angular.js/issues/8866), [#8889](https://github.com/angular/angular.js/issues/8889))
+- **$parse:** disallow passing Function to Array.sort
+  ([bd8ad0fb](https://github.com/angular/angular.js/commit/bd8ad0fbe81f6c280baa26a596d78e58fc7842e6))
+- **input:** check `scope.$$phase` only on `$rootScope`
+  ([bf59d727](https://github.com/angular/angular.js/commit/bf59d7274f4a667c5b19e6d4ba5ed2730ca2fe42))
+- **ngAnimate:** support removing classes from SVG elements when using jQuery
+  ([b3b67213](https://github.com/angular/angular.js/commit/b3b672130d4d1c6f13bdf7e58be76b2aafea2497),
+   [#8872](https://github.com/angular/angular.js/issues/8872), [#8893](https://github.com/angular/angular.js/issues/8893))
+- **ngEventDirs:** check `scope.$$phase` only on `$rootScope`
+  ([203ea10f](https://github.com/angular/angular.js/commit/203ea10f9ea49d7e29569a4232d3b2a666307cd8),
+   [#8891](https://github.com/angular/angular.js/issues/8891))
+- **ngForm:** don't clear validity of whole form when removing control
+  ([953ee22f](https://github.com/angular/angular.js/commit/953ee22f76f8c1137949ed07f36fafc5bbfeb7fe),
+   [#8863](https://github.com/angular/angular.js/issues/8863))
+- **ngInclude:** correctly add svg-namespaced template content
+  ([6639ca9d](https://github.com/angular/angular.js/commit/6639ca9d6bc00a6e3a31e54c50474361ae3561c6),
+   [#7538](https://github.com/angular/angular.js/issues/7538), [#8981](https://github.com/angular/angular.js/issues/8981), [#8997](https://github.com/angular/angular.js/issues/8997))
+- **ngModel:**
+  - update model value with async validators correctly
+  ([64c3b745](https://github.com/angular/angular.js/commit/64c3b745fba0792166f30e057f9251f263d80dac))
+  - render immediately also with async validators
+  ([f94d5515](https://github.com/angular/angular.js/commit/f94d551529b7c970c38b29e3073cec4e7f6b0e00))
+  - properly parse min/max date values as strings for date inputs
+  ([088545c1](https://github.com/angular/angular.js/commit/088545c1856ce1c3ec3416965dff65077a6e0523),
+   [#6755](https://github.com/angular/angular.js/issues/6755))
+  - revalidate the model when min/max expression values change for date inputs
+  ([b3502835](https://github.com/angular/angular.js/commit/b3502835039178296b730b7526e5666b66ba9156),
+   [#6755](https://github.com/angular/angular.js/issues/6755))
+  - consider ngMin/ngMax values when validating number input types
+  ([25541c1f](https://github.com/angular/angular.js/commit/25541c1f876a16c892d71faae11727bec7bba98c))
+  - revalidate the model when min/max expression values change for number inputs
+  ([7b273a2c](https://github.com/angular/angular.js/commit/7b273a2c978d5f5ef374f5335afab0ca7d8cfd4d),
+   [#2404](https://github.com/angular/angular.js/issues/2404))
+- **ngModelOptions:** do not trigger digest on `setViewValue` if debouncing
+  ([e322cd9b](https://github.com/angular/angular.js/commit/e322cd9b3b8b47b95c9de3edf631bb46f919c492),
+   [#8814](https://github.com/angular/angular.js/issues/8814), [#8850](https://github.com/angular/angular.js/issues/8850), [#8911](https://github.com/angular/angular.js/issues/8911))
+- **ngRepeat:** preserve original position of elements that are being animated away
+  ([ed637330](https://github.com/angular/angular.js/commit/ed6373300028deda9a0878b3975699d183c1f75c),
+   [#8918](https://github.com/angular/angular.js/issues/8918), [#8994](https://github.com/angular/angular.js/issues/8994))
+- **ngSwitch:** ensure correct iterator is passed to async function
+  ([712299c2](https://github.com/angular/angular.js/commit/712299c2a24390e74cd5c20f51cb1d78f0233b6f),
+   [#8833](https://github.com/angular/angular.js/issues/8833))
+- **numberFilter:** format numbers that round to zero as nonnegative
+  ([ae952fbf](https://github.com/angular/angular.js/commit/ae952fbf0be925a48743d1c925ffe4e31a42c280),
+   [#8489](https://github.com/angular/angular.js/issues/8489))
+- **orderBy:** allow arrayLike objects to be ordered
+  ([cbdaabfb](https://github.com/angular/angular.js/commit/cbdaabfb59bf3348588d5b581f2754e0f9f034a4),
+   [#8944](https://github.com/angular/angular.js/issues/8944))
+
+
+## Features
+
+- **angular.forEach:** add the array/object as the 3rd param like the native array forEach
+  ([df9e60c8](https://github.com/angular/angular.js/commit/df9e60c8e7453cdca2cb5a4fa48f3981ecc23a7d),
+   [#7902](https://github.com/angular/angular.js/issues/7902))
+- **ngModelOptions:** add allowInvalid option
+  ([3c538c1d](https://github.com/angular/angular.js/commit/3c538c1d21c43422c7b4cd9b69cb67981bce2b87),
+   [#8290](https://github.com/angular/angular.js/issues/8290), [#8313](https://github.com/angular/angular.js/issues/8313))
+
+
+## Performance Improvements
+
+- **$parse:**
+  - remove getterFn wrapper for internal use
+  ([b3b476db](https://github.com/angular/angular.js/commit/b3b476db7d34bc2f8b099ab5b993b1e899b9cffd),
+   [#8901](https://github.com/angular/angular.js/issues/8901))
+  - removing references to Parser/Lexer from parsed expressions
+  ([43c67ccd](https://github.com/angular/angular.js/commit/43c67ccd167aecc3549e1b7f7d100956204e3ed4))
+  - calculate array lengths once at start of loop
+  ([907b8c16](https://github.com/angular/angular.js/commit/907b8c1675865ac38dd055f3f304272e68b233d0))
+- **extend:** remove use of forEach to remove calls/closures/passing arguments
+  ([9bedeb33](https://github.com/angular/angular.js/commit/9bedeb3353969fba631ad9164edea3c38059fbda),
+   [#8898](https://github.com/angular/angular.js/issues/8898))
+- **jQuery:** only trigger $destroy if a handler exists
+  ([f6aa1c55](https://github.com/angular/angular.js/commit/f6aa1c55616b34215f562e0445e436210860ef04),
+   [#8859](https://github.com/angular/angular.js/issues/8859))
+
+
+## Breaking Changes
+
+- **ngModelController,formController:** due to [6046e14b](https://github.com/angular/angular.js/commit/6046e14bd22491168116e61ffdf5fd3fed5f135c),
+
+- `ctrl.$error` no longer contains entries for validators that were
+  successful.
+- `ctrl.$setValidity` now differentiates between `true`, `false`,
+  `undefined` and `null`, instead of previously only truthy vs falsy.
+
+Closes #8941- **ngSwitch:** due to [0f806d96](https://github.com/angular/angular.js/commit/0f806d9659b5b89a4bd9493364bc36398677e939),
+
+
+Ever since 0df93fd, tagged in v1.0.0rc1, the ngSwitch directive has had an undocumented `change`
+attribute, used for evaluating a scope expression when the switch value changes.
+
+While it's unlikely, applications which may be using this feature should work around the removal
+by adding a custom directive which will perform the eval instead. Directive controllers are
+re-instantiated when being transcluded, so by putting the attribute on each item that you want
+to be notified of a change to, you can more or less emulate the old behaviour.
+
+Example:
+
+```js
+angular.module("switchChangeWorkaround", []).
+  directive("onSwitchChanged", function() {
+    return {
+      linke: function($scope, $attrs) {
+        $scope.$parent.$eval($attrs.change);
+      }
+    };
+  });
+```
+
+```html
+<div ng-switch="switcher">
+  <div ng-switch-when="a" on-switch-changed="doSomethingInParentScope()"></div>
+  <div ng-switch-when="b" on-switch-changed="doSomethingInParentScope()"></div>
+</div>
+```
+
+Closes #8858
+Closes #8822
+
+
+<a name="1.2.24"></a>
+# 1.2.24 static-levitation (2014-09-09)
+
+
+## Bug Fixes
+
+- **$browser:** detect changes to the browser url that happened in sync
+  ([2ece4d03](https://github.com/angular/angular.js/commit/2ece4d0347a8a18d4d35993bb882ed6b5b24266c),
+   [#6976](https://github.com/angular/angular.js/issues/6976))
+- **$compile:**
+  - render nested transclusion at the root of a template
+  ([9d9cdfb5](https://github.com/angular/angular.js/commit/9d9cdfb575b89e96ae957c986734a49995e2b511),
+   [#8914](https://github.com/angular/angular.js/issues/8914), [#8925](https://github.com/angular/angular.js/issues/8925))
+  - render nested transclusion at the root of a template
+  ([466320f6](https://github.com/angular/angular.js/commit/466320f6911698048bae5406e341d25af7efafa0),
+   [#8914](https://github.com/angular/angular.js/issues/8914), [#8925](https://github.com/angular/angular.js/issues/8925))
+- **$location:**
+  - don't call toString on null values
+  ([c12e8d46](https://github.com/angular/angular.js/commit/c12e8d4665b635ba6b09d12802efb88d38b7ad5c))
+  - remove an unused parameter of $location.url
+  ([c65796d4](https://github.com/angular/angular.js/commit/c65796d496038554861e70da8012f9d0e2521e6d))
+  - allow numeric location setter arguments
+  ([68a09ba7](https://github.com/angular/angular.js/commit/68a09ba74d10a1490feca1d248f85b0023aa399b),
+   [#7054](https://github.com/angular/angular.js/issues/7054))
+- **$parse:** disallow passing Function to Array.sort
+  ([b39e1d47](https://github.com/angular/angular.js/commit/b39e1d47b9a1b39a9fe34c847a81f589fba522f8))
+- **form:** ensure concurrent animations use setClass
+  ([d7548fdf](https://github.com/angular/angular.js/commit/d7548fdf1ce6f543bf55d330985a83ef09d0cb83),
+   [#8166](https://github.com/angular/angular.js/issues/8166))
+- **input:** check `scope.$$phase` only on `$rootScope`
+  ([36e6de1d](https://github.com/angular/angular.js/commit/36e6de1d91937d73e900ac115ae366fbefcdf6da))
+- **ngEventDirs:**
+  - check `scope.$$phase` only on `$rootScope`
+  ([2712c2f1](https://github.com/angular/angular.js/commit/2712c2f1979db23eeb53be8a519b9f79bd75e217),
+   [#8891](https://github.com/angular/angular.js/issues/8891))
+  - execute `blur` and `focus` expression using `scope.$evalAsync`
+  ([54f0bc0f](https://github.com/angular/angular.js/commit/54f0bc0fe0c6b6d974d23f2c5ef07359dd93eb99),
+   [#4979](https://github.com/angular/angular.js/issues/4979), [#5945](https://github.com/angular/angular.js/issues/5945), [#8803](https://github.com/angular/angular.js/issues/8803), [#6910](https://github.com/angular/angular.js/issues/6910), [#5402](https://github.com/angular/angular.js/issues/5402))
+- **ngRepeat:** improve errors for duplicate items
+  ([1812af58](https://github.com/angular/angular.js/commit/1812af58c2d470d586c2a543c9a7db3f0baca04f))
+- **numberFilter:** format numbers that round to zero as nonnegative
+  ([7e02fa07](https://github.com/angular/angular.js/commit/7e02fa07eb5b02e75b1db0058d638af3d1074942),
+   [#8489](https://github.com/angular/angular.js/issues/8489))
+- **orderBy:** allow arrayLike objects to be ordered
+  ([94b0f2d3](https://github.com/angular/angular.js/commit/94b0f2d35de601ded3d93ea4fa78a4d9b139c0a0),
+   [#8944](https://github.com/angular/angular.js/issues/8944))
+
+
+## Breaking Changes
+
+- **ngEventDirs:** due to [54f0bc0f](https://github.com/angular/angular.js/commit/54f0bc0fe0c6b6d974d23f2c5ef07359dd93eb99),
+
+The `blur` and `focus` event fire synchronously, also during DOM operations
+that remove elements. This lead to errors as the Angular model was not
+in a consistent state. See this [fiddle](http://jsfiddle.net/fq1dq5yb/) for a demo.
+
+This change executes the expression of those events using
+`scope.$evalAsync` if an `$apply` is in progress, otherwise
+keeps the old behavior.
+
+Fixes #4979
+Fixes #5945
+Closes #8803
+Closes #6910
+Closes #5402
+
+
+
+
+<a name="1.3.0-RC.0"></a>
+# 1.3.0-RC.0 sonic-boltification (2014-08-29)
+
+
+## Bug Fixes
+
+- **$animate:**
+  - wait two until two digests are over until enabling animations
+  ([92576743](https://github.com/angular/angular.js/commit/92576743eec0cef5ffdd701b83f72a61e6489c3b),
+   [#8844](https://github.com/angular/angular.js/issues/8844))
+  - ensure guarded animations consider AJAX requests upon bootstrap
+  ([4bca4c44](https://github.com/angular/angular.js/commit/4bca4c44b95a7435722605a750804043f2960160),
+   [#8275](https://github.com/angular/angular.js/issues/8275), [#5262](https://github.com/angular/angular.js/issues/5262))
+  - use $timeout to handle the delay within staggering animations
+  ([23da6140](https://github.com/angular/angular.js/commit/23da614043fe5dcf0be132b86466eecb11c766a2),
+   [#7228](https://github.com/angular/angular.js/issues/7228), [#7547](https://github.com/angular/angular.js/issues/7547), [#8297](https://github.com/angular/angular.js/issues/8297), [#8547](https://github.com/angular/angular.js/issues/8547))
+- **$browser:** detect changes to the browser url that happened in sync
+  ([3be00df4](https://github.com/angular/angular.js/commit/3be00df495f6eed3b3d9587ebab1fdd633e94e08),
+   [#6976](https://github.com/angular/angular.js/issues/6976))
+- **$compile:** use the correct namespace for transcluded svg elements
+  ([cb73a37c](https://github.com/angular/angular.js/commit/cb73a37c7cae5cdebadf7b3ddd44c5a452495e4e),
+   [#8808](https://github.com/angular/angular.js/issues/8808), [#8816](https://github.com/angular/angular.js/issues/8816))
+- **$location:** always resolve relative links in html5mode to `<base>` url
+  ([22948807](https://github.com/angular/angular.js/commit/22948807e324eb0b182b15b31045dc306a9f3231),
+   [#8492](https://github.com/angular/angular.js/issues/8492), [#8172](https://github.com/angular/angular.js/issues/8172))
+- **$parse:** properly handle dots at the end of identifiers
+  ([8ac90357](https://github.com/angular/angular.js/commit/8ac90357a66ae0c62dbfe6db2c6eaf1d600ecc65),
+   [#4613](https://github.com/angular/angular.js/issues/4613), [#4912](https://github.com/angular/angular.js/issues/4912), [#8559](https://github.com/angular/angular.js/issues/8559))
+- **Angular:** remove duplicate nodeName_ references
+  ([a4520a74](https://github.com/angular/angular.js/commit/a4520a745d917c77f1d12cdbce48272c643f7255))
+- **currencyFilter:** pass through null and undefined values
+  ([c2aaddbe](https://github.com/angular/angular.js/commit/c2aaddbe4b21348aab8c13a78cdd6aaee846ae4e),
+   [#8605](https://github.com/angular/angular.js/issues/8605))
+- **docs:** don't throw exception on the 404 page
+  ([550ba01b](https://github.com/angular/angular.js/commit/550ba01b325fc29460030fc9c24fa00269dec2a9),
+   [#8518](https://github.com/angular/angular.js/issues/8518))
+- **input:**
+  - validate minlength/maxlength for non-string values
+  ([77ce5b89](https://github.com/angular/angular.js/commit/77ce5b89f97aa83c3eb1fe2e19375ef00a822015),
+   [#7967](https://github.com/angular/angular.js/issues/7967), [#8811](https://github.com/angular/angular.js/issues/8811))
+  - allow to use seconds in `input[time]` and `input[datetime-local]`
+  ([5f90340a](https://github.com/angular/angular.js/commit/5f90340abb78aa08dde4876328bcc00e46232e46))
+  - use year 1970 instead of 1900 for `input[time]`
+  ([29f0b568](https://github.com/angular/angular.js/commit/29f0b568debab7810752969d363d337099e96cdc))
+- **ngBindHtml:** throw error if interpolation is used in expression
+  ([cd21602d](https://github.com/angular/angular.js/commit/cd21602d5b1650d8be373618cb7320d697e32c4d),
+   [#8824](https://github.com/angular/angular.js/issues/8824))
+- **ngEventDirs:** execute `blur` and `focus` expression using `scope.$evalAsync`
+  ([719c747c](https://github.com/angular/angular.js/commit/719c747cd892ee933e7e414a7dc97e657b88317d),
+   [#4979](https://github.com/angular/angular.js/issues/4979), [#5945](https://github.com/angular/angular.js/issues/5945), [#8803](https://github.com/angular/angular.js/issues/8803), [#6910](https://github.com/angular/angular.js/issues/6910), [#5402](https://github.com/angular/angular.js/issues/5402))
+- **ngModel:**
+  - always format the viewValue as a string for text, url and email types
+  ([1eda1836](https://github.com/angular/angular.js/commit/1eda18365a348c9597aafba9d195d345e4f13d1e))
+  - allow non-assignable binding when getterSetter is used
+  ([ab878a6c](https://github.com/angular/angular.js/commit/ab878a6c038f47b95f3a7e85a4fdb599e0c73e63),
+   [#8704](https://github.com/angular/angular.js/issues/8704))
+  - treat undefined parse responses as parse errors
+  ([db044c40](https://github.com/angular/angular.js/commit/db044c408a7f8082758b96ab739348810c36e15a))
+- **ngRepeat:** improve errors for duplicate items
+  ([0604bb7b](https://github.com/angular/angular.js/commit/0604bb7b7a6156e33679396e805e327662d9a178))
+- **ngSwitch:** avoid removing DOM nodes twice within watch operation
+  ([c9b0bfec](https://github.com/angular/angular.js/commit/c9b0bfecc99837af1c97792b3ca3408ba182b0bb),
+   [#8662](https://github.com/angular/angular.js/issues/8662))
+- **numberFilter:** pass through null and undefined values
+  ([2ae10f67](https://github.com/angular/angular.js/commit/2ae10f67fcde3e172f695956301ef796b68a50c2),
+   [#8605](https://github.com/angular/angular.js/issues/8605), [#8842](https://github.com/angular/angular.js/issues/8842))
+
+
+## Features
+
+- **core:**
+  - add angular.reloadWithDebugInfo()
+  ([41c1b88](https://github.com/angular/angular.js/commit/41c1b8858f02c7310bfabdd545ebb28e90eb4258))
+- **$animate:**
+  - use promises instead of callbacks for animations
+  ([bf0f5502](https://github.com/angular/angular.js/commit/bf0f5502b1bbfddc5cdd2f138efd9188b8c652a9))
+  - coalesce concurrent class-based animations within a digest loop
+  ([2f4437b3](https://github.com/angular/angular.js/commit/2f4437b3a149eafb899f25933bd6c713b167d10e))
+- **$compile:**
+  - bind isolate scope properties to controller
+  ([5f3f25a1](https://github.com/angular/angular.js/commit/5f3f25a1a6f9d4f2a66e2700df3b9c5606f1c255),
+   [#7635](https://github.com/angular/angular.js/issues/7635), [#7645](https://github.com/angular/angular.js/issues/7645))
+  - allow disabling scope info
+  ([a1e5cd5f](https://github.com/angular/angular.js/commit/a1e5cd5fe3906ebee8c400247a1f793d3e2239fb))
+- **$compile/ngBind:** allow disabling binding info
+  ([3660fd09](https://github.com/angular/angular.js/commit/3660fd0912d3ccf6def8c9f02d8d4c0621c8d91f))
+- **$http:** implement mechanism for coalescing calls to $apply in $http
+  ([ea6fc6e6](https://github.com/angular/angular.js/commit/ea6fc6e69c2a2aa213c71ed4e917a0d54d064e4c),
+   [#8736](https://github.com/angular/angular.js/issues/8736), [#7634](https://github.com/angular/angular.js/issues/7634), [#5297](https://github.com/angular/angular.js/issues/5297))
+- **$rootScope:** implement $applyAsync to support combining calls to $apply into a single digest.
+  ([e94d454b](https://github.com/angular/angular.js/commit/e94d454b840f6cc55a440741382b407836ad245b))
+- **$templateRequest:** introduce the $templateRequest service
+  ([a70e2833](https://github.com/angular/angular.js/commit/a70e2833ea276107b11aafea96ef4a6724ad4d83))
+- **filter:** allow to define the timezone for formatting dates
+  ([4739b1d9](https://github.com/angular/angular.js/commit/4739b1d9daebfd094b6181c5f2cb52ff71e31c61))
+- **filterFilter:** pass index to function predicate
+  ([46343c60](https://github.com/angular/angular.js/commit/46343c603db6192daf5303b92eb664749326c7e6),
+   [#654](https://github.com/angular/angular.js/issues/654))
+- **input:** allow to define the timezone for parsing dates
+  ([cc6fc199](https://github.com/angular/angular.js/commit/cc6fc199f5abaacdf781aa03634337d776eb0fc9),
+   [#8447](https://github.com/angular/angular.js/issues/8447))
+- **minErr:** allow specifying ErrorConstructor in minErr constructor
+  ([a6bd4bc8](https://github.com/angular/angular.js/commit/a6bd4bc866a18f860c7548fa1b3f6d4c2a953416))
+- **ngModel:** provide validation API functions for sync and async validations
+  ([2ae4f40b](https://github.com/angular/angular.js/commit/2ae4f40be1803d999ca2a8cc30ec17ff19ea6d86))
+- **ngRoute:** alias string as redirectTo property in .otherwise()
+  ([3b5d75c0](https://github.com/angular/angular.js/commit/3b5d75c021e21fa6ec4dc6c47b8eafa55680ea63),
+   [#7794](https://github.com/angular/angular.js/issues/7794))
+- **testability:** add $$testability service
+  ([85880a64](https://github.com/angular/angular.js/commit/85880a64900fa22a61feb926bf52de0965332ca5))
+
+
+## Performance Improvements
+
+- **$compile:**
+  - add debug classes in compile phase
+  ([e0489abd](https://github.com/angular/angular.js/commit/e0489abd8d9e4971ae23cc38805a92d227d1f3a1))
+  - only iterate over elements with link functions
+  ([fdf9989f](https://github.com/angular/angular.js/commit/fdf9989f7cf1ed81982a788b75a338ac33334571),
+   [#8741](https://github.com/angular/angular.js/issues/8741))
+- **nodeName_:** simplify the code and reduce the number of DOM calls
+  ([5a1a0c96](https://github.com/angular/angular.js/commit/5a1a0c96220101b5e040f0755e5eb401e2c73f65))
+- **select:** execute render after $digest cycle
+  ([6f7018d5](https://github.com/angular/angular.js/commit/6f7018d52fa4f9f9c7fa8e3035317d1239efb20f),
+   [#8825](https://github.com/angular/angular.js/issues/8825))
+
+
+## Breaking Changes
+
+- **$location**: due to [22948807](https://github.com/angular/angular.js/commit/22948807e324eb0b182b15b31045dc306a9f3231)
+
+#### since 1.2.0 and 1.3.0-beta.1
+
+Angular now requires a `<base>` tag when html5 mode of `$location` is enabled. Reasoning:
+Using html5 mode without a `<base href="...">` tag makes relative links for images, links, ...
+relative to the current url if the browser supports
+the history API. However, if the browser does not support the history API Angular falls back to using the `#`,
+and then all those relative links would be broken.
+
+The `<base>` tag is also needed when a deep url is loaded from the server, e.g. `http://server/some/page/url`.
+In that case, Angular needs to decide which part of the url is the base of the application, and which part
+is path inside of the application.
+
+To summarize: Now all relative links are always relative to the `<base>` tag.
+
+Exception (also a breaking change):
+Link tags whose `href` attribute starts with a `#` will only change the hash of the url, but nothing else
+(e.g. `<a href="#someAnchor">`). This is to make it easy to scroll to anchors inside a document.
+
+Related to #6162
+Closes #8492
+
+#### since 1.2.17 and 1.3.0-beta.10
+
+In html5 mode without a `<base>` tag on older browser that don't support the history API
+relative paths were adding up. E.g. clicking on `<a href="page1">` and then on `<a href="page2">`
+would produce `$location.path()==='/page1/page2'`. The code that introduced this behavior was removed
+and Angular now also requires a `<base>` tag to be present when using html5 mode.
+
+Closes #8172, #8233
+
+
+- **ngInclude, ngMessage, ngView and directives that load templates**: due to [a70e2833](https://github.com/angular/angular.js/commit/a70e2833ea276107b11aafea96ef4a6724ad4d83)
+
+Angular will now throw a $compile minErr each a template fails to download
+for ngView, directives and ngMessage template requests. This changes the former
+behavior of silently ignoring failed HTTP requests--or when the template itself
+is empty. Please ensure that all directive, ngView and ngMessage code now properly
+addresses this scenario. NgInclude is uneffected from this change.
+
+
+- **$animate**: due to [23da6140](https://github.com/angular/angular.js/commit/23da614043fe5dcf0be132b86466eecb11c766a2)
+
+If any stagger code consisted of having BOTH transition staggers and delay staggers
+together then that will not work the same way. Angular will now instead choose
+the highest stagger delay value and set the timeout to wait for that before
+applying the active CSS class.
+
+
+- **$animate**: due to [bf0f5502](https://github.com/angular/angular.js/commit/bf0f5502b1bbfddc5cdd2f138efd9188b8c652a9)
+
+Both the API for the cancallation method and the done callback for
+$animate animations is different. Instead of using a callback function
+for each of the $animate animation methods, a promise is used instead.
+
+```js
+//before
+$animate.enter(element, container, null, callbackFn);
+
+//after
+$animate.enter(element, container).then(callbackFn);
+```
+
+The animation can now be cancelled via `$animate.cancel(promise)`.
+
+```js
+//before
+var cancelFn = $animate.enter(element, container);
+cancelFn(); //cancels the animation
+
+//after
+var promise = $animate.enter(element, container);
+$animate.cancel(promise); //cancels the animation
+```
+
+keep in mind that you will still need to run $scope.$apply inside of the `then` callback
+to trigger a digest.
+
+
+- **$animate**: due to [2f4437b3](https://github.com/angular/angular.js/commit/2f4437b3a149eafb899f25933bd6c713b167d10e)
+
+$animate.addClass, $animate.removeClass and $animate.setClass will no longer start the animation
+right after being called in the directive code. The animation will only commence once a digest
+has passed. This means that all animation-related testing code requires an extra digest to kick
+off the animation.
+
+```js
+//before this fix
+$animate.addClass(element, 'super');
+expect(element).toHaveClass('super');
+
+//now
+$animate.addClass(element, 'super');
+$rootScope.$digest();
+expect(element).toHaveClass('super');
+```
+
+$animate will also tally the amount of times classes are added and removed and only animate
+the left over classes once the digest kicks in. This means that for any directive code that
+adds and removes the same CSS class on the same element then this may result in no animation
+being triggered at all.
+
+```js
+$animate.addClass(element, 'klass');
+$animate.removeClass(element, 'klass');
+
+$rootScope.$digest();
+
+//nothing happens...
+```
+
+
+- **$compile/ngBind:** due to [3660fd09](https://github.com/angular/angular.js/commit/3660fd0912d3ccf6def8c9f02d8d4c0621c8d91f),
+
+The value of `$binding` data property on an element is always an array now
+and the expressions do not include the curly braces `{{ ... }}`.
+
+
+- **currencyFilter:** due to [c2aaddbe](https://github.com/angular/angular.js/commit/c2aaddbe4b21348aab8c13a78cdd6aaee846ae4e),
+  previously the currency filter would convert null and undefined values into empty string, after this change
+these values will be passed through.
+
+Only cases when the currency filter is chained with another filter that doesn't expect null/undefined will be affected. This
+should be very rare.
+
+This change will not change the visual output of the filter because the interpolation will convert the null/undefined to
+an empty string.
+
+Closes #8605
+
+
+- **numberFilter:** due to [2ae10f67](https://github.com/angular/angular.js/commit/2ae10f67fcde3e172f695956301ef796b68a50c2),
+  previously the number filter would convert null and undefined values into empty string, after this change
+these values will be passed through.
+
+Only cases when the number filter is chained with another filter that doesn't expect null/undefined will be affected. This
+should be very rare.
+
+This change will not change the visual output of the filter because the interpolation will convert the null/undefined to
+an empty string.
+
+Closes #8605
+Closes #8842
+
+
+- **input:**
+  - due to [77ce5b89](https://github.com/angular/angular.js/commit/77ce5b89f97aa83c3eb1fe2e19375ef00a822015),
+
+NgModel.viewValue will always be used when rendering validations for `minlength` and `maxlength`.
+
+Closes #7967
+Closes #8811
+
+- **input:**
+  - due to [29f0b568](https://github.com/angular/angular.js/commit/29f0b568debab7810752969d363d337099e96cdc),
+
+
+According to the HTML5 spec `input[time]` should create dates
+based on the year 1970 (used to be based on the year 1900).
+
+Related to #8447.
+
+
+- **ngModel**: due to [db044c40](https://github.com/angular/angular.js/commit/db044c408a7f8082758b96ab739348810c36e15a)
+
+Any parser code from before that returned an `undefined` value
+(or nothing at all) will now cause a parser failure. When this occurs
+none of the validators present in `$validators` will run until the parser
+error is gone. The error will be stored on `ngModel.$error`.
+
+
+
+
+- **ngEventDirs:** due to [719c747c](https://github.com/angular/angular.js/commit/719c747cd892ee933e7e414a7dc97e657b88317d),
+
+The `blur` and `focus` event fire synchronously, also during DOM operations
+that remove elements. This lead to errors as the Angular model was not
+in a consistent state. See this [fiddle](http://jsfiddle.net/fq1dq5yb/) for a demo.
+
+This change executes the expression of those events using
+`scope.$evalAsync` if an `$apply` is in progress, otherwise
+keeps the old behavior.
+
+Fixes #4979
+Fixes #5945
+Closes #8803
+Closes #6910
+Closes #5402
+
+
+
 <a name="1.2.23"></a>
 # 1.2.23 superficial-malady (2014-08-22)
 
@@ -1668,6 +2214,13 @@ jQuery. We don't expect that app code actually depends on this accidental featur
     application if 100s of elements are being inserted into the page. Therefore after this
     change callbacks are only fired if registered on the element being animated.
 
+- **input:**
+  - due to [a9fcb0d0](https://github.com/angular/angular.js/commit/a9fcb0d0fc6456f80501b8820d02b04d7c15b6d6),
+    input[type=file] will no longer support ngModel. Due to browser support being spotty among target browsers,
+    file inputs cannot be cleanly supported, and even features which technically do work (such as ng-change)
+    work in an inconsistent way depending on the attributes of the form control.
+
+    As a workaround, one can manually listen for change events on file inputs and handle them manually.
 
 <a name="1.2.12"></a>
 # 1.2.12 cauliflower-eradication (2014-02-07)
