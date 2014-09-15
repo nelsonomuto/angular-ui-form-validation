@@ -9,7 +9,7 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 
 ### Install
 
-[See Youtube Install Video](https://www.youtube.com/watch?v=0wG5ZNogY-s)
+[See Youtube Install Video](https://www.youtube.com/watch?v=jU3_58nOoeI)
 
  1. a.) Either clone & build this repository
     b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
