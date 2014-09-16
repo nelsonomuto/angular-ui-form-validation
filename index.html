@@ -66,14 +66,18 @@
             <select inline-input-label ng-model="user.state" name="state" id="state"
                     ng-options="state for state in states"
                     validation-field-required="true"
-                    validation-dynamically-defined="locallyDefinedValidations" />
+                    validation-dynamically-defined="locallyDefinedValidations" >
+                      
+            </select>
         </div>
         <div class="SelectCity">
             <label for="city">City</label>
             <select inline-input-label ng-model="user.city" name="city" id="city"
                     ng-options="city for city in cities"
                     validation-field-required="true"
-                    validation-dynamically-defined="locallyDefinedValidations" />
+                    validation-dynamically-defined="locallyDefinedValidations">
+                      
+            </select>
         </div>
 
 </form>
