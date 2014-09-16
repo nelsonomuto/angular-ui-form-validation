@@ -11,6 +11,8 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 
 [See Youtube Install Video](https://www.youtube.com/watch?v=jU3_58nOoeI)
 
+[See Youtube how to create your own re-usable custom validation types](https://www.youtube.com/watch?v=R-5loy9X6KE&feature=youtu.be)
+
  1. a.) Either clone & build this repository
     b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
     c.) or via bower `$ bower install angular-ui-form-validation`
