@@ -1,6 +1,7 @@
 # Angular ui form validation 
-[MIT LICENSE](/LICENSE.txt)
+Perform your form validation using re-usable directives and API to create your own validation types and avoid boilerplate code.
 
+[Interactive Demo.](http://nelsonomuto.github.io/angular-ui-form-validation/)
 
 Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.svg?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
 
