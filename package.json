@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-form-validation",
-  "description":"A plugin for performing validation in angularjs without writing lines upon lines of boilerplate code or duplicating logic.",
+  "description": "A plugin for performing validation in angularjs without writing lines upon lines of boilerplate code or duplicating logic.",
   "version": "1.2.2",
   "dependencies": {
     "jquery": "^2.1.1"
@@ -38,17 +38,17 @@
     "grunt-contrib-compass": "^1.0.1",
     "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-connect": "^0.8",
-    "grunt-contrib-copy": "^0.5",
+    "grunt-contrib-copy": "^0.6.0",
     "grunt-contrib-cssmin": "^0.10",
     "grunt-contrib-htmlmin": "^0.3.0",
     "grunt-contrib-imagemin": "^0.8.1",
     "grunt-contrib-jshint": "^0.10",
-    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6",
     "grunt-google-cdn": "^0.4",
     "grunt-karma": "^0.9.0",
     "grunt-newer": "^0.7",
-    "grunt-ng-annotate": "^0.3.2",
+    "grunt-ng-annotate": "^0.4.0",
     "grunt-ngmin": "0.0.3",
     "grunt-remove-logging": "^0.2.0",
     "grunt-rev": "^0.1",
@@ -65,7 +65,7 @@
     "karma-requirejs": "^0.2",
     "karma-script-launcher": "^0.1",
     "load-grunt-tasks": "^0.6",
-    "ng-annotate": "^0.9.11",
+    "ng-annotate": "^0.10.0",
     "requirejs": "^2.1",
     "time-grunt": "^1.0.0",
     "underscore": "^1.6"
