@@ -54,7 +54,7 @@
     "grunt-rev": "^0.1",
     "grunt-svgmin": "^1.0.0",
     "grunt-usemin": "^2.3",
-    "jshint-stylish": "^0.4",
+    "jshint-stylish": "^1.0.0",
     "karma": "^0.12",
     "karma-chrome-launcher": "^0.1",
     "karma-coffee-preprocessor": "^0.2",
@@ -65,7 +65,7 @@
     "karma-requirejs": "^0.2",
     "karma-script-launcher": "^0.1",
     "load-grunt-tasks": "^0.6",
-    "ng-annotate": "^0.10.0",
+    "ng-annotate": "^0.10.1",
     "requirejs": "^2.1",
     "time-grunt": "^1.0.0",
     "underscore": "^1.6"
