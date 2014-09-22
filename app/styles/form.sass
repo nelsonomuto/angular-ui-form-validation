@@ -5,22 +5,26 @@ $icon-font-path: "/bower_components/bootstrap-sass-official/assets/fonts/"
 $errorColor: darkorange
 
 form
-	@extend .form-group
+  @extend .form-group
 
-	label
-		display: block
-	input
-		@extend .form-control
-		
-	.ValidationLiveSuccess
-		border: lightgreen 1px solid
+  label
+    display: block
+  input
+    &[type="checkbox"]
+      width: inherit
+      display: inline
 
-	.requiredFieldLabel
-		&:after
-			content: ' *'
-			color: $errorColor
+    @extend .form-control
 
-	.CustomValidationError
-		position: relative
-		font-size: 0.8em
-		color: $errorColor
+  .ValidationLiveSuccess
+    border: lightgreen 1px solid
+
+  .requiredFieldLabel
+    &:after
+      content: ' *'
+      color: $errorColor
+
+  .CustomValidationError
+    position: relative
+    font-size: 0.8em
+    color: $errorColor

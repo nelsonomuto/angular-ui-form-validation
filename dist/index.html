@@ -11,8 +11,11 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="styles/e1f4c2e5.main.css">
-</head>
+        <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/form.css">
+        <!-- endbuild -->
+
   <body ng-app="angularUiFormValidationApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -50,6 +53,14 @@
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-route.min.js"></script>
         <!-- endbuild -->
 
-        <script src="scripts/ade51e32.scripts.js"></script>
-</body>
-</html>
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/JSOL/jsol.js"></script>
+        <script src="scripts/services/templateretriever/templateRetriever.js"></script>
+        <script src="scripts/directives/invalidinputformatter/invalidInputFormatter.js"></script>
+        <script src="scripts/directives/customvalidation/customValidations.js"></script>
+        <script src="scripts/directives/customvalidationtypes/customValidationTypes.js"></script>
+
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <!-- endbuild -->
+

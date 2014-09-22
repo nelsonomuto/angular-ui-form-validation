@@ -239,13 +239,13 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     // Optional configurations that you can uncomment to use
-                    // removeCommentsFromCDATA: true,
+                    removeCommentsFromCDATA: true,
                     // collapseBooleanAttributes: true,
                     // removeAttributeQuotes: true,
                     // removeRedundantAttributes: true,
                     // useShortDoctype: true,
                     // removeEmptyAttributes: true,
-                    // removeOptionalTags: true*/
+                    removeOptionalTags: true
                 },
                 files: [
                     {

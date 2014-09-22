@@ -23,5 +23,3 @@
 -   280 North Inc. (Now Motorola LLC, a subsidiary of Google Inc.)
     Copyright (C) 2009 MIT License
 -   Steven Levithan Copyright (C) 2012 MIT License
--   Jordan Harband (C) 2013 MIT License
-
