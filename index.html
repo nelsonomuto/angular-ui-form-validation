@@ -9,18 +9,16 @@
     <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
     <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
     <link rel="stylesheet" href="stylesheets/main.css"/>
+    <link rel="stylesheet" href="stylesheets/index.css"/>
 
     <script type="text/javascript" src="javascripts/modernizr.js"></script>
     <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script data-require="jquery@*" data-semver="2.0.3" src="javascripts/page-scroll-to-id.min.js"></script>
       <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
       <script data-require="angular.js@1.2.10" data-semver="1.2.10" src="http://code.angularjs.org/1.2.10/angular.js"></script>
     <script type="text/javascript" src="javascripts/angular-ui-form-validation.js"></script>
     <script type="text/javascript" src="javascripts/main.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
+    <script type="text/javascript" src="javascripts/mainJquery.js"></script>
     <title>Angular-ui-form-validation by nelsonomuto</title>
   </head>
 
@@ -28,6 +26,7 @@
     
     <a id="forkme_banner" href="https://github.com/angular-ui-form/validation">View on GitHub</a>
     <div class="shell">
+    <div id="demo">
 
       <header>
         <span class="ribbon-outer">
@@ -39,68 +38,82 @@
           <span class="right-tail"></span>
         </span>
       </header>
-
+        <nav id="navigation-menu">
+            <ul>
+                <li><a class="navlink" href="#demo">Demo</a></li>
+                <li><a class="navlink" href="#videos">Videos</a></li>
+                <li><a class="navlink" href="#sample-source">Sample Source</a></li>
+                <!--<li><a href="#compare">Compare</a></li>-->
+            </ul>
+        </nav>
 
 
       <span class="banner-fix"></span>
 
-
+</div>
       <section id="main_content">
+        <h3>Interactive Demo</h3>
+        <form ng-controller="MainCtrl" novalidate>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" ng-model="user.username" validation-min-length="5" validation-no-space="true" validation-field-required="true" validation-max-length="10" validation-no-special-chars="true" validation-dynamically-defined="locallyDefinedValidations" />
+                <span class="help-block">username | validates no ones, no twos, min char = 5, max = 10, no special chars</span>
 
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password" ng-model="user.password" validation-min-length="8" validation-one-number="true" validation-one-upper-case-letter="true" validation-one-lower-case-letter="true" validation-field-required="true" validation-no-space="true" />
+                <span class="help-block">password | validates number required, lowercase required, uppercase...no space...</span>
 
-<h3>Interactive Demo</h3>
-<form ng-controller="MainCtrl" novalidate>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" ng-model="user.username" validation-min-length="5" validation-no-space="true" validation-field-required="true" validation-max-length="10" validation-no-special-chars="true" validation-dynamically-defined="locallyDefinedValidations" />
-        <span class="help-block">username | validates no ones, no twos, min char = 5, max = 10, no special chars</span>
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="text" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword" validation-confirm-password="true" />
+                <span class="help-block">only validates when password is valid</span>
+                <div class="SelectState">
+                    <label for="state">State</label>
+                    <select inline-input-label ng-model="user.state" name="state" id="state"
+                            ng-options="state for state in states"
+                            validation-field-required="true"
+                            validation-dynamically-defined="locallyDefinedValidations" >
 
-        <label for="password">Password</label>
-        <input type="text" id="password" name="password" ng-model="user.password" validation-min-length="8" validation-one-number="true" validation-one-upper-case-letter="true" validation-one-lower-case-letter="true" validation-field-required="true" validation-no-space="true" />
-        <span class="help-block">password | validates number required, lowercase required, uppercase...no space...</span>
-        
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="text" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword" validation-confirm-password="true" />
-        <span class="help-block">only validates when password is valid</span>
-        <div class="SelectState">
-            <label for="state">State</label>
-            <select inline-input-label ng-model="user.state" name="state" id="state"
-                    ng-options="state for state in states"
-                    validation-field-required="true"
-                    validation-dynamically-defined="locallyDefinedValidations" >
-                      
-            </select>
-        </div>
-        <div class="SelectCity">
-            <label for="city">City</label>
-            <select inline-input-label ng-model="user.city" name="city" id="city"
-                    ng-options="city for city in cities"
-                    validation-field-required="true"
-                    validation-dynamically-defined="locallyDefinedValidations">
-                      
-            </select>
-        </div>
+                    </select>
+                </div>
+                <div class="SelectCity">
+                    <label for="city">City</label>
+                    <select inline-input-label ng-model="user.city" name="city" id="city"
+                            ng-options="city for city in cities"
+                            validation-field-required="true"
+                            validation-dynamically-defined="locallyDefinedValidations">
 
-</form>
-<iframe width="560" height="315" src="//www.youtube.com/embed/jU3_58nOoeI" frameborder="0" allowfullscreen></iframe>
-<iframe width="560" height="315" src="//www.youtube.com/embed/R-5loy9X6KE" frameborder="0" allowfullscreen></iframe>
+                    </select>
+                </div>
 
-<h4>Example source:</h4>
+        </form>
+          <hr /><a href="#videos" rel="next">&darr; Next section</a>
 
-<div class="highlight highlight-html"><pre> <span class="nt">&lt;form</span> <span class="na">novalidate</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"username"</span><span class="nt">&gt;</span>Username<span class="nt">&lt;/label&gt;</span>
-    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"username"</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">ng-model=</span><span class="s">"user.username"</span>
-      <span class="na">validation-max-length=</span><span class="s">"10"</span>
-      <span class="na">validation-min-length=</span><span class="s">"5"</span>
-      <span class="na">validation-no-space=</span><span class="s">"true"</span>
-      <span class="na">validation-field-required=</span><span class="s">"true"</span>
-      <span class="na">validation-no-special-chars=</span><span class="s">"true"</span>
-    <span class="nt">/&gt;</span>
+          <div id="videos">
+              <h4>Instructional Videos</h4>
+              <iframe width="560" height="315" src="//www.youtube.com/embed/jU3_58nOoeI" frameborder="0" allowfullscreen></iframe>
+              <iframe width="560" height="315" src="//www.youtube.com/embed/R-5loy9X6KE" frameborder="0" allowfullscreen></iframe>
+              <hr /><a href="#top">&uarr; Previous Section</a> <a href="#sample-source" rel="next">&darr; Next section</a>
+          </div>
 
-                                  ...
+          <div id="sample-source">
+              <h4>Sample source</h4>
+              <div class="highlight highlight-html">
+                  <pre> <span class="nt">&lt;form</span> <span class="na">novalidate</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"username"</span><span class="nt">&gt;</span>Username<span class="nt">&lt;/label&gt;</span>
+                    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"username"</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">ng-model=</span><span class="s">"user.username"</span>
+                      <span class="na">validation-max-length=</span><span class="s">"10"</span>
+                      <span class="na">validation-min-length=</span><span class="s">"5"</span>
+                      <span class="na">validation-no-space=</span><span class="s">"true"</span>
+                      <span class="na">validation-field-required=</span><span class="s">"true"</span>
+                      <span class="na">validation-no-special-chars=</span><span class="s">"true"</span>
+                    <span class="nt">/&gt;</span>
 
-<span class="nt">&lt;/form&gt;</span>
-</pre></div>
+                                                  ...
 
+                    <span class="nt">&lt;/form&gt;</span>
+                </pre>
+              </div>
+              <hr /><a href="#top">&uarr; Back to top</a>
+          </div>
 
       </section>
 
