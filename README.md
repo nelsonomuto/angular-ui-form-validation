@@ -1,7 +1,7 @@
 # Angular ui form validation 
 Perform your form validation using re-usable directives and API to create your own validation types and avoid boilerplate code.
 
-[Interactive Demo.](http://nelsonomuto.github.io/angular-ui-form-validation/)
+[Interactive Demo.](http://angular-ui-form.github.io/validation)
 
 Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.svg?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
 
@@ -82,7 +82,7 @@ The **second** is that I provide out of the box a library of over 20 commonly us
 </form>
 ```
 
-### [Interactive Preview Demo](http://nelsonomuto.github.io/angular-ui-form-validation) on github page ###
+### [Interactive Preview Demo](http://angular-ui-form.github.io/validation) on github page ###
 
 (Plunker load times are slow)
 
