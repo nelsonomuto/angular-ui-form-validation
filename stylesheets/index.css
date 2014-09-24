@@ -317,12 +317,12 @@ header, .content, footer{
 
 @media only screen and (min-width: 1140px){
 
-    header, .content, footer,
-    .horizontal-layout header, .horizontal-layout .content, .horizontal-layout footer,
-    .auto-layout .content{
-        padding-right: 3em;
-        padding-left: 3em;
-    }
+    /*header, .content, footer,*/
+    /*.horizontal-layout header, .horizontal-layout .content, .horizontal-layout footer,*/
+    /*.auto-layout .content{*/
+        /*padding-right: 3em;*/
+        /*padding-left: 3em;*/
+    /*}*/
 
     .horizontal-layout header h1{
         display: block;
