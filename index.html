@@ -53,7 +53,7 @@
 </div>
       <section id="main_content">
         <h3>Interactive Demo</h3>
-        <form ng-controller="MainCtrl" novalidate>
+        <form ng-controller="MainCtrl" name="demoForm" novalidate>
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" ng-model="user.username" validation-min-length="5" validation-no-space="true" validation-field-required="true" validation-max-length="10" validation-no-special-chars="true" validation-dynamically-defined="locallyDefinedValidations" />
                 <span class="help-block">username | validates no ones, no twos, min char = 5, max = 10, no special chars</span>
@@ -83,7 +83,7 @@
 
                     </select>
                 </div>
-
+            <button class="btn-primary" type="submit" ng-click="user.save()">Submit</button>
         </form>
           <hr /><a href="#videos" rel="next">&darr; Next section</a>
 

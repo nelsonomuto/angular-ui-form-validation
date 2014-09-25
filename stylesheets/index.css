@@ -7,6 +7,10 @@ a#forkme_banner{
     -webkit-transition: none;
 }
 
+button[type=submit]{
+    margin: 20px;
+}
+
 div#videos{
     margin: 100px 0;
 }
