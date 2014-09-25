@@ -3,10 +3,10 @@ Perform your form validation using re-usable directives and API to create your o
 
 [Interactive Demo.](http://nelsonomuto.github.io/angular-ui-form-validation)
 
-Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/angular-ui-form/validation.svg?branch=master)](https://travis-ci.org/angular-ui-form/validation)
+Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.svg?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
 
-[![Dependencies status](https://david-dm.org/angular-ui-form/validation.svg?style=flat)](https://david-dm.org/angular-ui-form/validation) 
-[![devDependency Status](https://david-dm.org/angular-ui-form/validation/dev-status.svg?style=flat&breakCache=0)](https://david-dm.org/angular-ui-form/validation#info=devDependencies)
+[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.svg?style=flat)](https://david-dm.org/nelsonomuto/angular-ui-form-validation)
+[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.svg?style=flat&breakCache=0)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 
 ### Install
 
