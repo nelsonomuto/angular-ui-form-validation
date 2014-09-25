@@ -1,12 +1,12 @@
 # Angular ui form validation 
 Perform your form validation using re-usable directives and API to create your own validation types and avoid boilerplate code.
 
-[Interactive Demo.](http://nelsonomuto.github.io/angular-ui-form-validation/)
+[Interactive Demo.](http://angular-ui-form.github.io/validation)
 
-Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.svg?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
+Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/angular-ui-form/validation.svg?branch=master)](https://travis-ci.org/angular-ui-form/validation)
 
-[![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.svg?style=flat)](https://david-dm.org/nelsonomuto/angular-ui-form-validation) 
-[![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.svg?style=flat&breakCache=0)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
+[![Dependencies status](https://david-dm.org/angular-ui-form/validation.svg?style=flat)](https://david-dm.org/angular-ui-form/validation) 
+[![devDependency Status](https://david-dm.org/angular-ui-form/validation/dev-status.svg?style=flat&breakCache=0)](https://david-dm.org/angular-ui-form/validation#info=devDependencies)
 
 ### Install
 
@@ -15,7 +15,7 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 [See Youtube how to create your own re-usable custom validation types](https://www.youtube.com/watch?v=R-5loy9X6KE&feature=youtu.be)
 
  1. a.) Either clone & build this repository
-    b.) [or Download the release](https://raw.github.com/nelsonomuto/angular-ui-form-validation/master/dist/angular-ui-form-validation.js)
+    b.) [or Download the release](https://raw.github.com/angular-ui-form/validation/master/dist/angular-ui-form-validation.js)
     c.) or via bower `$ bower install angular-ui-form-validation`
     d.) or via npm `$ npm install angular-ui-form-validation`
  
@@ -82,7 +82,7 @@ The **second** is that I provide out of the box a library of over 20 commonly us
 </form>
 ```
 
-### [Interactive Preview Demo](http://nelsonomuto.github.io/angular-ui-form-validation) on github page ###
+### [Interactive Preview Demo](http://angular-ui-form.github.io/validation) on github page ###
 
 (Plunker load times are slow)
 
