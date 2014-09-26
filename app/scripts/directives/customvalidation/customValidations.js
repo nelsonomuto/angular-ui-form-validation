@@ -297,12 +297,10 @@ angular_ui_form_validations = (function(){
                             confirmPasswordIsDirty = /dirty/.test(confirmPasswordElement.attr('class'));
                             passwordIsValid = /invalid/.test(passwordElement.attr('class')) === false;
 
-                            if(passwordIsValid){
-                                passwordMatch =  $('[name=password]').val() === $element.val();                        
-                                
-                                ngModelController.$setValidity('validationconfirmpassword', passwordMatch); 
-                                confirmPasswordElement.siblings('.CustomValidationError.validationConfirmPassword:first').toggle(! passwordMatch);    
-                            }                        
+                            passwordMatch =  $('[name=password]').val() === $element.val();
+
+                            ngModelController.$setValidity('validationconfirmpassword', passwordMatch);
+                            confirmPasswordElement.siblings('.CustomValidationError.validationConfirmPassword:first').toggle(! passwordMatch);
                         });
                         return;
                     }
