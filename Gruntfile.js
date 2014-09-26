@@ -8,7 +8,6 @@
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
-    grunt.loadNpmTasks('grunt-debug');
 
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
