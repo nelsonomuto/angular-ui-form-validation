@@ -192,11 +192,16 @@ angular_ui_form_validations = (function(){
                         && ( validationAttributeValue !== 'false' ) );
 
                 getErrorMessageElement = function () {
+                    var ifCheckboxOrRadio = '';
+                    if((/checkbox|radio/).test($element[0].type)){
+                        ifCheckboxOrRadio = 'checkboxradioerror ';
+                    }
+
                     return angular.element(
                         '<span data-custom-validation-priorityIndex='+ getValidationPriorityIndex(formatterArgs.customValidationAttribute) +
                         ' data-custom-validation-attribute='+ formatterArgs.customValidationAttribute +
                         ' data-custom-field-name='+ $element.attr('name') +
-                        ' class="CustomValidationError '+ formatterArgs.customValidationAttribute + ' '+ propertyName +'property">' +
+                        ' class="CustomValidationError '+ ifCheckboxOrRadio + formatterArgs.customValidationAttribute + ' '+ propertyName +'property">' +
                         errorMessage + '</span>');
                 };
 
