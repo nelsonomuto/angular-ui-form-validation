@@ -1,6 +1,6 @@
-@import 'bootstrap-sass-official/assets/stylesheets/bootstrap'
+@import 'sass-bootstrap/lib/bootstrap'
 
-$icon-font-path: "/bower_components/bootstrap-sass-official/assets/fonts/"
+$icon-font-path: "/bower_components/sass-bootstrap/fonts/"
 
 $errorColor: darkorange
 
@@ -13,9 +13,42 @@ $errorColor: darkorange
 .inputFocus
   border-width: 3px
 
+.jumbotron
+  margin: 100px 30px 30px
+  box-shadow: #eee 2px 2px 1px
+  border: 1px solid whitesmoke
+  background: white
+@media all
+  .header
+    position: fixed
+    width: 100%
+    top: 0
+    left: 0
+    padding: 20px
+
+h2, .h2
+  font-size: 1.2em
+  @media only screen and (max-width: 500px)
+    font-size: 0.8em
+a:hover
+  cursor: pointer
+
 form
   @extend .form-group
 
+  background: whitesmoke
+  border: 10px solid whitesmoke
+
+  font-size: 15px
+  @media only screen and (max-width: 700px)
+    font-size: 12px
+
+  .btn-primary
+    padding: 10px 15px
+    border-radius: 2px
+    font-size: 1.2em
+    &:hover
+      text-decoration: none
   label
     display: block
   input

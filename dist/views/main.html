@@ -1,6 +1,7 @@
 <div class="header">
   <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Reset Form</a></li>
+    <li class="active"><a ng-click="user.save()">Submit</a></li>
+    <li class="active"><a ng-href="#">Reset</a></li>
   </ul>
   <h3 class="text-muted">angular ui form validation</h3>
 </div>
@@ -47,6 +48,6 @@
     <input type="date" id="bday" name="bday" validation-date-before-today="true" validation-date-after="09/25/1987" ng-model="user.birthdate">
     <span class="help-block">birthdate | validates must be before today, must be after 09/25/1987</span>
 
-    <button class="btn-primary" type="submit" ng-click="user.save()">Submit</button>
+    <a class="btn-primary" type="submit" ng-click="user.save()">Submit</a>
   </form>
 </div>
