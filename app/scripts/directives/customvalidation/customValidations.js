@@ -306,6 +306,7 @@ angular_ui_form_validations = (function(){
 
                             ngModelController.$setValidity('validationconfirmpassword', passwordMatch);
                             confirmPasswordElement.siblings('.CustomValidationError.validationConfirmPassword:first').toggle(! passwordMatch);
+                            onValidationComplete(passwordMatch, passwordMatch, validationAttributeValue, $element, model, ngModelController, $scope, formatterArgs.success || function(){});
                         });
                         return;
                     }
