@@ -115,7 +115,7 @@ header, footer, section {
 div.shell {
   display: block;
   width: 670px;
-  margin: 0 auto;
+  margin: 0;
 }
 
 a#forkme_banner {
@@ -265,12 +265,6 @@ span.banner-fix {
   position: absolute;
   width: 670px;
   top: 19px;
-}
-
-section#main_content {
-  z-index: 2;
-  padding: 20px 82px 0;
-  min-height:185px;
 }
 
 /* footer */

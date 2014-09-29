@@ -5,6 +5,7 @@
 a#forkme_banner{
     position: fixed;
     -webkit-transition: none;
+    z-index: 10;
 }
 
 button[type=submit]{
@@ -75,8 +76,16 @@ header, footer{
     text-shadow: none;
 }
 
+header {
+    z-index: 9;
+    position: fixed;
+    width: 100%;
+    left: 58px;
+    top: 0;
+    box-shadow: crimson 0 2px 20px;
+}
+
 header h1{
-    color: #e6842c;
     font-size: 1.4em;
     font-style: italic;
 }
@@ -88,25 +97,26 @@ nav ul, nav ol, nav li{
 }
 
 #navigation-menu{
-    position: fixed;
-    top: 2em;
-    right: 3em;
-    left: auto;
-    bottom: auto;
+    font-size: 1.1em;
+    color: white;
     z-index: 9;
+    background-color: #5B7E99;
     text-shadow: none;
-    /*font-size: 0.85em;*/
+    padding: 0 5px 8px 5px;
+    box-shadow: white 0 2px 5px;
 }
 
 #navigation-menu ul{
     overflow: hidden;
-    background: #564a44;
-    background: wheat;
-    -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+    border: 1px solid lightgray;
+    border-top: none;
+    padding-left: 200px;
 }
 
 #navigation-menu li{
     margin: 3px;
+    float: left;
+    background: none;
 }
 
 #navigation-menu a{
@@ -328,71 +338,20 @@ div#videos {
     overflow: auto;
 }
 
-@media only screen and (max-width: 820px) {
-    div.shell, span.banner-fix {
-        width: 95%;
-    }
-
-    #navigation-menu {
-        top: 0;
-        right: 0;
-    }
-
-    nav li {
-        float: left;
-        background: none;
-    }
-
-    section#main_content {
-        padding-top: 15%;
-    }
-
-    iframe {
-        width: 100%;
-        height: 100%;
-    }
-
+span.banner-fix {
+    position: fixed;
+    left: 3%;
+    width: 100%;
+    top: 0;
+    z-index: 9;
 }
-@media only screen and (min-width: 1140px){
 
-    /*header, .content, footer,*/
-    /*.horizontal-layout header, .horizontal-layout .content, .horizontal-layout footer,*/
-    /*.auto-layout .content{*/
-        /*padding-right: 3em;*/
-        /*padding-left: 3em;*/
-    /*}*/
-
-    .horizontal-layout header h1{
-        display: block;
+@media all {
+    section#main_content {
+        padding: 150px 100px;
     }
+}
 
-    .auto-layout header h1{
-        margin-left: 0;
-    }
-
-    #navigation-menu{
-        font-size: 1em;
-        top: 1.55em;
-    }
-
-    .horizontal-layout #navigation-menu, .auto-layout #navigation-menu{
-        right: 3em;
-        left: auto;
-        top: 1.55em;
-    }
-
-    #navigation-menu ul{
-        -moz-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px;
-    }
-
-    #navigation-menu li{
-        float: left;
-        margin: 3px 5px;
-        font-size: 1.2em;
-    }
-
-    #navigation-menu a{
-        -moz-border-radius: 50px; -webkit-border-radius: 50px; border-radius: 50px;
-    }
+@media only screen and (max-width: 700px) {
 
 }
