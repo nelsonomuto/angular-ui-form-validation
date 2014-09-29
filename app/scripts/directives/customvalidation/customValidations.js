@@ -291,15 +291,19 @@ angular_ui_form_validations = (function(){
                     }
 
                     if (formatterArgs.customValidationAttribute === 'validationConfirmPassword') {
-                        $element.add('[name=password]').on('keyup blur', function (){
+                        $element.add('[name=password]').on('keyup blur', function (target){
                             var passwordMatch, confirmPasswordElement, passwordElement, confirmPasswordIsDirty, passwordIsValid;     
 
-                            confirmPasswordElement = 
+                            confirmPasswordElement =
                                 this.name === 'confirmPassword'? angular.element(this) : angular.element(this).siblings('[name=confirmPassword]'); 
 
                             passwordElement = confirmPasswordElement.siblings('[name=password]');
 
                             confirmPasswordIsDirty = /dirty/.test(confirmPasswordElement.attr('class'));
+
+                            if(confirmPasswordIsDirty === false) {
+                                return;
+                            }
                             passwordIsValid = /invalid/.test(passwordElement.attr('class')) === false;
 
                             passwordMatch =  $('[name=password]').val() === $element.val();

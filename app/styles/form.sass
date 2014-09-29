@@ -10,7 +10,9 @@ $errorColor: darkorange
   border: darkorange 2px solid
 
 .inputFocus
-  border-width: 3px
+  //border-width: 3px
+  //box-shadow: inset 0 0 2px grey
+  border-color: none
 
 .jumbotron
   margin: 100px 30px 30px
@@ -50,7 +52,7 @@ form
       text-decoration: none
   label
     display: block
-  input
+  input, select
     &[type="checkbox"]
       width: inherit
       display: inline
@@ -58,8 +60,7 @@ form
     @extend .form-control
 
     &:focus
-      box-shadow: inset 0 10px 1px rgba(0, 0, 0, 0.075)
-      border-color: inherit
+
       @extend .inputFocus
 
     &.ng-dirty:not(.ValidationLiveSuccess)
