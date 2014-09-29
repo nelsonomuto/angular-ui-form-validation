@@ -7,10 +7,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:angular-ui-form/validation.git"
+    "url": "git@github.com:nelsonomuto/angular-ui-form-validation.git"
   },
-  "homepage": "http://angular-ui-form.github.io/validation/",
-  "bugs": "https://github.com/angular-ui-form/validation/issues",
+  "homepage": "http://nelsonomuto.github.io/angular-ui-form-validation/",
+  "bugs": "https://github.com/nelsonomuto/angular-ui-form-validation/issues",
   "keywords": [
     "angular",
     "angular-validation",
