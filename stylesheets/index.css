@@ -354,6 +354,9 @@ span.banner-fix {
     section#main_content {
         padding: 150px 100px;
     }
+    footer {
+        margin-left: 78px;
+    }
 }
 
 @media only screen and (max-width: 635px) {
@@ -367,4 +370,5 @@ span.banner-fix {
     #navigation-menu ul {
         padding-left: 32%;
     }
+
 }
