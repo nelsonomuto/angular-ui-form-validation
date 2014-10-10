@@ -17,3 +17,10 @@ angular.module('angularUiFormValidationApp', [
         redirectTo: '/'
       });
   });
+
+
+$(function(){
+  $('#angularUiFormValidationApp').ready(function(){
+    angular.bootstrap($('#angularUiFormValidationApp'), ['angularUiFormValidationApp']);
+  });
+});
