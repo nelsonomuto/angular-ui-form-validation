@@ -136,5 +136,12 @@
                 link: customValidationUtil.createValidationLink(customValidation)
             };
         });   
-    });    
+        extendCustomValidations.directive('textarea', function (customValidationUtil) {
+            return {
+                require: '?ngModel',
+                restrict: 'E',
+                link: customValidationUtil.createValidationLink(customValidation)
+            };
+        });
+    });
 })();
