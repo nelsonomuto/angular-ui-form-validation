@@ -1,3 +1,4 @@
+//jshint ignore:start
 (function(self) {
   /**
    JSOL stands for JavaScript Object Literal which is a string representing
@@ -65,3 +66,4 @@
     };
   }
 })(window);
+//jshint ignore:end

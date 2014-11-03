@@ -1,26 +1,9 @@
+/* global alert */
 'use strict';
 
 angular.module('angularUiFormValidationApp')
- 
-.service('emailAddressAvailable', function ($timeout, $q) {
-    return {
-        run: function(errorMessageElement, val) {
-            var deferred = $q.defer();
 
-            $timeout(function() {
-                if(val === 'unavailableemailaddress@gmail.com') {
-                    deferred.reject();
-                } else {
-                    deferred.resolve();
-                }
-            }, 1000);
-
-            return deferred.promise;
-        }
-    }
-})
-
-.controller('MainCtrl', function ($scope, emailAddressAvailable, $http) {
+.controller('MainCtrl', function ($scope) {
   $scope.awesomeThings = [
     'HTML5 Boilerplate',
     'AngularJS',
@@ -56,11 +39,12 @@ angular.module('angularUiFormValidationApp')
              *       element: {Object} $element //DOM element
              *   };
              */
+             // jshint ignore:start
             $scope.$on('customValidationComplete', function (data) {
                 //console.log(data);
                 //You may perform any business logic here based on the element validation results
             });
-
+            // jshint ignore:end
             /*
              * The custom validations will display errors after evaluation performed by runCustomValidations is triggered above on line 46.
              * This will also ensure that the $scope.demoForm.$valid is updated based upon aforementioned evaluation.
