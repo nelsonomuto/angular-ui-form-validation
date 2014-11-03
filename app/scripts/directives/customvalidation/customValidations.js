@@ -325,6 +325,21 @@ angular_ui_form_validations = (function(){
                         currentErrorMessage, currentErrorMessageIsStale,
                         currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
                         currentErrorMessageIsOfALowerPriority, successFn;
+                    
+                    //assuming non-blur events suggest a keypress/keyup/keydown/input event
+                    if(event.type !== 'blur') {
+                        //validating non-blur events only when formatterArgs have specified to validateWhileEntering
+                        if(formatterArgs.validateWhileEntering && formatterArgs.validateWhileEntering === true) {
+                            //Do nothing continue on
+                        } else {
+                            return;
+                        }
+                    }
+
+                    //Do not validate if input is pristine, i.e nothing entered by user yet
+                    if($element.hasClass('ng-pristine')){
+                        return;
+                    }
 
                     successFn = formatterArgs.success || function(){};
 
@@ -469,6 +484,10 @@ angular_ui_form_validations = (function(){
 
                     ngModelController.$parsers.push(function() {
                         return runCustomValidations(errorMessageElement);
+                    });
+
+                    $element.on('blur', function () {
+                        runCustomValidations(errorMessageElement);
                     });
 
                     $scope.$on('runCustomValidations', function () {

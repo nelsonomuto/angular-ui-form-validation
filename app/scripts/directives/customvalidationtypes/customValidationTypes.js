@@ -31,6 +31,7 @@
          {
             customValidationAttribute: 'validationNoSpace',
             errorMessage: 'Cannot contain any spaces',
+            validateWhileEntering: true,
             validator: function (errorMessageElement, val){
                 return val !== '' && (/^[^\s]+$/).test(val);
             }
