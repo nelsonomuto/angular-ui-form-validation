@@ -350,6 +350,10 @@ span.banner-fix {
     z-index: 9;
 }
 
+footer {
+    margin: -15% 15%;
+}
+
 @media all {
     section#main_content {
         padding: 150px 100px;
