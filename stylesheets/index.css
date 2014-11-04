@@ -372,3 +372,12 @@ span.banner-fix {
     }
 
 }
+
+@media only screen and (min-width: 850px) {
+    div.shell {
+        margin: 0 17%;
+    }
+    header {
+        margin: 0 15%;
+    }
+}
