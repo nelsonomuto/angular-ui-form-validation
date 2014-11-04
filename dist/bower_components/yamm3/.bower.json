@@ -1,0 +1,32 @@
+{
+  "name": "Yamm3",
+  "description": "Yet another megamenu for Bootstrap 3",
+  "authors": [
+    {
+      "name": "geedmo",
+      "email": "geedmo.ds@gmail.com",
+      "homepage": "http://geedmo.com/"
+    }
+  ],
+  "keywords": [
+    "bootstrap",
+    "megamenu",
+    "megadropdown"
+  ],
+  "version": "1.0.0",
+  "main": "yamm/yamm.css",
+  "dependencies": {
+    "bootstrap": ">= 3.0.0"
+  },
+  "homepage": "https://github.com/geedmo/yamm3",
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.0",
+    "commit": "6875fb245ab706976d587690f7a12f0378d701c4"
+  },
+  "_source": "https://github.com/geedmo/yamm3.git",
+  "_target": "~1.0.0",
+  "_originalSource": "yamm3",
+  "_direct": true
+}
