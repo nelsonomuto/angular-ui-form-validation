@@ -320,24 +320,30 @@ angular_ui_form_validations = (function(){
                     }
                 };
 
-                runCustomValidations = function (errorMessageElement) {
+                runCustomValidations = function (eventType) {
                     var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
                         currentErrorMessage, currentErrorMessageIsStale,
                         currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
                         currentErrorMessageIsOfALowerPriority, successFn;
                     
+                    var evaluateAsValid = false;    
+
                     //assuming non-blur events suggest a keypress/keyup/keydown/input event
-                    if(event.type !== 'blur') {
+                    //only blur and runCustomValidations events are always evaluated automatically regardless of validateWhileEntering
+                    if(eventType !== 'blur' && eventType !== 'runCustomValidations') {
                         //validating non-blur events only when formatterArgs have specified to validateWhileEntering
                         if(formatterArgs.validateWhileEntering && formatterArgs.validateWhileEntering === true) {
                             //Do nothing continue on
                         } else {
-                            return;
+                            //TOOD: figure out why returning here is causing the cursor to be set to last position and 
+                            //  slowing down UI by preventing key to be pressed while it is moved, thereby causing confusing and bad UX
+                            // return;
+                            evaluateAsValid = true;
                         }
                     }
 
                     //Do not validate if input is pristine, i.e nothing entered by user yet
-                    if($element.hasClass('ng-pristine')){
+                    if($element.hasClass('ng-pristine') && eventType !=='runCustomValidations'){
                         return;
                     }
 
@@ -442,7 +448,13 @@ angular_ui_form_validations = (function(){
                         toggleRequiredLabelClass();
                     }
 
-                    isValid = runValidation();
+                    //TODO: using this temporarily because if we don't evaluate we have wierd UX whereby cursor moved to end of string
+                    if (evaluateAsValid === true) {
+                        isValid = true;
+                    } else {
+                        isValid = runValidation();
+
+                    }
 
                     ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
@@ -483,15 +495,15 @@ angular_ui_form_validations = (function(){
                     installSpecialErrorCases();                    
 
                     ngModelController.$parsers.push(function() {
-                        return runCustomValidations(errorMessageElement);
+                        return runCustomValidations('input');
                     });
 
-                    $element.on('blur', function () {
-                        runCustomValidations(errorMessageElement);
+                    $element.on('blur', function (event) {
+                        runCustomValidations(event.type);
                     });
 
                     $scope.$on('runCustomValidations', function () {
-                        runCustomValidations(errorMessageElement);
+                        runCustomValidations('runCustomValidations');
                     });
                 }    
 

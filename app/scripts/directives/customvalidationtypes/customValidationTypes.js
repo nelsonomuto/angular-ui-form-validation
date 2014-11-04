@@ -46,6 +46,7 @@
         {
             customValidationAttribute: 'validationMaxLength',            
             errorMessage: '',
+            validateWhileEntering: true,
             validator: function (errorMessageElement, val, attr) {                
                 if (val.length <= parseInt(getValidationAttributeValue(attr), 10)) {
                     return true;
@@ -58,6 +59,7 @@
         {
             customValidationAttribute: 'validationOnlyAlphabets',
             errorMessage: 'Valid characters are: A-Z, a-z',
+            validateWhileEntering: true,
             validator: function (errorMessageElement, val){
                 return (/^[a-z]*$/i).test(val);    
             }
@@ -92,6 +94,7 @@
         },
         {
             customValidationAttribute: 'validationNoSpecialChars',
+            validateWhileEntering: true,
             errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
             validator: function (errorMessageElement, val){
                 return (/^[a-z0-9_\-\s]*$/i).test(val);
