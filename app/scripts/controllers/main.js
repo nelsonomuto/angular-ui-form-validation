@@ -65,13 +65,15 @@ angular.module('angularUiFormValidationApp')
               errorMessage: 'Cannot contain the number one',
               validator: function (errorMessageElement, val) {
                   return /1/.test(val) !== true;    
-              }
+              },
+              validateWhileEntering: true
           },
           {
               errorMessage: 'Cannot contain the number two',
               validator: function (errorMessageElement, val){
                   return /2/.test(val) !== true;      
-              } 
+              },
+              validateWhileEntering: true
           }
       ]
   });
