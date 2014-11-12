@@ -1,8 +1,8 @@
 angular_ui_form_validations = (function(){
-    
+
     var customValidations, createValidationFormatterLink, customValidationsModule, getValidationPriorityIndex, getValidationAttributeValue,
         getValidatorByAttribute, getCustomTemplateIfDefined, customTemplates, isCurrentlyDisplayingAnErrorMessageInATemplate,
-        currentlyDisplayedTemplate, dynamicallyDefinedValidation, defaultFieldIsValidSuccessFn, $q, $timeout, $log;        
+        currentlyDisplayedTemplate, dynamicallyDefinedValidation, defaultFieldIsValidSuccessFn, $q, $timeout, $log;
 
     customTemplates = [];
 
@@ -14,22 +14,22 @@ angular_ui_form_validations = (function(){
         latestElement: null,
         _errorMessage: 'Field is invalid',
         _success: function () {},
-        success: function () { 
-            return dynamicallyDefinedValidation._success && dynamicallyDefinedValidation._success.apply(this, arguments); 
+        success: function () {
+            return dynamicallyDefinedValidation._success && dynamicallyDefinedValidation._success.apply(this, arguments);
         },
-        errorMessage: function () { 
-            return dynamicallyDefinedValidation._errorMessage; 
+        errorMessage: function () {
+            return dynamicallyDefinedValidation._errorMessage;
         },
         validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope) {
-            var valid, hydrateDynamicallyDefinedValidation, scopeValidations, 
+            var valid, hydrateDynamicallyDefinedValidation, scopeValidations,
                 setErrorIdentifier, setValidity, validatorArgs, deferred;
             validatorArgs = arguments;
             scopeValidations = scope[attr];
 
             hydrateDynamicallyDefinedValidation = function (validation) {
-                dynamicallyDefinedValidation._errorMessage = validation.errorMessage;     
+                dynamicallyDefinedValidation._errorMessage = validation.errorMessage;
                 dynamicallyDefinedValidation._success = validation.success;
-                return validation;  
+                return validation;
             };
 
             setErrorIdentifier = function (validation, index) {
@@ -50,7 +50,7 @@ angular_ui_form_validations = (function(){
 
             setValidity = function (validation) {
                 valid = validation.validator.apply(scope, validatorArgs);
-                modelCtrl.$setValidity(validation.identifier, valid); 
+                modelCtrl.$setValidity(validation.identifier, valid);
 
                 return valid === true;
             };
@@ -64,13 +64,13 @@ angular_ui_form_validations = (function(){
                         dynamicallyDefinedValidation.errorCount++;
                         dynamicallyDefinedValidation.latestElement = element;
                         return false;
-                    } 
+                    }
                     return true;
                 });
 
             return valid;
         }
-    };    
+    };
 
     onValidationComplete = function (fieldIsValid, value, validationAttributeValue, $element, model, ngModelController, $scope, customOnSuccess) {
         if(fieldIsValid) {
@@ -86,7 +86,7 @@ angular_ui_form_validations = (function(){
         Lazy(customTemplates)
             .each(function(template){
                 if(template.attr('templateUid') === inputElement.attr('templateUid')){
-                    isCurrentlyDisplayingAnErrorMessageInATemplate = true;  
+                    isCurrentlyDisplayingAnErrorMessageInATemplate = true;
                     currentlyDisplayedTemplate = template;
                     return false;
                 }
@@ -132,7 +132,7 @@ angular_ui_form_validations = (function(){
         try{
             templateUrl = JSOL.parse(attr)['template'];
             if(templateUrl === undefined || templateUrl === null || templateUrl === '') {
-                deferred.reject('No template url specified.');                
+                deferred.reject('No template url specified.');
             } else {
                 promise = templateRetriever.getTemplate(templateUrl);
             }
@@ -143,7 +143,7 @@ angular_ui_form_validations = (function(){
 
         return promise;
     };
-    
+
     getValidatorByAttribute = function (customValidationAttribute) {
         var validator;
 
@@ -181,9 +181,9 @@ angular_ui_form_validations = (function(){
 
         return function($scope, $element, $attrs, ngModelController) {
             var customErrorMessage, errorMessage, errorMessageElement, modelName, model, propertyName, runCustomValidations, validationAttributeValue, customErrorTemplate;
-            
+
             $timeout(function() {
-                var getErrorMessageElement, addWatcherForDynamicallyDefinedValidations, 
+                var getErrorMessageElement, addWatcherForDynamicallyDefinedValidations,
                     addWatcherToWrapErrorInCustomTemplate, isValidValidationAttributeValue,
                     getFormatterArgsErrorMessage, installErrorMessageElement, installSpecialErrorCases;
 
@@ -241,8 +241,8 @@ angular_ui_form_validations = (function(){
 
                     $scope.$watch(function (){
                         return errorMessageElement.css('display');
-                    }, errorMessageToggled);     
-                    $scope.$on('errorMessageToggled', errorMessageToggled);     
+                    }, errorMessageToggled);
+                    $scope.$on('errorMessageToggled', errorMessageToggled);
                 };
 
                 getFormatterArgsErrorMessage = function () {
@@ -257,26 +257,26 @@ angular_ui_form_validations = (function(){
                 };
 
                 installErrorMessageElement = function () {
-                    errorMessage = getFormatterArgsErrorMessage();                    
-                    
+                    errorMessage = getFormatterArgsErrorMessage();
+
                     errorMessageElement = getErrorMessageElement();
 
                     $element.after(errorMessageElement);
-                    
+
                     errorMessageElement.hide();
 
                     if(formatterArgs.customValidationAttribute === 'validationDynamicallyDefined') {
                         addWatcherForDynamicallyDefinedValidations();
                     }
-                    
+
                     getCustomTemplateIfDefined($attrs[formatterArgs.customValidationAttribute], templateRetriever)
                         .then(function (template) {
-                            addWatcherToWrapErrorInCustomTemplate(template);       
+                            addWatcherToWrapErrorInCustomTemplate(template);
                         });
-                    
+
                     customErrorMessage = getValidationAttributeByPropertyName($attrs[formatterArgs.customValidationAttribute], 'message');
                     if(customErrorMessage !== null) {
-                        errorMessageElement.html(customErrorMessage);    
+                        errorMessageElement.html(customErrorMessage);
                     }
 
                 };
@@ -285,17 +285,17 @@ angular_ui_form_validations = (function(){
                      if (formatterArgs.customValidationAttribute === 'validationNoSpace') {
                         $element.keyup(function (event){
                             if (event.keyCode === 8) {
-                                model[propertyName] = ($element.val().trimRight());
+                                model[propertyName] = ($element.val().replace(/\s+$/, ''));
                             }
                         });
                     }
 
                     if (formatterArgs.customValidationAttribute === 'validationConfirmPassword') {
                         $element.add('[name=password]').on('keyup blur', function (target){
-                            var passwordMatch, confirmPasswordElement, passwordElement, confirmPasswordIsDirty, passwordIsValid;     
+                            var passwordMatch, confirmPasswordElement, passwordElement, confirmPasswordIsDirty, passwordIsValid;
 
                             confirmPasswordElement =
-                                this.name === 'confirmPassword'? angular.element(this) : angular.element(this).siblings('[name=confirmPassword]'); 
+                                this.name === 'confirmPassword'? angular.element(this) : angular.element(this).siblings('[name=confirmPassword]');
 
                             passwordElement = confirmPasswordElement.siblings('[name=password]');
 
@@ -321,12 +321,12 @@ angular_ui_form_validations = (function(){
                 };
 
                 runCustomValidations = function (eventType) {
-                    var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage, 
+                    var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage,
                         currentErrorMessage, currentErrorMessageIsStale,
-                        currentErrorMessageValidator, currentErrorMessagePriorityIndex, 
+                        currentErrorMessageValidator, currentErrorMessagePriorityIndex,
                         currentErrorMessageIsOfALowerPriority, successFn;
-                    
-                    var evaluateAsValid = false;    
+
+                    var evaluateAsValid = false;
 
                     //assuming non-blur events suggest a keypress/keyup/keydown/input event
                     //only blur and runCustomValidations events are always evaluated automatically regardless of validateWhileEntering
@@ -335,7 +335,7 @@ angular_ui_form_validations = (function(){
                         if(formatterArgs.validateWhileEntering && formatterArgs.validateWhileEntering === true) {
                             //Do nothing continue on
                         } else {
-                            //TOOD: figure out why returning here is causing the cursor to be set to last position and 
+                            //TOOD: figure out why returning here is causing the cursor to be set to last position and
                             //  slowing down UI by preventing key to be pressed while it is moved, thereby causing confusing and bad UX
                             // return;
                             evaluateAsValid = true;
@@ -364,8 +364,8 @@ angular_ui_form_validations = (function(){
                     }
 
                     function getElementValue() {
-                        var value = $element.val().trimRight();
-                    
+                        var value = $element.val().replace(/\s+$/, '');
+
                         if((/select/).test($element[0].type)){
                             value = $element[0].options[$element[0].selectedIndex].innerHTML;
                         }
@@ -380,13 +380,13 @@ angular_ui_form_validations = (function(){
                         if(value === '') {
                             $element.parents('form').find('label[for='+$element.attr('id')+']').addClass('requiredFieldLabel');
                         } else {
-                            $element.parents('form').find('label[for='+$element.attr('id')+']').removeClass('requiredFieldLabel');                                
+                            $element.parents('form').find('label[for='+$element.attr('id')+']').removeClass('requiredFieldLabel');
                         }
                     }
 
                     function runValidation() {
-                        return formatterArgs.validator(errorMessageElement, 
-                            value, validationAttributeValue, $element, model, 
+                        return formatterArgs.validator(errorMessageElement,
+                            value, validationAttributeValue, $element, model,
                             ngModelController, $scope);
                     }
 
@@ -491,8 +491,8 @@ angular_ui_form_validations = (function(){
                     model = $scope[modelName];
 
                     installErrorMessageElement();
-                    
-                    installSpecialErrorCases();                    
+
+                    installSpecialErrorCases();
 
                     ngModelController.$parsers.push(function() {
                         return runCustomValidations('input');
@@ -505,12 +505,12 @@ angular_ui_form_validations = (function(){
                     $scope.$on('runCustomValidations', function () {
                         runCustomValidations('runCustomValidations');
                     });
-                }    
+                }
 
             });
-        };    
+        };
     };
-    
+
     customValidationsModule = angular.module('directives.customvalidation.customValidations', [
         'directives.invalidinputformatter.invalidInputFormatter',
         'services.templateRetriever'
@@ -528,7 +528,7 @@ angular_ui_form_validations = (function(){
     .directive('input', function (customValidationUtil) {
         return {
             require: '?ngModel',
-            restrict: 'E',            
+            restrict: 'E',
             link: customValidationUtil.createValidationLink(dynamicallyDefinedValidation)
         };
     })
@@ -536,7 +536,7 @@ angular_ui_form_validations = (function(){
     .directive('select', function (customValidationUtil) {
         return {
             require: '?ngModel',
-            restrict: 'E',            
+            restrict: 'E',
             link: customValidationUtil.createValidationLink(dynamicallyDefinedValidation)
         };
     })
@@ -544,12 +544,12 @@ angular_ui_form_validations = (function(){
     .directive('select', function (customValidationUtil) {
         return {
             require: '?ngModel',
-            restrict: 'E',            
-            link: customValidationUtil.createValidationLink({        
+            restrict: 'E',
+            link: customValidationUtil.createValidationLink({
                 customValidationAttribute: 'validationFieldRequired',
                 errorMessage: 'This is a required field',
                 validator: function (errorMessageElement, val){
-                    return (/\S/).test(val);    
+                    return (/\S/).test(val);
                 }
              })
         };

@@ -5,12 +5,12 @@
 
     getValidationAttributeValue = angular_ui_form_validations.getValidationAttributeValue;
 
-    angular.forEach([        
-         {        
+    angular.forEach([
+         {
             customValidationAttribute: 'validationFieldRequired',
             errorMessage: 'This is a required field',
             validator: function (errorMessageElement, val){
-                return (/\S/).test(val);    
+                return (/\S/).test(val);
             }
          },
          {
@@ -18,7 +18,7 @@
             errorMessage: 'Passwords do not match.',
             validator: function (errorMessageElement, val, attr, element, model, modelCtrl) {
                 var password = model.password || '';
-                return password.trimRight() === element.val().trimRight();
+                return password.replace(/\s+$/, '') === element.val().replace(/\s+$/, '');
             }
          },
          {
@@ -40,56 +40,56 @@
             customValidationAttribute: 'validationMinLength',
             errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
             validator: function (errorMessageElement, val, attr){
-                return val.length >= parseInt(getValidationAttributeValue(attr), 10);    
-            }   
+                return val.length >= parseInt(getValidationAttributeValue(attr), 10);
+            }
         },
         {
-            customValidationAttribute: 'validationMaxLength',            
+            customValidationAttribute: 'validationMaxLength',
             errorMessage: '',
             validateWhileEntering: true,
-            validator: function (errorMessageElement, val, attr) {                
+            validator: function (errorMessageElement, val, attr) {
                 if (val.length <= parseInt(getValidationAttributeValue(attr), 10)) {
                     return true;
                 } else {
                     errorMessageElement.html('Maximum of ' + getValidationAttributeValue(attr) + ' characters');
                     return false;
                 }
-            }   
+            }
         },
         {
             customValidationAttribute: 'validationOnlyAlphabets',
             errorMessage: 'Valid characters are: A-Z, a-z',
             validateWhileEntering: true,
             validator: function (errorMessageElement, val){
-                return (/^[a-z]*$/i).test(val);    
+                return (/^[a-z]*$/i).test(val);
             }
         },
         {
             customValidationAttribute: 'validationOneUpperCaseLetter',
             errorMessage: 'Must contain at least one uppercase letter',
             validator: function (errorMessageElement, val){
-                return (/^(?=.*[A-Z]).+$/).test(val);    
+                return (/^(?=.*[A-Z]).+$/).test(val);
             }
         },
         {
             customValidationAttribute: 'validationOneLowerCaseLetter',
             errorMessage: 'Must contain at least one lowercase letter',
             validator: function (errorMessageElement, val){
-                return (/^(?=.*[a-z]).+$/).test(val);    
+                return (/^(?=.*[a-z]).+$/).test(val);
             }
         },
         {
             customValidationAttribute: 'validationOneNumber',
             errorMessage: 'Must contain at least one number',
             validator: function (errorMessageElement, val){
-                return (/^(?=.*[0-9]).+$/).test(val);    
+                return (/^(?=.*[0-9]).+$/).test(val);
             }
         },
         {
             customValidationAttribute: 'validationOneAlphabet',
             errorMessage: 'Must contain at least one alphabet',
             validator: function (errorMessageElement, val) {
-                return (/^(?=.*[a-z]).+$/i).test(val);    
+                return (/^(?=.*[a-z]).+$/i).test(val);
             }
         },
         {
@@ -130,7 +130,7 @@
                 return dateValue > new Date(afterDate);
             }
         }
-    ], 
+    ],
 
     function(customValidation) {
         extendCustomValidations.directive('input', function (customValidationUtil) {
@@ -139,7 +139,7 @@
                 restrict: 'E',
                 link: customValidationUtil.createValidationLink(customValidation)
             };
-        });   
+        });
         extendCustomValidations.directive('textarea', function (customValidationUtil) {
             return {
                 require: '?ngModel',

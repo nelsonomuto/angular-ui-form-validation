@@ -142,7 +142,7 @@ Here's an example of what a validation object looks like. It has three propertie
             customValidationAttribute: 'validationConfirmPassword',
             errorMessage: 'Passwords do not match.',
             validator: function (errorMessageElement, val, attr, element, model, modelCtrl) {
-                return model.password.trimRight() === element.val().trimRight();
+                return model.password.trim() === element.val().trim();
             }
     },  
   ```
