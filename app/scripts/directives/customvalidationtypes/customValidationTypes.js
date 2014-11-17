@@ -39,7 +39,7 @@
          {
             customValidationAttribute: 'validationMinLength',
             errorMessage: function (attr) { return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters'; },
-            validator: function (errorMessageElement, val, attr){
+            validator: function (errorMessageElement, val, attr) {
                 return val.length >= parseInt(getValidationAttributeValue(attr), 10);
             }
         },
@@ -47,11 +47,13 @@
             customValidationAttribute: 'validationMaxLength',
             errorMessage: '',
             validateWhileEntering: true,
-            validator: function (errorMessageElement, val, attr) {
+            validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
+                var customMessage = getValidationAttributeValue(rawAttr, 'message');
+                attr = getValidationAttributeValue(rawAttr, 'value', true) || attr;
                 if (val.length <= parseInt(getValidationAttributeValue(attr), 10)) {
                     return true;
                 } else {
-                    errorMessageElement.html('Maximum of ' + getValidationAttributeValue(attr) + ' characters');
+                    errorMessageElement.html(customMessage || 'Maximum of ' + getValidationAttributeValue(attr) + ' characters');
                     return false;
                 }
             }

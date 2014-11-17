@@ -95,8 +95,8 @@ angular_ui_form_validations = (function(){
         return isCurrentlyDisplayingAnErrorMessageInATemplate;
     }
 
-    getValidationAttributeValue = function (attr) {
-        var value, property;
+    getValidationAttributeValue = function (attr, property, strict) {
+        var value;
 
         property = property || 'value';
 
@@ -105,6 +105,10 @@ angular_ui_form_validations = (function(){
         try{
             value = JSOL.parse(attr)[property];
         } catch (e) {
+        }
+
+        if(strict === true) {
+            attr = undefined;
         }
 
         return value || attr;
@@ -187,7 +191,8 @@ angular_ui_form_validations = (function(){
                     addWatcherToWrapErrorInCustomTemplate, isValidValidationAttributeValue,
                     getFormatterArgsErrorMessage, installErrorMessageElement, installSpecialErrorCases;
 
-                validationAttributeValue = getValidationAttributeValue($attrs[formatterArgs.customValidationAttribute]);
+                var rawCustomValidationAttribute = $attrs[formatterArgs.customValidationAttribute];
+                validationAttributeValue = getValidationAttributeValue(rawCustomValidationAttribute);
                 isValidValidationAttributeValue = ( validationAttributeValue && ( validationAttributeValue !== 'undefined' )
                         && ( validationAttributeValue !== 'false' ) );
 
@@ -387,7 +392,7 @@ angular_ui_form_validations = (function(){
                     function runValidation() {
                         return formatterArgs.validator(errorMessageElement,
                             value, validationAttributeValue, $element, model,
-                            ngModelController, $scope);
+                            ngModelController, $scope, rawCustomValidationAttribute);
                     }
 
                     function getPropertyNameClass (pname) {
