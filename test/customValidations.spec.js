@@ -1,11 +1,11 @@
 "use strict;"
 
 describe('directives.customvalidation.customValidations', function () {
-    var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages, 
+    var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages,
         passwordInput, confirmPasswordInput, templateRetriever;
-    
+
     beforeEach(function (){
-        module('directives.customvalidation.customValidationTypes');        
+        module('directives.customvalidation.customValidationTypes');
         inject(function ($injector, $rootScope, $compile, $q, $timeout) {
             element = angular.element('<form name="form">' +
                 '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
@@ -16,7 +16,7 @@ describe('directives.customvalidation.customValidations', function () {
             passwordInput = element.find('#password');
             templateRetriever = $injector.get('templateRetriever');
 
-            spyOn(templateRetriever, 'getTemplate').andCallFake(function (templateUrl){
+            spyOn(templateRetriever, 'getTemplate').and.callFake(function (templateUrl){
                 var template;
                 if(templateUrl === 'views/errorTemplateOne.html'){
                     template = '<div class="ErrorTemplateOne" >{{errorMessage}}</div>'
@@ -28,7 +28,7 @@ describe('directives.customvalidation.customValidations', function () {
             });
 
             scope = $rootScope;
-            
+
             angular.extend(scope, {
                 user: {
                     name: null,
@@ -83,7 +83,7 @@ describe('directives.customvalidation.customValidations', function () {
         expect(2).toEqual(visibleErrorMessages.length);
         expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim());
     });
-    
+
     describe('confirmPassword', function(){
         beforeEach(function (){
             inject(function ($rootScope, $compile, $timeout){
@@ -124,7 +124,7 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(8).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
-            expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());   
+            expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());
 
             passwordInput.val('sadffsdaadfsSfsda');
             scope.$broadcast('runCustomValidations');
@@ -132,9 +132,9 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(8).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
-            expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim()); 
-        });        
-    });    
+            expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim());
+        });
+    });
 
     describe('validation false', function() {
         beforeEach(function (){
@@ -203,7 +203,7 @@ describe('directives.customvalidation.customValidations', function () {
             labelClass = label.attr('class');
             expect(/requiredFieldLabel/.test(labelClass)).toBe(true);
         });
-    });    
+    });
 
     describe('object literal validation attribute value', function(){
         beforeEach(function (){
@@ -245,7 +245,7 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(8).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
-            expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());   
+            expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());
 
             passwordInput.val('sadffsdaadfsSfsda');
             scope.$broadcast('runCustomValidations');
@@ -253,8 +253,8 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(8).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
-            expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim()); 
-        });        
+            expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim());
+        });
     });
 
     describe('custom message', function(){
@@ -287,13 +287,13 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(1).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
-            expect('under min length').toEqual(visibleErrorMessages.html().trim()); 
-        });        
+            expect('under min length').toEqual(visibleErrorMessages.html().trim());
+        });
     });
 
     describe('custom error message template wrap', function () {
         beforeEach(function (){
-            inject(function ($rootScope, $compile, $timeout){                    
+            inject(function ($rootScope, $compile, $timeout){
                 element = angular.element('<form name="form">' +
                     '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
                     'validation-min-length="{ template:\'views/errorTemplateOne.html\', value: 8}" validation-one-alphabet="{ template:\'views/errorTemplateTwo.html\', value: true}" validation-one-number="{ template:\'views/errorTemplateTwo.html\', value: 8}" validation-one-lower-case-letter="true" '+
@@ -323,7 +323,7 @@ describe('directives.customvalidation.customValidations', function () {
             expect(9).toEqual(hiddenErrorMessages.length);
             expect(0).toEqual(visibleErrorMessages.length);
         });
-        
+
         it('should show password errors when password is changed', function (){
             passwordInput.val('sadffsdaadfsfsda');
             element.scope().$apply();
@@ -333,8 +333,8 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(8).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
-            expect('ErrorTemplateOne').toEqual(angular.element(visibleErrorMessages[0]).parents('div').attr('class'));   
-            expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());   
+            expect('ErrorTemplateOne').toEqual(angular.element(visibleErrorMessages[0]).parents('div').attr('class'));
+            expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());
 
             passwordInput.val('sadffsdaadfsSfsda');
             element.scope().$apply();
@@ -344,16 +344,16 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(8).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
-            expect('ErrorTemplateTwo').toEqual(angular.element(visibleErrorMessages[0]).parents('div').attr('class'));   
-            expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim()); 
-        });        
+            expect('ErrorTemplateTwo').toEqual(angular.element(visibleErrorMessages[0]).parents('div').attr('class'));
+            expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim());
+        });
     });
     describe('error message modified by validator', function() {
         var customValidationTypes;
         beforeEach(function (){
             inject(function ($injector, $rootScope, $compile, $timeout) {
                 element = angular.element('<form name="form">' +
-                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+                    
+                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+
                     'validation-max-length="5"/>'+
                     '</form>');
                 passwordInput = element.find('#password');
@@ -374,8 +374,8 @@ describe('directives.customvalidation.customValidations', function () {
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(0).toEqual(hiddenErrorMessages.length);
-            expect(1).toEqual(visibleErrorMessages.length);             
-            expect('Maximum of 5 characters').toEqual(visibleErrorMessages.html().trim());   
+            expect(1).toEqual(visibleErrorMessages.length);
+            expect('Maximum of 5 characters').toEqual(visibleErrorMessages.html().trim());
         });
     });
     describe('support selects', function() {
@@ -383,8 +383,8 @@ describe('directives.customvalidation.customValidations', function () {
         beforeEach(function (){
             inject(function ($injector, $rootScope, $compile, $timeout) {
                 element = angular.element('<form name="form">' +
-                    '<select ng-model="user.password" name="password" id="password" ng-model="user.password"'+                    
-                    'ng-options="option for option in selectOptions"'+                    
+                    '<select ng-model="user.password" name="password" id="password" ng-model="user.password"'+
+                    'ng-options="option for option in selectOptions"'+
                     'validation-field-required="true"'+
                     'validation-dynamically-defined="locallyDefinedValidations"<select/>'+
                     '</form>');
@@ -397,11 +397,11 @@ describe('directives.customvalidation.customValidations', function () {
                         password: null,
                         confirmPassword: null
                     },
-                    locallyDefinedValidations: [                  
+                    locallyDefinedValidations: [
                         {
                             errorMessage: 'Cannot contain the number one',
                             validator: function (errorMessageElement, val){
-                              return /1/.test(val) !== true;    
+                              return /1/.test(val) !== true;
                             }
                         }
                     ]
@@ -430,7 +430,7 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(2).toEqual(hiddenErrorMessages.length);
             expect(0).toEqual(visibleErrorMessages.length);
-            
+
             scope.user.password = 'invalidOption1';
             element.scope().$apply();
             scope.$broadcast('runCustomValidations');
@@ -439,8 +439,8 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(1).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
-            expect('Cannot contain the number one').toEqual(visibleErrorMessages.html().trim()); 
-        }); 
+            expect('Cannot contain the number one').toEqual(visibleErrorMessages.html().trim());
+        });
     });
 
     describe('validationDynamicallyDefined', function() {
@@ -448,7 +448,7 @@ describe('directives.customvalidation.customValidations', function () {
         beforeEach(function (){
             inject(function ($injector, $rootScope, $compile, $timeout) {
                 element = angular.element('<form name="form">' +
-                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+                    
+                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+
                     'validation-dynamically-defined="locallyDefinedValidations"/>'+
                     '</form>');
                 passwordInput = element.find('#password');
@@ -459,18 +459,18 @@ describe('directives.customvalidation.customValidations', function () {
                         password: null,
                         confirmPassword: null
                     },
-                    locallyDefinedValidations: [                  
+                    locallyDefinedValidations: [
                         {
                             errorMessage: 'Cannot contain the number one',
                             validator: function (errorMessageElement, val){
-                              return /1/.test(val) !== true;    
+                              return /1/.test(val) !== true;
                             }
                         },
                         {
                           errorMessage: 'Cannot contain the number two',
                              validator: function (errorMessageElement, val){
-                              return /2/.test(val) !== true;      
-                            } 
+                              return /2/.test(val) !== true;
+                            }
                         }
                     ]
                 });
@@ -490,14 +490,14 @@ describe('directives.customvalidation.customValidations', function () {
             expect(0).toEqual(visibleErrorMessages.length);
         });
     });
-    
+
     describe('live feedback | success', function() {
         var successSpy;
 
         beforeEach(function (){
             inject(function ($injector, $rootScope, $compile, $timeout) {
                 element = angular.element('<form name="form">' +
-                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+        
+                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+
                     'validation-dynamically-defined="locallyDefinedValidations"/>'+
                     '</form>');
                 passwordInput = element.find('#password');
@@ -509,12 +509,12 @@ describe('directives.customvalidation.customValidations', function () {
                         password: null,
                         confirmPassword: null
                     },
-                    locallyDefinedValidations: [                  
+                    locallyDefinedValidations: [
                         {
                             errorMessage: 'Cannot contain the number one',
                             success: successSpy,
                             validator: function (errorMessageElement, val){
-                              return /1/.test(val) !== true;    
+                              return /1/.test(val) !== true;
                             }
                         }
                     ]
@@ -547,7 +547,7 @@ describe('directives.customvalidation.customValidations', function () {
         beforeEach(function (){
             inject(function ($injector, $rootScope, $compile, $timeout, $q) {
                 element = angular.element('<form name="form">' +
-                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+                    
+                    '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" '+
                     'validation-dynamically-defined="locallyDefinedValidations"/>'+
                     '</form>');
                 passwordInput = element.find('#password');
@@ -558,7 +558,7 @@ describe('directives.customvalidation.customValidations', function () {
                         password: null,
                         confirmPassword: null
                     },
-                    locallyDefinedValidations: [                  
+                    locallyDefinedValidations: [
                         {
                             errorMessage: 'Cannot contain the number one',
                             validator: function (errorMessageElement, val){
@@ -572,14 +572,14 @@ describe('directives.customvalidation.customValidations', function () {
                                     }
                                 }, 1000);
                                 $timeout.flush();
-                                return deferred.promise;   
+                                return deferred.promise;
                             }
                         },
                         {
                           errorMessage: 'Cannot contain the number two',
                              validator: function (errorMessageElement, val){
-                                return /2/.test(val) !== true;      
-                            } 
+                                return /2/.test(val) !== true;
+                            }
                         }
                     ]
                 });
@@ -608,7 +608,7 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(1).toEqual(hiddenErrorMessages.length);
             expect(0).toEqual(visibleErrorMessages.length);
-            
+
             scope.user.password = 'invalidOption1';
             element.scope().$apply();
             scope.$broadcast('runCustomValidations');
@@ -617,7 +617,7 @@ describe('directives.customvalidation.customValidations', function () {
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(1).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
-            expect('Cannot contain the number one').toEqual(visibleErrorMessages.html().trim()); 
-        });       
+            expect('Cannot contain the number one').toEqual(visibleErrorMessages.html().trim());
+        });
     });
 });
