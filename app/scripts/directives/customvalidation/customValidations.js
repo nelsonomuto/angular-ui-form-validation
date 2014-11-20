@@ -8,6 +8,60 @@ angular_ui_form_validations = (function(){
 
     customValidations = [];
 
+    var submitLink = function ($scope, $element, $attrs, ngModelController) {
+        if(typeof($attrs['validationSubmit']) === 'undefined') {
+            return;
+        }
+        var validationSubmit = getValidationAttributeValue($attrs['validationSubmit'], 'onSubmit', true);
+        var formName = getValidationAttributeValue($attrs['validationSubmit'], 'formName', true);
+        var form = angular.element('[name='+ formName +']');
+        if(form.length === 0){
+            form = $element.parents('[name=' + formName + ']');
+        }
+        validationSubmit = validationSubmit.substring(0, validationSubmit.indexOf('('));
+        var submitFunction = $scope[validationSubmit];
+        var indexOfDot = validationSubmit.indexOf('.');
+        if (indexOfDot !== -1) {
+            var model = validationSubmit.substring(0, indexOfDot);
+            var modelFunction = validationSubmit.substring(indexOfDot + 1);
+            submitFunction = $scope[model][modelFunction];
+        }
+
+        var formIsValid = false;//TODO: logic to check if form is valid ($scope.$watch $form.pristine, )
+
+        $element.addClass('invalid');
+        $element.removeClass('valid');
+
+        var formIsSubmittable = function () {
+            formIsValid = true;
+            $element.addClass('valid');
+            $element.removeClass('invalid');
+        };
+
+        var formIsNotSubmittable = function () {
+            formIsValid = false;
+            $element.addClass('invalid');
+            $element.removeClass('valid');
+        };
+
+        $scope.$watch( function (scope) {
+            return scope[formName].$valid && $scope[formName].$dirty === true;
+        }, function (valid) {
+            if (valid === true) {
+                formIsSubmittable();
+
+            } else {
+                formIsNotSubmittable();
+            }
+        });
+
+        $element.on('click', function () {
+           if(formIsValid === true){
+               submitFunction.apply($scope, []);
+           }
+        });
+    };
+
     dynamicallyDefinedValidation = {
         customValidationAttribute: 'validationDynamicallyDefined',
         errorCount: 0,
@@ -552,14 +606,28 @@ angular_ui_form_validations = (function(){
             restrict: 'E',
             link: customValidationUtil.createValidationLink({
                 customValidationAttribute: 'validationFieldRequired',
+                validateWhileEntering: true,
                 errorMessage: 'This is a required field',
                 validator: function (errorMessageElement, val){
                     return (/\S/).test(val);
                 }
              })
         };
-    });
+    })
 
+    .directive('button', function (customValidationUtil) {
+        return {
+            restrict: 'E',
+            link: submitLink
+        };
+    })
+
+    .directive('a', function (customValidationUtil) {
+        return {
+            restrict: 'E',
+            link: submitLink
+        };
+    });
 
     //shared config functions
     return {

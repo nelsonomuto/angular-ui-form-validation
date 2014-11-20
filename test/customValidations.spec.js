@@ -378,6 +378,155 @@ describe('directives.customvalidation.customValidations', function () {
             expect('Maximum of 5 characters').toEqual(visibleErrorMessages.html().trim());
         });
     });
+    describe('uses custom error message when supplied', function() {
+        var customValidationTypes;
+        beforeEach(function () {
+            inject(function ($injector, $rootScope, $compile, $timeout) {
+                element = angular.element('<form name="form">' +
+                '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" ' +
+                'validation-max-length=\'{"message":"customMessage", "value":5}\'/>' +
+                '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+        it('should be able to modify error message in validator', function () {
+            passwordInput.val('sadffsdaadfsfsda');
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(0).toEqual(hiddenErrorMessages.length);
+            expect(1).toEqual(visibleErrorMessages.length);
+            expect('customMessage').toEqual(visibleErrorMessages.html().trim());
+        });
+    });
+    describe('validation submit validate while entering is true', function() {
+        var customValidationTypes;
+        beforeEach(function () {
+            inject(function ($injector, $rootScope, $compile, $timeout) {
+                element = angular.element('<form name="form">' +
+                '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" ' +
+                'validation-max-length=\'{"message":"customMessage", "value":5, "validateWhileEntering": true }\'/>' +
+                '<a validation-submit=\'{"formName":"form", "onSubmit":"onSubmit()"}\' >Submit</a>' +
+                '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                scope.onSubmit = jasmine.createSpy('scope#onValid');
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+        it('should change element class to invalid', function () {
+            passwordInput.val('sadffsdaadfsfsda');
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            var form = element;
+            form.removeClass('ng-pristine');
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(0).toEqual(hiddenErrorMessages.length);
+            expect(1).toEqual(visibleErrorMessages.length);
+            expect('customMessage').toEqual(visibleErrorMessages.html().trim());
+            expect(form.hasClass('ng-invalid')).toBe(true);
+            expect(form.hasClass('ng-valid')).toBe(false);
+        });
+        it('should change element class to valid', function () {
+            passwordInput.val('asdf');
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            var form = element;
+            form.removeClass('ng-pristine');
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+            expect(form.hasClass('ng-invalid')).toBe(false);
+            expect(form.hasClass('ng-valid')).toBe(true);
+        });
+        it('should not call onSubmit when clicked', function () {
+            passwordInput.val('sadffsdaadfsfsda');
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            var form = element;
+            form.removeClass('ng-pristine');
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(0).toEqual(hiddenErrorMessages.length);
+            expect(1).toEqual(visibleErrorMessages.length);
+            expect('customMessage').toEqual(visibleErrorMessages.html().trim());
+            expect(form.hasClass('ng-invalid')).toBe(true);
+            expect(form.hasClass('ng-valid')).toBe(false);
+            form.find('a').click();
+            expect(scope.onSubmit).not.toHaveBeenCalled();
+        });
+        it('should call onSubmit when clicked', function () {
+            passwordInput.val('asdf');
+            scope.form.$setDirty();
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            var form = element;
+            form.scope().$apply();
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+            expect(form.hasClass('ng-invalid')).toBe(false);
+            expect(form.hasClass('ng-valid')).toBe(true);
+            form.find('a').click();
+            expect(scope.onSubmit).toHaveBeenCalled();
+        });
+    });
+    describe('validation submit validate while entering is true when onSubmit is defined on scope model', function() {
+        var customValidationTypes;
+        beforeEach(function () {
+            inject(function ($injector, $rootScope, $compile, $timeout) {
+                element = angular.element('<form name="form">' +
+                '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" ' +
+                'validation-max-length=\'{"message":"customMessage", "value":5, "validateWhileEntering": true }\'/>' +
+                '<a validation-submit=\'{"formName":"form", "onSubmit":"model.onSubmit()"}\' >Submit</a>' +
+                '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                scope.model = { onSubmit: jasmine.createSpy('scope#onValid')};
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+        it('should call onSubmit when clicked', function () {
+            passwordInput.val('asdf');
+            scope.form.$setDirty();
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            var form = element;
+            form.scope().$apply();
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+            expect(form.hasClass('ng-invalid')).toBe(false);
+            expect(form.hasClass('ng-valid')).toBe(true);
+            form.find('a').click();
+            expect(scope.model.onSubmit).toHaveBeenCalled();
+        });
+    });
     describe('support selects', function() {
         var customValidationTypes;
         beforeEach(function (){

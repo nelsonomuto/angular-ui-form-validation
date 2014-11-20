@@ -26,7 +26,9 @@ angular.module('angularUiFormValidationApp')
             /**
              * Trigger the runCustomValidations to ensure the form is evaluated before submission
              */
-            $scope.$broadcast('runCustomValidations');
+            $scope.$broadcast('runCustomValidations', {
+                forms: ['demoForm']
+            });
 
             /**
              * The customValidationComplete event will fire for each evaluated property of user
@@ -64,14 +66,14 @@ angular.module('angularUiFormValidationApp')
               identifier: 'noOnes',
               errorMessage: 'Cannot contain the number one',
               validator: function (errorMessageElement, val) {
-                  return /1/.test(val) !== true;    
+                  return /1/.test(val) !== true;
               },
               validateWhileEntering: true
           },
           {
               errorMessage: 'Cannot contain the number two',
               validator: function (errorMessageElement, val){
-                  return /2/.test(val) !== true;      
+                  return /2/.test(val) !== true;
               },
               validateWhileEntering: true
           }
