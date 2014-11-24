@@ -516,7 +516,8 @@ describe('directives.customvalidation.customValidations', function () {
         });
     });
     describe('validation submit validate while entering is true with multiple fields', function() {
-        var customValidationTypes;
+        var customValidationTypes,
+            nameInput;
         beforeEach(function () {
             inject(function ($injector, $rootScope, $compile, $timeout) {
                 element = angular.element('<form name="form">' +
@@ -538,7 +539,20 @@ describe('directives.customvalidation.customValidations', function () {
         });
         it('should change element class to invalid', function () {
             passwordInput.val('sadffsdaadfsfsda');
-            debugger;
+            nameInput.val('nelson');
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            var form = element;
+            form.removeClass('ng-pristine');
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(2).toEqual(visibleErrorMessages.length);
+            expect('customMessage').toEqual(visibleErrorMessages.html().trim());
+            expect(form.hasClass('ng-invalid')).toBe(true);
+            expect(form.hasClass('ng-valid')).toBe(false);
+
             nameInput.val('nelso1n');
             element.scope().$apply();
             scope.$broadcast('runCustomValidations');
@@ -547,11 +561,24 @@ describe('directives.customvalidation.customValidations', function () {
             form.removeClass('ng-pristine');
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-            expect(0).toEqual(hiddenErrorMessages.length);
+            expect(2).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
             expect('customMessage').toEqual(visibleErrorMessages.html().trim());
             expect(form.hasClass('ng-invalid')).toBe(true);
             expect(form.hasClass('ng-valid')).toBe(false);
+
+            passwordInput.val('fsad');
+            element.scope().$apply();
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            var form = element;
+            form.removeClass('ng-pristine');
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(3).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+            expect(form.hasClass('ng-invalid')).toBe(false);
+            expect(form.hasClass('ng-valid')).toBe(true);
         });
         it('should change element class to valid', function () {
             passwordInput.val('asdf');
