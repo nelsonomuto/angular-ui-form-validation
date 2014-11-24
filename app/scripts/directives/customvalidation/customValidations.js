@@ -151,21 +151,37 @@ angular_ui_form_validations = (function(){
 
     getValidationAttributeValue = function (attr, property, strict) {
         var value;
-
+        if(attr === undefined) {
+            return undefined;
+        }
         property = property || 'value';
 
         value = attr;
 
         try{
-            value = JSOL.parse(attr)[property];
+            var json = JSOL.parse(attr);
         } catch (e) {
         }
 
-        if(strict === true) {
-            attr = undefined;
+        if(json !== null && typeof(json) === 'object'){
+
+            if(json.hasOwnProperty(property)){
+                hasProperty = true;
+                value = json[property];
+            } else {
+                hasProperty = false;
+                value = undefined;
+                if(strict !== true){
+                    value = json.value;
+                }
+            }
+            return value;
+
+        } else if(strict === true){ //strict assumes you must be passing in an object attr
+            return undefined;
         }
 
-        return value || attr;
+        return value;
     };
 
     getValidationAttributeByPropertyName = function (attr, property) {
@@ -627,7 +643,7 @@ angular_ui_form_validations = (function(){
             restrict: 'E',
             link: submitLink
         };
-    });
+    })
 
     //shared config functions
     return {

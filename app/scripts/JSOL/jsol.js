@@ -39,7 +39,8 @@
   // Used for trimming whitespace
   var trim =  /^(\s|\u00A0)+|(\s|\u00A0)+$/g;
   if (typeof self.JSOL.parse !== "function") {
-    self.JSOL.parse = function(text) {
+    self.JSOL.parse = function(inText) {
+      var text = inText.replace(/\n/, '');
       // make sure text is a "string"
       if (typeof text !== "string" || !text) {
         return null;
