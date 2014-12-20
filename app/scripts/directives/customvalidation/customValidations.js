@@ -364,15 +364,15 @@ angular_ui_form_validations = (function(){
                             }
                         });
                     }
-
                     if (formatterArgs.customValidationAttribute === 'validationConfirmPassword') {
-                        $element.add('[name=password]').on('keyup blur', function (target){
+                        var passwordFieldSelector = '#' + $element.attr('passwordFieldId');
+                        $element.add(passwordFieldSelector).on('keyup blur', function (target){
                             var passwordMatch, confirmPasswordElement, passwordElement, confirmPasswordIsDirty, passwordIsValid;
 
                             confirmPasswordElement =
                                 this.name === 'confirmPassword'? angular.element(this) : angular.element(this).siblings('[name=confirmPassword]');
 
-                            passwordElement = confirmPasswordElement.siblings('[name=password]');
+                            passwordElement = confirmPasswordElement.siblings(passwordFieldSelector);
 
                             confirmPasswordIsDirty = /dirty/.test(confirmPasswordElement.attr('class'));
 
@@ -381,7 +381,7 @@ angular_ui_form_validations = (function(){
                             }
                             passwordIsValid = /invalid/.test(passwordElement.attr('class')) === false;
 
-                            passwordMatch =  $('[name=password]').val() === $element.val();
+                            passwordMatch =  $(passwordFieldSelector).val() === $element.val();
 
                             ngModelController.$setValidity('validationconfirmpassword', passwordMatch);
                             confirmPasswordElement.siblings('.CustomValidationError.validationConfirmPassword:first').toggle(! passwordMatch);
