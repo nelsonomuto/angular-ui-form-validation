@@ -1,7 +1,7 @@
 {
   "name": "angular-ui-form-validation",
   "description": "A plugin for performing validation in angularjs without writing lots of boilerplate code or duplicating logic.",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "dependencies": {
     "jquery": "^2.1.1"
   },
