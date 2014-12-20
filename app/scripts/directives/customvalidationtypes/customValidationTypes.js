@@ -49,8 +49,7 @@
             validateWhileEntering: true,
             validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
                 var customMessage = getValidationAttributeValue(rawAttr, 'message', true);
-                attr = getValidationAttributeValue(rawAttr, 'value', true);
-                if (val.length <= parseInt(getValidationAttributeValue(attr), 10)) {
+                if (val.length <= parseInt(getValidationAttributeValue(rawAttr), 10)) {
                     return true;
                 } else {
                     errorMessageElement.html(customMessage || 'Maximum of ' + getValidationAttributeValue(rawAttr) + ' characters');

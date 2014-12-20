@@ -14,36 +14,30 @@
   <form novalidate name="demoForm">
     <label for="username">Username</label>
     <input type="text" id="username" name="username" ng-model="user.username"
-           validation-max-length="{message:'
-Maximum of 30 characters', value: '30'}"
-           validation-field-required="{message:'Required', value: true}"
-        />
-    <!--<input type="text" id="username" name="username" ng-model="user.username"-->
-      <!--validation-min-length="{template:'/views/errorTemplateOne.html', value:5}"-->
-      <!--validation-no-space="{message:'no space - custom message', value: true}"-->
-      <!--validation-field-required="true"-->
-      <!--validation-max-length="10"-->
-      <!--validation-no-special-chars="true"-->
-      <!--validation-dynamically-defined="locallyDefinedValidations"-->
-    <!--/>-->
+      validation-min-length="{template:'/views/errorTemplateOne.html', value:5}"
+      validation-no-space="{message:'no space - custom message', value: true}"
+      validation-field-required="true"
+      validation-max-length="10"
+      validation-no-special-chars="true"
+      validation-dynamically-defined="locallyDefinedValidations"
+    />
     <span class="help-block">username | validates no ones, no twos, min char = 5, max = 10, no special chars</span>
 
-    <!--<label for="password">Password</label>-->
-    <!--<input type="text" id="password" name="password" ng-model="user.password"-->
-      <!--validation-min-length="8"-->
-      <!--validation-one-number="true"-->
-      <!--validation-one-upper-case-letter="true"-->
-      <!--validation-one-lower-case-letter="true"-->
-      <!--validation-field-required="true"-->
-      <!--validation-no-space="true"-->
-    <!--/>-->
-    <!--<span class="help-block">password | validates number required, lowercase required, uppercase...no space...</span>-->
-
-    <!--<label for="confirmPassword">Confirm Password</label>-->
-    <!--<input type="text" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword"-->
-      <!--validation-confirm-password="true"-->
-      <!--validation-field-required="true"-->
-    <!--/>-->
+    <label for="password">Password</label>
+    <input type="text" id="password" name="password" ng-model="user.password"
+      validation-min-length="8"
+      validation-one-number="true"
+      validation-one-upper-case-letter="true"
+      validation-one-lower-case-letter="true"
+      validation-field-required="true"
+      validation-no-space="true"
+    />
+    <span class="help-block">password | validates number required, lowercase required, uppercase...no space...</span>
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="text" id="confirmPassword" name="confirmPassword" ng-model="user.confirmPassword"
+      validation-confirm-password="true"
+      validation-field-required="true"
+    />
 
     <!--<div class="Select">-->
     <!--<label for="state">State</label>-->
@@ -66,11 +60,11 @@ Maximum of 30 characters', value: '30'}"
     <!--<input id="isAdmin" type="checkbox" name="isAdmin" value="true" ng-model="user.isAdmin" validation-field-required="true" />-->
     <!--<span class="help-block">admin | validates is required</span>-->
 
-    <!--&lt;!&ndash; <label for="hasKids">Has Kids</label>-->
+    <!--<!-- <label for="hasKids">Has Kids</label>-->
     <!--<input id="hasKids" type="radio" name="kids" value="true" ng-model="user.hasKids" validation-field-required="true" />-->
     <!--<label for="hasNoKids">Has No Kids</label>-->
     <!--<input id="hasNoKids" type="radio" name="kids" value="true" ng-model="user.hasKids" />-->
-    <!--<span class="help-block">Has Kids | validates is required</span> &ndash;&gt;-->
+    <!--<span class="help-block">Has Kids | validates is required</span> -->
 
     <!--<label for="bday">Birthdate</label>-->
     <!--<input type="date" id="bday" name="bday"-->
@@ -78,7 +72,7 @@ Maximum of 30 characters', value: '30'}"
            <!--validation-date-after="09/25/1987"-->
            <!--ng-model="user.birthdate"-->
     <!--/>-->
-    <!--<span class="help-block">birthdate | validates must be before today, must be after 09/25/1987</span>-->
+    <!--<span class="help-block">birthdate | validates must be before today, must be after 09/25/1987</span> -->
 
     <a class="btn-primary" validation-submit="{onSubmit:'user.save()', formName:'demoForm'}" type="submit">Submit</a>
   </form>

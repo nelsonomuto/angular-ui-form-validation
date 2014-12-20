@@ -373,6 +373,11 @@ describe('directives.customvalidation.customValidations', function () {
             expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim());
         });
     });
+    describe('maxlength validation', function (){
+        it('should use the custom message when specified', function () {
+
+        });
+    });
     describe('error message modified by validator', function() {
         var customValidationTypes;
         beforeEach(function (){
@@ -430,6 +435,44 @@ describe('directives.customvalidation.customValidations', function () {
             expect(0).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
             expect('customMessage').toEqual(visibleErrorMessages.html().trim());
+        });
+    });
+    describe('validation submit validate one required field', function() {
+        var customValidationTypes;
+        beforeEach(function () {
+            inject(function ($injector, $rootScope, $compile, $timeout) {
+                element = angular.element('<form name="form">' +
+                '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password"' +
+                'validation-field-required="true" ' +
+                'validation-max-length=\'{"message":"customMessage", "value":5, "validateWhileEntering": true }\'/>' +
+                '<a validation-submit=\'{"formName":"form", "onSubmit":"onSubmit()"}\' >Submit</a>' +
+                '</form>');
+                passwordInput = element.find('#password');
+                confirmPasswordInput = element.find('#confirmPassword');
+                scope = $rootScope;
+                scope.onSubmit = jasmine.createSpy('scope#onValid');
+                $compile(element)(scope);
+                scope.$digest();
+                $timeout.flush();
+                errorMessages = element.find('.CustomValidationError');
+            });
+        });
+        it('should have invalid submit given a pristine form with a required field', function () {
+            //passwordInput.val('sadffsdaadfsfsda');
+            //element.scope().$apply();
+            //scope.$broadcast('runCustomValidations');
+            //element.scope().$apply();
+            var form = element;
+            //form.removeClass('ng-pristine');
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(2).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(visibleErrorMessages.length);
+            expect(form.hasClass('ng-invalid')).toBe(false);
+            expect(form.hasClass('ng-valid')).toBe(true);
+            var submit = form.find('a');
+            expect(submit.hasClass('invalid')).toEqual(true);
+            expect(submit.hasClass('valid')).toEqual(false);
         });
     });
     describe('validation submit validate while entering is true', function() {
@@ -515,7 +558,7 @@ describe('directives.customvalidation.customValidations', function () {
             expect(scope.onSubmit).toHaveBeenCalled();
         });
     });
-    describe('validation submit validate while entering is true with multiple fields', function() {
+    xdescribe('validation submit validate while entering is true with multiple fields', function() {
         var customValidationTypes,
             nameInput;
         beforeEach(function () {
@@ -536,6 +579,27 @@ describe('directives.customvalidation.customValidations', function () {
                 $timeout.flush();
                 errorMessages = element.find('.CustomValidationError');
             });
+        });
+        it('should have invalid submit given a form with a required field and a valid dirty field', function () {
+            passwordInput.val('dasaa');
+            element.scope().$apply();
+            debugger;
+            scope.$broadcast('runCustomValidations');
+            element.scope().$apply();
+            var form = element;
+            form.removeClass('ng-pristine');
+            hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
+            visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
+            expect(2).toEqual(hiddenErrorMessages.length);
+
+            //runCustomValidations should not invalidate a field that is not dirty
+            expect(0).toEqual(visibleErrorMessages.length);
+
+            expect(form.hasClass('ng-invalid')).toBe(false);
+            expect(form.hasClass('ng-valid')).toBe(true);
+            var submit = form.find('a');
+            expect(submit.hasClass('invalid')).toEqual(true);
+            expect(submit.hasClass('valid')).toEqual(false);
         });
         it('should change element class to invalid', function () {
             passwordInput.val('sadffsdaadfsfsda');
