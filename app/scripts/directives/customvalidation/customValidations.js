@@ -370,7 +370,7 @@ angular_ui_form_validations = (function(){
                             var passwordMatch, confirmPasswordElement, passwordElement, confirmPasswordIsDirty, passwordIsValid;
 
                             confirmPasswordElement =
-                                this.name === 'confirmPassword'? angular.element(this) : angular.element(this).siblings('[name=confirmPassword]');
+                              this.hasAttribute('passwordFieldId') === true ? angular.element(this) : angular.element(this).siblings('[passwordFieldId='+this.id+']');
 
                             passwordElement = confirmPasswordElement.siblings(passwordFieldSelector);
 
