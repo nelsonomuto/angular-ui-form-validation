@@ -140,7 +140,17 @@
         userCustomValidations = userCustomValidations.concat(validations);
       };
 
+      var compileProvider;
+
+      this.setCompileProvider = function (cp) {
+        compileProvider = cp;
+      };
+
       var Validations = function () {
+        this.compileDirective = function (name, constructor) {
+          compileProvider.directive.apply(null, [name, constructor]);
+        };
+
         this.fetch = function () {
           return userCustomValidations.concat(outOfBoxValidations);
         };
@@ -151,19 +161,22 @@
       };
     });
 
+    extendCustomValidations.config(function ($compileProvider, myValidationsProvider) {
+      myValidationsProvider.setCompileProvider($compileProvider);
+    });
+
     extendCustomValidations.run(function(myValidations){
       angular.forEach(myValidations.fetch(),
 
         function(customValidation) {
-          debugger;
-          extendCustomValidations.directive('input', function (customValidationUtil) {
+          myValidations.compileDirective('input', function (customValidationUtil) {
             return {
               require: '?ngModel',
               restrict: 'E',
               link: customValidationUtil.createValidationLink(customValidation)
             };
           });
-          extendCustomValidations.directive('textarea', function (customValidationUtil) {
+          myValidations.compileDirective('textarea', function (customValidationUtil) {
             return {
               require: '?ngModel',
               restrict: 'E',
