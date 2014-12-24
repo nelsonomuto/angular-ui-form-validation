@@ -387,6 +387,9 @@ module.exports = function (grunt) {
         },
 
         uglify: {
+            options: {
+                mangle: false
+            },
             distsourcefile: {
                 files: {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
