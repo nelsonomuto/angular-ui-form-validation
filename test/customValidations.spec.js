@@ -917,11 +917,7 @@ describe('directives.customvalidation.customValidations', function () {
                                 var deferred = $q.defer();
 
                                 $timeout(function() {
-                                    if(/1/.test(val) === true) {
-                                        deferred.reject();
-                                    } else {
-                                        deferred.resolve();
-                                    }
+                                    deferred.resolve(/1/.test(val) !== true);
                                 }, 1000);
                                 $timeout.flush();
                                 return deferred.promise;
@@ -951,7 +947,7 @@ describe('directives.customvalidation.customValidations', function () {
             expect(0).toEqual(visibleErrorMessages.length);
         });
 
-        xit('should show errors when value is changed to invalid option', function (){
+        it('should show errors when value is changed to invalid option', function (){
             scope.user.password = 'validOption';
             element.scope().$apply();
             scope.$broadcast('runCustomValidations');
@@ -967,7 +963,7 @@ describe('directives.customvalidation.customValidations', function () {
             element.scope().$apply();
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-            expect(1).toEqual(hiddenErrorMessages.length);
+            expect(0).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
             expect('Cannot contain the number one').toEqual(visibleErrorMessages.html().trim());
         });

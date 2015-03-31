@@ -3,7 +3,7 @@
 
 angular.module('angularUiFormValidationApp')
 
-.controller('MainCtrl', function ($scope) {
+.controller('MainCtrl', function ($scope, $timeout, $q) {
   $scope.awesomeThings = [
     'HTML5 Boilerplate',
     'AngularJS',
@@ -76,6 +76,18 @@ angular.module('angularUiFormValidationApp')
                   return /2/.test(val) !== true;
               },
               validateWhileEntering: true
+          },
+          {
+              identifier: 'noThreesAjax',
+              errorMessage: 'Cannot contain the number three ajax call',
+              validator: function (errorMessageElement, val) {
+                  var deferred = $q.defer();
+                  $timeout(function () {
+                      deferred.resolve(/3/.test(val) !== true);
+                  }, 2000);
+
+                  return deferred.promise;
+              }
           }
       ]
   });

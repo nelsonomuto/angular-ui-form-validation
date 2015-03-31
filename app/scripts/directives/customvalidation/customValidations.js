@@ -65,6 +65,7 @@ angular_ui_form_validations = (function(){
     dynamicallyDefinedValidation = {
         customValidationAttribute: 'validationDynamicallyDefined',
         errorCount: 0,
+        asynchCount: 0,
         latestElement: null,
         _errorMessage: 'Field is invalid',
         _success: function () {},
@@ -74,11 +75,15 @@ angular_ui_form_validations = (function(){
         errorMessage: function () {
             return dynamicallyDefinedValidation._errorMessage;
         },
+
         validator: function (errorMessageElement, val, attr, element, model, modelCtrl, scope) {
             var valid, hydrateDynamicallyDefinedValidation, scopeValidations,
                 setErrorIdentifier, setValidity, validatorArgs, deferred;
             validatorArgs = arguments;
             scopeValidations = scope[attr];
+
+            var me = dynamicallyDefinedValidation;
+            me.errorCount = 0;
 
             hydrateDynamicallyDefinedValidation = function (validation) {
                 dynamicallyDefinedValidation._errorMessage = validation.errorMessage;
@@ -106,20 +111,34 @@ angular_ui_form_validations = (function(){
                 valid = validation.validator.apply(scope, validatorArgs);
                 modelCtrl.$setValidity(validation.identifier, valid);
 
-                return valid === true;
+                return {valid: valid, validObj: validation };
             };
 
             Lazy(scopeValidations)
                 .map(hydrateDynamicallyDefinedValidation)
                 .map(setErrorIdentifier)
                 .map(setValidity)
-                .each(function(valid){
-                    if(valid === false){
+                .each(function(validArg) {
+                    var valid = validArg.valid;
+                    var validationObject = validArg.validObj;
+                    if(valid.then) {
+                        var promise = valid;
+                        promise.then(function (promiseIsValid) {
+                            if(promiseIsValid === false) {
+                                dynamicallyDefinedValidation._errorMessage = validationObject.errorMessage;
+                                dynamicallyDefinedValidation.errorCount++;
+                                dynamicallyDefinedValidation.latestElement = element;
+                                dynamicallyDefinedValidation.asynchCount++;
+                            }
+                        }, function (reason){
+                            console.log('*** failed dynamically defined rejected promise');
+                        });
+                    }
+                    if (valid === false) {
                         dynamicallyDefinedValidation.errorCount++;
                         dynamicallyDefinedValidation.latestElement = element;
                         return false;
                     }
-                    return true;
                 });
 
             return valid;
@@ -469,14 +488,23 @@ angular_ui_form_validations = (function(){
                         return pname.replace('.', '\\.');
                     }
 
-                    function whenIsNotCurrentlyDisplayingAnErrorMessage() {
+                    function whenIsNotCurrentlyDisplayingAnErrorMessage(customFormatterArgs) {
+                        var fArgs = customFormatterArgs || formatterArgs;
+                        var ele = customFormatterArgs && customFormatterArgs.latestElement || $element;
+                        var fArgsValid = customFormatterArgs? false : isValid;
                         $log.log('is not currently displaying an error message', customValidationBroadcastArg);
-                        var classNames = ".CustomValidationError."+ formatterArgs.customValidationAttribute + "." + getPropertyNameClass(propertyName) + "property:first";
+                        var classNames = ".CustomValidationError."+ fArgs.customValidationAttribute + "." + getPropertyNameClass(propertyName) + "property:first";
                         $log.log(classNames);
-                        $element.siblings(classNames).toggle(!isValid);
+                        if(customFormatterArgs) {
+                            var errorEl = ele.siblings(classNames);
+                            errorEl.css('display', 'block');
+                        } else {
+                            ele.siblings(classNames).toggle(!fArgsValid);
+
+                        }
                     }
 
-                    function whenIsNotCurrentlyDisplayingAnErrorMessageInATemplate(){
+                    function whenIsNotCurrentlyDisplayingAnErrorMessageInATemplate(customFormatterArgs){
                         $log.log('is not currently displaying an error message in a template', customValidationBroadcastArg);
                         currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
                         currentErrorMessageIsStale = currentErrorMessageValidator(errorMessageElement.clone(), value, $attrs[currentErrorMessage.attr('data-custom-validation-attribute')], $element, model, ngModelController, $scope, rawCustomValidationAttribute);
@@ -491,7 +519,7 @@ angular_ui_form_validations = (function(){
                         }
                     }
 
-                    function whenIsCurrentlyDisplayingAnErrorMessageInATemplate(){
+                    function whenIsCurrentlyDisplayingAnErrorMessageInATemplate(customFormatterArgs){
                         $log.log('is currently displaying an error message in a template', customValidationBroadcastArg);
                         currentErrorMessageValidator = getValidatorByAttribute(currentErrorMessage.attr('data-custom-validation-attribute'));
                         currentErrorMessageIsStale = currentErrorMessageValidator(
@@ -523,7 +551,7 @@ angular_ui_form_validations = (function(){
                         toggleRequiredLabelClass();
                     }
 
-                    //TODO: using this temporarily because if we don't evaluate we have wierd UX whereby cursor moved to end of string
+                    //TODO: using this temporarily because if we don't evaluate we have weird UX whereby cursor moved to end of string
                     if (evaluateAsValid === true) {
                         isValid = true;
                     } else {
@@ -557,6 +585,43 @@ angular_ui_form_validations = (function(){
 
                     onValidationComplete(!(currentlyDisplayingAnErrorMessage || isCurrentlyDisplayingAnErrorMessageInATemplate($element) || !isValid), value, validationAttributeValue, $element, model, ngModelController, $scope, successFn);
 
+                    var addWatcherForAsynchDefinedValidations = function () {
+                        $scope.$watch(function(){ return dynamicallyDefinedValidation.asynchCount; }, function () {
+                            if (dynamicallyDefinedValidation.asynchCount === 0) {
+                                return;
+                            }
+                            var isValid = false;
+                            ngModelController.$setValidity('validationdynamicallydefined', isValid);
+
+                            var status = isValid === true ? ' passed' : ' failed';
+
+                            var customValidationBroadcastArg = {
+                                isValid: isValid,
+                                validation: $element.attr('id') + ' validationDynamicallyDefined ' + status,
+                                model: model,
+                                controller: ngModelController,
+                                element: $element
+                            };
+
+                            if(! currentlyDisplayingAnErrorMessage) {
+                                whenIsNotCurrentlyDisplayingAnErrorMessage(dynamicallyDefinedValidation);
+                            } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate(dynamicallyDefinedValidation.latestElement)){
+                                whenIsNotCurrentlyDisplayingAnErrorMessageInATemplate(dynamicallyDefinedValidation);
+                            }
+
+                            if(isCurrentlyDisplayingAnErrorMessageInATemplate(dynamicallyDefinedValidation.latestElement)) {
+                                whenIsCurrentlyDisplayingAnErrorMessageInATemplate(dynamicallyDefinedValidation);
+                            }
+
+                            $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
+
+                            onValidationComplete(!(currentlyDisplayingAnErrorMessage || isCurrentlyDisplayingAnErrorMessageInATemplate(dynamicallyDefinedValidation.latestElement) || !isValid), value, validationAttributeValue, dynamicallyDefinedValidation.latestElement, model, ngModelController, $scope, successFn);
+
+                            dynamicallyDefinedValidation.asynchCount = 0;
+                        });
+                    };
+
+                    addWatcherForAsynchDefinedValidations();
                     return value;
                 };
 
