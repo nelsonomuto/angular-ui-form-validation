@@ -1,3 +1,4 @@
+.htaccess
 npm-debug.log
 node_modules
 .tmp
