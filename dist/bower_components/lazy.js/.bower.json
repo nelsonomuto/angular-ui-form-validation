@@ -16,7 +16,7 @@
     "tag": "0.3.2",
     "commit": "2b851ec6d4556954d84e6f8a042efefb875948cb"
   },
-  "_source": "https://github.com/dtao/lazy.js.git",
+  "_source": "git://github.com/dtao/lazy.js.git",
   "_target": "~0.3.2",
   "_originalSource": "lazy.js"
 }
