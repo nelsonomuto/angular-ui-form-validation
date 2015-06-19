@@ -19,7 +19,7 @@
     "tag": "v3.0.2",
     "commit": "efd13cf8bf77c623cd38c927ad14a30eb1a1384b"
   },
-  "_source": "https://github.com/jlong/sass-bootstrap.git",
+  "_source": "git://github.com/jlong/sass-bootstrap.git",
   "_target": "~3.0.2",
   "_originalSource": "sass-bootstrap"
 }

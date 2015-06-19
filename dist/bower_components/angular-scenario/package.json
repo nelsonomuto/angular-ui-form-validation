@@ -1,8 +1,8 @@
 {
-  "name": "angular-mocks",
+  "name": "angular-scenario",
   "version": "1.2.28",
-  "description": "AngularJS mocks for testing",
-  "main": "angular-mocks.js",
+  "description": "AngularJS module for end-to-end testing",
+  "main": "angular-scenario.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +14,6 @@
     "angular",
     "framework",
     "browser",
-    "mocks",
     "testing",
     "client-side"
   ],
