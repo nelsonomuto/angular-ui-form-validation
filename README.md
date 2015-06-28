@@ -1,3 +1,4 @@
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nelsonomuto/angular-ui-form-validation?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 # Angular ui form validation 
 Perform your form validation using re-usable directives and API to create your own validation types and avoid boilerplate code.
 
