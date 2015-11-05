@@ -163,3 +163,12 @@ To add your own custom validation types you will need to create a module that mi
 The validation-dynamically-defined directive gives you the ability to define a validation local to the scope alone.
 
 [Here's a plunker with an example of how to accomplish this.](http://plnkr.co/edit/LDoYUM?p=preview)
+
+###### Declare your own custom validation classes
+
+Use these attributes for live validation success and fail, **validation-live-success-cls, validation-live-fail-cls**
+Ex: 
+```
+    <input validation-live-success-cls="text-success" validation-live-fail-cls="text-error" type="text" id="username" name="username" ng-model="user.username" validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" validation-no-space="{message:'no space - custom message', value: true}" >
+
+```

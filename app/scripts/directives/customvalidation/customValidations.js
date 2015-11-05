@@ -129,9 +129,14 @@ angular_ui_form_validations = (function(){
     onValidationComplete = function (fieldIsValid, value, validationAttributeValue, $element, model, ngModelController, $scope, customOnSuccess) {
         if(fieldIsValid) {
             $element.addClass('ValidationLiveSuccess');
+            $element.addClass($element.attr('validation-live-success-cls'));
+            $element.removeClass($element.attr('validation-live-fail-cls'));
+
             customOnSuccess.call(this, value, validationAttributeValue, $element, model, ngModelController, $scope);
         } else {
             $element.removeClass('ValidationLiveSuccess');
+            $element.removeClass($element.attr('validation-live-success-cls'));
+            $element.addClass($element.attr('validation-live-fail-cls'));
         }
     };
 

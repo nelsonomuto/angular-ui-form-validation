@@ -38,7 +38,7 @@
     "tag": "v3.1.1",
     "commit": "f5ca40f6f49b7eb0abef39bb1c3a5b4f7ca176d5"
   },
-  "_source": "git://github.com/es-shims/es5-shim.git",
+  "_source": "https://github.com/es-shims/es5-shim.git",
   "_target": "~3.1.1",
   "_originalSource": "es5-shim"
 }
