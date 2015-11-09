@@ -2,7 +2,7 @@
 # Angular ui form validation 
 Perform your form validation using re-usable directives and API to create your own validation types and avoid boilerplate code.
 
-![demo gif](https://raw.githubusercontent.com/nelsonomuto/angular-ui-form-validation/master/app/images/formValidation.gif)
+![demo gif](https://raw.githubusercontent.com/nelsonomuto/angular-ui-form-validation/master/app/images/demo.gif)
 
 [Interactive Demo.](http://nelsonomuto.github.io/angular-ui-form-validation)
 
