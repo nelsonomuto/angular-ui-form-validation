@@ -1,4 +1,4 @@
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nelsonomuto/angular-ui-form-validation?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 # Angular ui form validation 
 Perform your form validation using re-usable directives and API to create your own validation types and avoid boilerplate code.
 
@@ -6,10 +6,13 @@ Perform your form validation using re-usable directives and API to create your o
 
 [Interactive Demo.](http://nelsonomuto.github.io/angular-ui-form-validation)
 
-Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) | [![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.svg?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
+Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) 
+
+[![Build Status](https://travis-ci.org/nelsonomuto/angular-ui-form-validation.svg?branch=master)](https://travis-ci.org/nelsonomuto/angular-ui-form-validation)
 
 [![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.svg?style=flat)](https://david-dm.org/nelsonomuto/angular-ui-form-validation)
 [![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.svg?style=flat&breakCache=0)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nelsonomuto/angular-ui-form-validation?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ### Install
 
