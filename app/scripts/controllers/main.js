@@ -66,6 +66,7 @@ angular.module('angularUiFormValidationApp')
               identifier: 'noOnes',
               errorMessage: 'Cannot contain the number one',
               validator: function (errorMessageElement, val) {
+                  debugger;
                   return /1/.test(val) !== true;
               },
               validateWhileEntering: true
