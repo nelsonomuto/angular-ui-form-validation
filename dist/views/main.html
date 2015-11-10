@@ -7,56 +7,47 @@
 </div>
 
 <div class="jumbotron">
-  <h2>Form example | User account signup</h2>
-  <p>
-    Validations are displayed one at a time based on the order set in customValidations.js
-  </p>
-  <form novalidate name="demoForm">
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username" ng-model="user.username" validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" validation-no-space="{message:'no space - custom message', value: true}" validation-field-required="true" validation-max-length="10" validation-no-special-chars="true" validation-dynamically-defined="locallyDefinedValidations">
-    <span class="help-block">username | validates no ones, no twos, min char = 5, max = 10, no special chars</span>
+    <div class="jColumn">
+        <h2>Example</h2>
+        <p>
+            Validations are displayed one at a time based on the order set in customValidations.js
+        </p>
+        <form novalidate name="demoForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" ng-model="user.username" validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" validation-no-space="{message:'no space - custom message', value: true}" validation-field-required="true" validation-max-length="10" validation-no-special-chars="true" validation-dynamically-defined="locallyDefinedValidations">
+            <span class="help-block">username | validates no ones, no twos, min char = 5, max = 10, no special chars</span>
 
-    <label for="password">Password</label>
-    <input type="text" id="password" name="pwd" ng-model="user.password" validation-min-length="8" validation-one-number="true" validation-one-upper-case-letter="true" validation-one-lower-case-letter="true" validation-field-required="true" validation-no-space="true">
-    <span class="help-block">password | validates number required, lowercase required, uppercase...no space...</span>
-    <label for="confirmPassword">Confirm Password</label>
-    <input type="text" id="confirmPassword" name="confirmPassword" passwordfieldid="password" ng-model="user.confirmPassword" validation-confirm-password="true" validation-field-required="true">
+            <label for="password">Password</label>
+            <input type="text" id="password" name="pwd" ng-model="user.password" validation-min-length="8" validation-one-number="true" validation-one-upper-case-letter="true" validation-one-lower-case-letter="true" validation-field-required="true" validation-no-space="true">
+            <span class="help-block">password | validates number required, lowercase required, uppercase...no space...</span>
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="text" id="confirmPassword" name="confirmPassword" passwordfieldid="password" ng-model="user.confirmPassword" validation-confirm-password="true" validation-field-required="true">
+            <br>
+            <a class="btn-primary" validation-submit="{onSubmit:'user.save()', formName:'demoForm'}" type="submit">Submit</a>
+        </form>
+    </div>
 
-    <!--<div class="Select">-->
-    <!--<label for="state">State</label>-->
-    <!--<select inline-input-label ng-model="user.state" name="state" id="state"-->
-      <!--ng-options="state for state in states"-->
-      <!--validation-field-required="true"-->
-      <!--validation-dynamically-defined="locallyDefinedValidations">-->
-    <!--</select>-->
-    <!--<label for="city">City</label>-->
-    <!--<select inline-input-label ng-model="user.city" name="city" id="city"-->
-            <!--ng-options="city for city in cities"-->
-            <!--validation-field-required="true"-->
-            <!--validation-dynamically-defined="locallyDefinedValidations">-->
-    <!--</select>-->
-    <!--</div>-->
-    <!--<span class="help-block">Select support available only for validation-field-required and validation-dynamically-defined, user may augment with their own customValidationTypes where they see fit. But most use cases for validating selects should be sufficiently covered by validation-field-required and validation-dynamically-defined.</span>-->
+    <div class="jColumn">
+        <h3>Multi form validation ability</h3>
+        <p>
+            Validations can be triggered for all forms or per form based on the form name(s).
+        </p>
+        <form novalidate name="demoFormTwo">
+            <label for="usernameTwo">
+                Alias
+            </label>
+            <input type="text" id="usernameTwo" name="usernameTwo" ng-model="user.usernameTwo" validation-field-required="true" validation-max-length="20" validation-no-special-chars="true">
+            <span class="help-block">usernameTwo | validates min char = 5, max = 10, no special chars</span>
+
+            <label for="lastFourSSN">
+                Last Four of SSN
+            </label>
+            <input type="text" id="lastFourSSN" name="lastFourSSN" ng-model="user.lastFourSSN" validation-only-numbers="true" validation-set-length="4">
+            <span class="help-block">SSN | validates only numbers</span>
+            <br>
+            <a class="btn-primary" validation-submit="{onSubmit:'user.save()', formName:'demoFormTwo'}" type="submit">Submit</a>
+        </form>
+    </div>
 
 
-    <!--<label for="isAdmin">IsAdmin</label>-->
-    <!--<input id="isAdmin" type="checkbox" name="isAdmin" value="true" ng-model="user.isAdmin" validation-field-required="true" />-->
-    <!--<span class="help-block">admin | validates is required</span>-->
-
-    <!--<!-- <label for="hasKids">Has Kids</label>-->
-    <!--<input id="hasKids" type="radio" name="kids" value="true" ng-model="user.hasKids" validation-field-required="true" />-->
-    <!--<label for="hasNoKids">Has No Kids</label>-->
-    <!--<input id="hasNoKids" type="radio" name="kids" value="true" ng-model="user.hasKids" />-->
-    <!--<span class="help-block">Has Kids | validates is required</span> -->
-
-    <!--<label for="bday">Birthdate</label>-->
-    <!--<input type="date" id="bday" name="bday"-->
-           <!--validation-date-before-today="true"-->
-           <!--validation-date-after="09/25/1987"-->
-           <!--ng-model="user.birthdate"-->
-    <!--/>-->
-    <!--<span class="help-block">birthdate | validates must be before today, must be after 09/25/1987</span> -->
-
-    <a class="btn-primary" validation-submit="{onSubmit:'user.save()', formName:'demoForm'}" type="submit">Submit</a>
-  </form>
 </div>

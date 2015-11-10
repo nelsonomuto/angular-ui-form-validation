@@ -8,10 +8,18 @@ describe('directives.customvalidation.customValidations', function () {
         module('directives.customvalidation.customValidationTypes');
         inject(function ($injector, $rootScope, $compile, $q, $timeout) {
             element = angular.element('<form name="form">' +
-                '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" validation-field-required="true" '+
-                'validation-min-length="8" validation-one-alphabet="true" validation-one-number="true" validation-one-lower-case-letter="true" '+
-                'validation-one-upper-case-letter="true" validation-no-special-chars="true" validation-no-space="true" />'+
-                '<input ng-model="user.name" type="text" id="name" name="name" validation-field-required="true" validation-one-number="true" />'+
+                '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" ' +
+                'validation-field-required="true" '+
+                'validation-min-length="8" ' +
+                'validation-one-alphabet="true" ' +
+                'validation-one-number="true" ' +
+                'validation-one-lower-case-letter="true" '+
+                'validation-one-upper-case-letter="true" ' +
+                'validation-no-special-chars="true" ' +
+                'validation-no-space="true" />'+
+                '<input ng-model="user.name" type="text" id="name" name="name" ' +
+                'validation-field-required="true" ' +
+                'validation-one-number="true" />'+
                 '</form>');
             passwordInput = element.find('#password');
             templateRetriever = $injector.get('templateRetriever');
@@ -44,14 +52,14 @@ describe('directives.customvalidation.customValidations', function () {
     });
 
     it('should contain all error messages', function () {
-        expect(10).toEqual(errorMessages.length);
+        expect(9).toEqual(errorMessages.length);
     });
 
     it('should contain all hidden error messages', function () {
         hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
         visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
 
-        expect(10).toEqual(hiddenErrorMessages.length);
+        expect(9).toEqual(hiddenErrorMessages.length);
         expect(0).toEqual(visibleErrorMessages.length);
     });
 
@@ -60,7 +68,7 @@ describe('directives.customvalidation.customValidations', function () {
         scope.$broadcast('runCustomValidations');
         hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
         visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-        expect(8).toEqual(hiddenErrorMessages.length);
+        expect(7).toEqual(hiddenErrorMessages.length);
         expect(2).toEqual(visibleErrorMessages.length);
         expect('Must contain at least one uppercase letter').toEqual($(visibleErrorMessages[0]).html().trim());
         expect('This is a required field').toEqual($(visibleErrorMessages[1]).html().trim());
@@ -71,7 +79,7 @@ describe('directives.customvalidation.customValidations', function () {
         scope.$broadcast('runCustomValidations');
         hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
         visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-        expect(8).toEqual(hiddenErrorMessages.length);
+        expect(7).toEqual(hiddenErrorMessages.length);
         expect(2).toEqual(visibleErrorMessages.length);
         expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());
 
@@ -79,7 +87,7 @@ describe('directives.customvalidation.customValidations', function () {
         scope.$broadcast('runCustomValidations');
         hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
         visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-        expect(8).toEqual(hiddenErrorMessages.length);
+        expect(7).toEqual(hiddenErrorMessages.length);
         expect(2).toEqual(visibleErrorMessages.length);
         expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim());
     });
@@ -138,7 +146,7 @@ describe('directives.customvalidation.customValidations', function () {
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
 
-            expect(9).toEqual(hiddenErrorMessages.length);
+            expect(8).toEqual(hiddenErrorMessages.length);
             expect(0).toEqual(visibleErrorMessages.length);
         });
 
@@ -147,7 +155,7 @@ describe('directives.customvalidation.customValidations', function () {
             scope.$broadcast('runCustomValidations');
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-            expect(8).toEqual(hiddenErrorMessages.length);
+            expect(7).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
             expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());
 
@@ -155,7 +163,7 @@ describe('directives.customvalidation.customValidations', function () {
             scope.$broadcast('runCustomValidations');
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-            expect(8).toEqual(hiddenErrorMessages.length);
+            expect(7).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
             expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim());
         });
@@ -259,7 +267,7 @@ describe('directives.customvalidation.customValidations', function () {
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
 
-            expect(9).toEqual(hiddenErrorMessages.length);
+            expect(8).toEqual(hiddenErrorMessages.length);
             expect(0).toEqual(visibleErrorMessages.length);
         });
 
@@ -268,7 +276,7 @@ describe('directives.customvalidation.customValidations', function () {
             scope.$broadcast('runCustomValidations');
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-            expect(8).toEqual(hiddenErrorMessages.length);
+            expect(7).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
             expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());
 
@@ -276,7 +284,7 @@ describe('directives.customvalidation.customValidations', function () {
             scope.$broadcast('runCustomValidations');
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-            expect(8).toEqual(hiddenErrorMessages.length);
+            expect(7).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
             expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim());
         });
@@ -345,7 +353,7 @@ describe('directives.customvalidation.customValidations', function () {
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
 
-            expect(9).toEqual(hiddenErrorMessages.length);
+            expect(8).toEqual(hiddenErrorMessages.length);
             expect(0).toEqual(visibleErrorMessages.length);
         });
 
@@ -356,7 +364,7 @@ describe('directives.customvalidation.customValidations', function () {
             element.scope().$apply();
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-            expect(8).toEqual(hiddenErrorMessages.length);
+            expect(7).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
             expect('ErrorTemplateOne').toEqual(angular.element(visibleErrorMessages[0]).parents('div').attr('class'));
             expect('Must contain at least one uppercase letter').toEqual(visibleErrorMessages.html().trim());
@@ -367,7 +375,7 @@ describe('directives.customvalidation.customValidations', function () {
             element.scope().$apply();
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
-            expect(8).toEqual(hiddenErrorMessages.length);
+            expect(7).toEqual(hiddenErrorMessages.length);
             expect(1).toEqual(visibleErrorMessages.length);
             expect('ErrorTemplateTwo').toEqual(angular.element(visibleErrorMessages[0]).parents('div').attr('class'));
             expect('Must contain at least one number').toEqual(visibleErrorMessages.html().trim());
@@ -583,7 +591,6 @@ describe('directives.customvalidation.customValidations', function () {
         it('should have invalid submit given a form with a required field and a valid dirty field', function () {
             passwordInput.val('dasaa');
             element.scope().$apply();
-            debugger;
             scope.$broadcast('runCustomValidations');
             element.scope().$apply();
             var form = element;
