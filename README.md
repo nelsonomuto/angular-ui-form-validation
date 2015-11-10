@@ -13,6 +13,7 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 [![Dependencies status](https://david-dm.org/nelsonomuto/angular-ui-form-validation.svg?style=flat)](https://david-dm.org/nelsonomuto/angular-ui-form-validation)
 [![devDependency Status](https://david-dm.org/nelsonomuto/angular-ui-form-validation/dev-status.svg?style=flat&breakCache=0)](https://david-dm.org/nelsonomuto/angular-ui-form-validation#info=devDependencies)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nelsonomuto/angular-ui-form-validation?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+<br />
 <span class="badge-npmversion"><a href="https://npmjs.org/package/angular-ui-form-validation" title="View this project on NPM"><img src="https://img.shields.io/npm/v/angular-ui-form-validation.svg" alt="NPM version" /></a></span>
 <span class="badge-npmdownloads"><a href="https://npmjs.org/package/angular-ui-form-validation" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/angular-ui-form-validation.svg" alt="NPM downloads" /></a></span>
 

@@ -4,95 +4,106 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/"
 
 $errorColor: darkorange
 .inputSuccess
-  border: lightgreen 2px solid
+    border: lightgreen 2px solid
 
 .inputFail
-  border: darkorange 2px solid
+    border: darkorange 2px solid
 
 .inputFocus
-  //border-width: 3px
-  //box-shadow: inset 0 0 2px grey
-  border-color: none
+    //border-width: 3px
+    //box-shadow: inset 0 0 2px grey
+    border-color: none
 
 .jumbotron
-  margin: 100px 30px 30px
-  box-shadow: #eee 2px 2px 1px
-  border: 1px solid whitesmoke
-  background: white
+    margin: 100px 30px 30px
+    box-shadow: #eee 2px 2px 1px
+    border: 1px solid whitesmoke
+    background: white
+    overflow: auto
+    .jColumn
+        float: left
+        width: 50%
+        padding: 10px
+        .help-block
+            white-space: nowrap
+            text-overflow: ellipsis
+            overflow: hidden
+            max-width: 200px
+
 @media all
-  .header
-    position: fixed
-    width: 100%
-    top: 0
-    left: 0
-    padding: 20px
+    .header
+        position: fixed
+        width: 100%
+        top: 0
+        left: 0
+        padding: 20px
 
 h2, .h2
-  font-size: 1.2em
-  @media only screen and (max-width: 500px)
-    font-size: 0.8em
+    font-size: 1.2em
+    @media only screen and (max-width: 500px)
+        font-size: 0.8em
+
 a:hover
-  cursor: pointer
+    cursor: pointer
 
 form
-  @extend .form-group
+    @extend .form-group
 
-  background: whitesmoke
-  border: 10px solid whitesmoke
+    background: whitesmoke
+    border: 10px solid whitesmoke
 
-  font-size: 15px
-  @media only screen and (max-width: 700px)
-    font-size: 12px
+    font-size: 15px
+    @media only screen and (max-width: 700px)
+        font-size: 12px
 
-  .btn-primary
-    padding: 10px 15px
-    border-radius: 2px
-    font-size: 1.2em
-    &:hover
-      text-decoration: none
-  label
-    display: block
-  input, select
-    &[type="checkbox"]
-      width: inherit
-      display: inline
+    .btn-primary
+        padding: 10px 15px
+        border-radius: 2px
+        font-size: 1.2em
+        &:hover
+            text-decoration: none
+    label
+        display: block
+    input, select
+        &[type="checkbox"]
+            width: inherit
+            display: inline
 
-    @extend .form-control
+        @extend .form-control
 
-    &:focus
+        &:focus
 
-      @extend .inputFocus
+            @extend .inputFocus
 
-    &.ng-dirty:not(.ValidationLiveSuccess)
-      @extend .inputFail
+        &.ng-dirty:not(.ValidationLiveSuccess)
+            @extend .inputFail
 
-      &:focus
-        @extend .inputFocus
+            &:focus
+                @extend .inputFocus
 
+    .ValidationLiveSuccess
+        @extend .inputSuccess
+        &:focus
+            @extend .inputSuccess
+            @extend .inputFocus
 
-  .ValidationLiveSuccess
-    @extend .inputSuccess
-    &:focus
-      @extend .inputSuccess
-      @extend .inputFocus
+    .requiredFieldLabel
+        &:after
+            content: ' *'
+            color: $errorColor
 
-  .requiredFieldLabel
-    &:after
-      content: ' *'
-      color: $errorColor
+    .CustomValidationError
+        position: relative
+        font-size: 0.8em
+        color: $errorColor
 
-  .CustomValidationError
-    position: relative
-    font-size: 0.8em
-    color: $errorColor
-
-    &.checkboxradioerror
-      display: block
+        &.checkboxradioerror
+            display: block
 
 a.valid
-  background-color: gold !important
-  color: black !important
+    background-color: gold !important
+    color: black !important
 
 a.invalid
-  background-color: grey !important
+    background-color: grey !important
 

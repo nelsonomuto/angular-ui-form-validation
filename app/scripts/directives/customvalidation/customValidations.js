@@ -32,6 +32,8 @@ angular_ui_form_validations = (function(){
         $element.addClass('invalid');
         $element.removeClass('valid');
 
+        debugger;
+
         var formIsSubmittable = function () {
             formIsValid = true;
             $element.addClass('valid');
@@ -648,7 +650,7 @@ angular_ui_form_validations = (function(){
             restrict: 'E',
             link: submitLink
         };
-    })
+    });
 
     //shared config functions
     return {

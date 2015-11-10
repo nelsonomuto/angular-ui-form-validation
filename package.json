@@ -3,6 +3,7 @@
   "description": "A plugin for performing validation in angularjs without writing lots of boilerplate code or duplicating logic.",
   "version": "2.0.4",
   "dependencies": {
+    "badges": "^1.0.2",
     "jquery": "^2.1.1"
   },
   "repository": {

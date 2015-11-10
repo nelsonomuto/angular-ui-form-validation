@@ -41,6 +41,19 @@
                 }
             },
             {
+                customValidationAttribute: 'validationSetLength',
+                errorMessage: '',
+                validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
+                    var customMessage = getValidationAttributeValue(rawAttr, 'message', true);
+                    if (val.length === parseInt(getValidationAttributeValue(rawAttr), 10)) {
+                        return true;
+                    } else {
+                        errorMessageElement.html(customMessage || 'Set number of characters allowed is ' + getValidationAttributeValue(rawAttr));
+                        return false;
+                    }
+                }
+            },
+            {
                 customValidationAttribute: 'validationMinLength',
                 errorMessage: function (attr) {
                     return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters';
@@ -72,6 +85,14 @@
                 }
             },
             {
+                customValidationAttribute: 'validationOnlyAlphabets',
+                errorMessage: 'Valid characters are: A-Z, a-z',
+                validateWhileEntering: true,
+                validator: function (errorMessageElement, val) {
+                    return (/^[a-z]*$/i).test(val);
+                }
+            },
+            {
                 customValidationAttribute: 'validationOneUpperCaseLetter',
                 errorMessage: 'Must contain at least one uppercase letter',
                 validator: function (errorMessageElement, val) {
@@ -79,10 +100,10 @@
                 }
             },
             {
-                customValidationAttribute: 'validationOneLowerCaseLetter',
-                errorMessage: 'Must contain at least one lowercase letter',
+                customValidationAttribute: 'validationOnlyNumbers',
+                errorMessage: 'Must contain only numbers',
                 validator: function (errorMessageElement, val) {
-                    return (/^(?=.*[a-z]).+$/).test(val);
+                    return (/^[0-9]*$/i).test(val);
                 }
             },
             {
