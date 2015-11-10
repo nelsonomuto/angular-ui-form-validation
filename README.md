@@ -4,6 +4,11 @@ Perform your form validation using re-usable directives and API to create your o
 
 ![demo gif](https://raw.githubusercontent.com/nelsonomuto/angular-ui-form-validation/master/app/images/formValidation.gif)
 
+## Multi-form support 
+`            <a class="btn-primary" validation-submit="{onSubmit:'user.save()', formName:'demoFormTwo'}" type="submit">Submit</a>
+`
+![multi form](https://raw.githubusercontent.com/nelsonomuto/angular-ui-form-validation/master/app/images/multiFormExample.png)
+
 [Interactive Demo.](http://nelsonomuto.github.io/angular-ui-form-validation)
 
 Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.js) 
@@ -43,57 +48,6 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
     ])
  ```
 
-### Comparison with similar projects
-
-There are 2 other angularjs validation plugins right now with a similar goal of reducing boilerplate code to ease the work of developers. One is Huei Tan's https://github.com/huei90/angular-validation and the other is kelp404's https://github.com/kelp404/angular-validator.
-
-I have forked both of these repos and analyzed them. Both Huei and Kelp's implementation are quite similar, down to the organization of the source code. I believe the former was heavily influenced by the latter. 
-
-There are a few important distinctions in my implementation, the **first** major difference is I am providing the developer with an api for creating directives (NOT a single validation directive - this greatly reduces the amount of code the developer has to write in his controller and encourages re-usability by forcing him to use a directive instead. However, I also provide leeway for edge cases with 'validationDynamicallyDefined' directive which allows the developer to create a validator on the fly and have the logic centralized in a controller). 
-
-The **second** is that I provide out of the box a library of over 20 commonly used validators to get you started asap. You may expand the library with the validations you deem shareable across your app as well. There is an extension point for this explained in the wiki.
-
-**Thirdly** and most importantly I believe is the flexibility through which my validator directives expose their dom element(for instance you can access the input and its error message element within your validator function if you needed to add special logic) and attribute values (for instance you can configure the max-length validator with an arbitrary value in the html directives for any number of inputs that may require a different max length, so instead of creating a new config object in your controller as you would be forced to do with other plugins, you would simply re-use the max-length validator and pass in a new max length). Support for having multiple validators in a single input was a top priority while designing my implementation and you will find that it is robust and well thought through, for example it contains as well the ability for the developer to not only define multiple validators on an input but also to determine the order of priority that they are applied. 
- 
-
-**Supports and tested on angular versions from 1.0.7 through the latest snapshot 1.3.0-build.2810** 
-
-**Provides out of the box more than 20 commonly used validations that are easily configured using attributes on the directive**
-
-**Enables users with the capacity to add to the library of re-usable validations**
-
-**Supports multiple validation rules on one input element**
-
-**Supports custom error message strings**
-
-**Supports custom error message templates as well for additional styling requirements**
-
-**Supports adding your own validation types**
-
-**For edge cases, supports dynamically defining validation logic in the controller for complex business logic rules**
-
-```html
- <form novalidate>    
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username" ng-model="user.username"
-      validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" 
-      validation-no-space="{message:'no space - custom message', value: true}"
-      validation-field-required="true"
-      validation-max-length="10"
-      validation-no-special-chars="true"
-      validation-dynamically-defined="locallyDefinedValidations"
-    />
-    <label for="firstname">First Name</label>
-    
-    <input type="text" id="firstname" name="firstname" ng-model="user.firstname"
-      validation-min-length="{ value: 5, template: 'ErrorTemplateOne.html' }"  
-      validation-max-length="10"
-      validation-no-special-chars="true"
-    />
-                                  ...
-
-</form>
-```
 
 ### [Interactive Preview Demo](http://nelsonomuto.github.io/angular-ui-form-validation) on github page ###
 
@@ -180,4 +134,56 @@ Ex:
 ```
     <input validation-live-success-cls="text-success" validation-live-fail-cls="text-error" type="text" id="username" name="username" ng-model="user.username" validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" validation-no-space="{message:'no space - custom message', value: true}" >
 
+```
+
+### Comparison with similar projects
+
+There are 2 other angularjs validation plugins right now with a similar goal of reducing boilerplate code to ease the work of developers. One is Huei Tan's https://github.com/huei90/angular-validation and the other is kelp404's https://github.com/kelp404/angular-validator.
+
+I have forked both of these repos and analyzed them. Both Huei and Kelp's implementation are quite similar, down to the organization of the source code. I believe the former was heavily influenced by the latter. 
+
+There are a few important distinctions in my implementation, the **first** major difference is I am providing the developer with an api for creating directives (NOT a single validation directive - this greatly reduces the amount of code the developer has to write in his controller and encourages re-usability by forcing him to use a directive instead. However, I also provide leeway for edge cases with 'validationDynamicallyDefined' directive which allows the developer to create a validator on the fly and have the logic centralized in a controller). 
+
+The **second** is that I provide out of the box a library of over 20 commonly used validators to get you started asap. You may expand the library with the validations you deem shareable across your app as well. There is an extension point for this explained in the wiki.
+
+**Thirdly** and most importantly I believe is the flexibility through which my validator directives expose their dom element(for instance you can access the input and its error message element within your validator function if you needed to add special logic) and attribute values (for instance you can configure the max-length validator with an arbitrary value in the html directives for any number of inputs that may require a different max length, so instead of creating a new config object in your controller as you would be forced to do with other plugins, you would simply re-use the max-length validator and pass in a new max length). Support for having multiple validators in a single input was a top priority while designing my implementation and you will find that it is robust and well thought through, for example it contains as well the ability for the developer to not only define multiple validators on an input but also to determine the order of priority that they are applied. 
+ 
+
+**Supports and tested on angular versions from 1.0.7 through the latest snapshot 1.3.0-build.2810** 
+
+**Provides out of the box more than 20 commonly used validations that are easily configured using attributes on the directive**
+
+**Enables users with the capacity to add to the library of re-usable validations**
+
+**Supports multiple validation rules on one input element**
+
+**Supports custom error message strings**
+
+**Supports custom error message templates as well for additional styling requirements**
+
+**Supports adding your own validation types**
+
+**For edge cases, supports dynamically defining validation logic in the controller for complex business logic rules**
+
+```html
+ <form novalidate>    
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" ng-model="user.username"
+      validation-min-length="{template:'/views/errorTemplateOne.html', value:5}" 
+      validation-no-space="{message:'no space - custom message', value: true}"
+      validation-field-required="true"
+      validation-max-length="10"
+      validation-no-special-chars="true"
+      validation-dynamically-defined="locallyDefinedValidations"
+    />
+    <label for="firstname">First Name</label>
+    
+    <input type="text" id="firstname" name="firstname" ng-model="user.firstname"
+      validation-min-length="{ value: 5, template: 'ErrorTemplateOne.html' }"  
+      validation-max-length="10"
+      validation-no-special-chars="true"
+    />
+                                  ...
+
+</form>
 ```
