@@ -527,7 +527,6 @@ describe('directives.customvalidation.customValidations', function () {
             expect(form.hasClass('ng-valid')).toBe(true);
         });
         it('should not call onSubmit when clicked', function () {
-            debugger;
             passwordInput.val('sadffsdaadfsfsda');
             element.scope().$apply();
             scope.$broadcast('runCustomValidations');

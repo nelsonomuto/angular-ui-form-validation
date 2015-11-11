@@ -425,27 +425,43 @@ angular_ui_form_validations = (function(){
                         });
                     }
                     if (formatterArgs.customValidationAttribute === 'validationConfirmPassword') {
-                        var passwordFieldSelector = '#' + $element.attr('passwordFieldId');
-                        $element.add(passwordFieldSelector).on('keyup blur', function (target){
-                            var passwordMatch, confirmPasswordElement, passwordElement, confirmPasswordIsDirty, passwordIsValid;
+                        var passwordFieldId = $element.attr('passwordFieldId') || 'password';
+                        var passwordFieldSelector = '#' + passwordFieldId;
 
-                            confirmPasswordElement =
-                              this.hasAttribute('passwordFieldId') === true ? angular.element(this) : angular.element(this).siblings('[passwordFieldId='+this.id+']');
+                        var validationConfirmPasswordHandlerSelector = passwordFieldSelector + ', #' + $element[0].id;
 
-                            passwordElement = confirmPasswordElement.siblings(passwordFieldSelector);
+                        var confirmPasswordElement = $element;
+                        var passwordElement = $element.parent().children(passwordFieldSelector);
+
+
+                        $($element.parent()).on('keyup blur', validationConfirmPasswordHandlerSelector, function (target) {
+                            console.log('Entering validationConfirmPassword keyup blur handler', {args: arguments});
+                            console.log('validationConfirmPassword handler selector' + validationConfirmPasswordHandlerSelector);
+
+                            var passwordMatch, confirmPasswordIsDirty;
+
 
                             confirmPasswordIsDirty = /dirty/.test(confirmPasswordElement.attr('class'));
 
                             if(confirmPasswordIsDirty === false) {
                                 return;
                             }
-                            passwordIsValid = /invalid/.test(passwordElement.attr('class')) === false;
 
-                            passwordMatch =  $(passwordFieldSelector).val() === $element.val();
+                            passwordMatch =  passwordElement.val() === $element.val();
+
+                            console.log('--- validationConfirmPassword keyup blur handler passwordMatch', passwordMatch);
 
                             ngModelController.$setValidity('validationconfirmpassword', passwordMatch);
+
                             confirmPasswordElement.siblings('.CustomValidationError.validationConfirmPassword:first').toggle(! passwordMatch);
-                            onValidationComplete(passwordMatch, passwordMatch, validationAttributeValue, $element, model, ngModelController, $scope, formatterArgs.success || function(){});
+
+                            onValidationComplete(passwordMatch, passwordMatch, validationAttributeValue, $element, model, ngModelController, $scope, function () {
+                                console.log('Entering validationConfirmPassword onCustomSuccess callback');
+
+                                if (formatterArgs.success) {
+                                    formatterArgs.success();
+                                }
+                            });
                         });
                         return;
                     }
@@ -456,6 +472,8 @@ angular_ui_form_validations = (function(){
                 };
 
                 runCustomValidations = function (eventType) {
+                    console.log('Entering runCustomValidations', { eventType: eventType });
+
                     var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage,
                         currentErrorMessage, currentErrorMessageIsStale,
                         currentErrorMessageValidator, currentErrorMessagePriorityIndex,
@@ -479,6 +497,7 @@ angular_ui_form_validations = (function(){
 
                     //Do not validate if input is pristine, i.e nothing entered by user yet
                     if($element.hasClass('ng-pristine') && eventType !=='runCustomValidations'){
+                        console.log('--- runCustomValidations not validating because pristine');
                         return;
                     }
 
@@ -588,8 +607,9 @@ angular_ui_form_validations = (function(){
                         isValid = true;
                     } else {
                         isValid = runValidation();
-
                     }
+
+                    console.log('--- runCustomValidations validity ' + isValid);
 
                     ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
@@ -603,6 +623,10 @@ angular_ui_form_validations = (function(){
                         element: $element
                     };
 
+                    console.log('--- runCustomValidations customValidationBroadcastArg', customValidationBroadcastArg);
+
+                    console.log('--- runCustomValidations currentlyDisplayingAnErrorMessage ' + currentlyDisplayingAnErrorMessage);
+
                     if(! currentlyDisplayingAnErrorMessage) {
                         whenIsNotCurrentlyDisplayingAnErrorMessage();
                     } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){
@@ -610,12 +634,15 @@ angular_ui_form_validations = (function(){
                     }
 
                     if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
+                        console.log('--- runCustomValidations isCurrentlyDisplayingAnErrorMessageInATemplate');
                         whenIsCurrentlyDisplayingAnErrorMessageInATemplate();
                     }
 
                     $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
 
                     onValidationComplete(!(currentlyDisplayingAnErrorMessage || isCurrentlyDisplayingAnErrorMessageInATemplate($element) || !isValid), value, validationAttributeValue, $element, model, ngModelController, $scope, successFn);
+
+                    console.log('--- runCustomValidations returnValue ' + value);
 
                     return value;
                 };

@@ -18,8 +18,7 @@
                 customValidationAttribute: 'validationConfirmPassword',
                 errorMessage: 'Passwords do not match.',
                 validator: function (errorMessageElement, val, attr, element, model, modelCtrl) {
-                    var password = model.password || '';
-                    return password.replace(/\s+$/, '') === element.val().replace(/\s+$/, '');
+                    return true; //will be validated on keyup & blur event in directive
                 }
             },
             {
