@@ -32,8 +32,6 @@ angular_ui_form_validations = (function(){
         $element.addClass('invalid');
         $element.removeClass('valid');
 
-        debugger;
-
         var formIsSubmittable = function () {
             formIsValid = true;
             $element.addClass('valid');
@@ -47,7 +45,28 @@ angular_ui_form_validations = (function(){
         };
 
         $scope.$watch( function (scope) {
-            return scope[formName].$valid && $scope[formName].$dirty === true;
+            var valid = false;
+            var numTotalFields = fields.length;
+            var hasMissingRequiredField = false;
+
+            var fields = $('form[name='+formName+']').children('input, select');
+            fields.each(function (index, field) {
+                if(field.value.trim() === "" && $(field).attr('validation-field-required') === "true") {
+                    hasMissingRequiredField = true;
+                    false;
+                }
+            });
+
+            if(hasMissingRequiredField === true) {
+                return false;
+            }
+
+            //At this point all fields that require a value have one and are therefore all validated as success or not
+            //therefore the difference between validated fields and total required fields should be zero at this point
+            var numValidatedFields = $('form[name='+formName+'] .ValidationLiveSuccess').length;
+
+
+            return valid;
         }, function (valid) {
             if (valid === true) {
                 formIsSubmittable();
@@ -154,7 +173,7 @@ angular_ui_form_validations = (function(){
                 return true;
             });
         return isCurrentlyDisplayingAnErrorMessageInATemplate;
-    }
+    };
 
     getValidationAttributeValue = function (attr, property, strict) {
         var value;
