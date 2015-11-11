@@ -33,23 +33,39 @@ angular_ui_form_validations = (function(){
         $element.removeClass('valid');
 
         var formIsSubmittable = function () {
+            console.log('Entering formIsSubmittable');
+
             formIsValid = true;
             $element.addClass('valid');
             $element.removeClass('invalid');
         };
 
         var formIsNotSubmittable = function () {
+            console.log('Entering formIsNotSubmittable');
+
             formIsValid = false;
             $element.addClass('invalid');
             $element.removeClass('valid');
         };
 
-        $scope.$watch( function (scope) {
+        var formValidityChangeListener = function (currentValidValue, previousValidValue) {
+            console.log('Entering formValidityChangeListener', {args: arguments});
+
+            var valid = currentValidValue;
+            if (valid === true) {
+                formIsSubmittable();
+
+            } else {
+                formIsNotSubmittable();
+            }
+        };
+
+        var isFormValid = function (scope) {
+            console.log('Entering isFormValid', {args: arguments});
             var valid = false;
-            var numTotalFields = fields.length;
             var hasMissingRequiredField = false;
 
-            var fields = $('form[name='+formName+']').children('input, select');
+            var fields = form.children('input, select');
             fields.each(function (index, field) {
                 if(field.value.trim() === "" && $(field).attr('validation-field-required') === "true") {
                     hasMissingRequiredField = true;
@@ -63,11 +79,27 @@ angular_ui_form_validations = (function(){
 
             //At this point all fields that require a value have one and are therefore all validated as success or not
             //therefore the difference between validated fields and total required fields should be zero at this point
-            var numValidatedFields = $('form[name='+formName+'] .ValidationLiveSuccess').length;
+            //TODO: make valid true if this is the case
+            var numTotalFields = fields.length;
+            var numValidatedFields = form.children('.ValidationLiveSuccess').length;
 
+            if(numTotalFields - numValidatedFields === 0) {
+                valid = true;
+            }
 
             return valid;
+        };
+
+        $scope.$watch( function (scope) {
+            console.log('Entering validation submit directive watch expression', {
+                args: arguments
+            });
+            return isFormValid(scope);
+
         }, function (valid) {
+            console.log('Entering validation submit directive watch listener', {
+                args: arguments
+            });
             if (valid === true) {
                 formIsSubmittable();
 
@@ -81,6 +113,8 @@ angular_ui_form_validations = (function(){
                submitFunction.apply($scope, []);
            }
         });
+
+        formValidityChangeListener(isFormValid($scope));
     };
 
     dynamicallyDefinedValidation = {

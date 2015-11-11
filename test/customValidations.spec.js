@@ -466,12 +466,7 @@ describe('directives.customvalidation.customValidations', function () {
             });
         });
         it('should have invalid submit given a pristine form with a required field', function () {
-            //passwordInput.val('sadffsdaadfsfsda');
-            //element.scope().$apply();
-            //scope.$broadcast('runCustomValidations');
-            //element.scope().$apply();
             var form = element;
-            //form.removeClass('ng-pristine');
             hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
             visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');
             expect(2).toEqual(hiddenErrorMessages.length);
@@ -532,6 +527,7 @@ describe('directives.customvalidation.customValidations', function () {
             expect(form.hasClass('ng-valid')).toBe(true);
         });
         it('should not call onSubmit when clicked', function () {
+            debugger;
             passwordInput.val('sadffsdaadfsfsda');
             element.scope().$apply();
             scope.$broadcast('runCustomValidations');

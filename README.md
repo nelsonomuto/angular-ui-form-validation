@@ -4,10 +4,6 @@ Perform your form validation using re-usable directives and API to create your o
 
 ![demo gif](https://raw.githubusercontent.com/nelsonomuto/angular-ui-form-validation/master/app/images/formValidation.gif)
 
-## Multi-form support 
-`            <a class="btn-primary" validation-submit="{onSubmit:'user.save()', formName:'demoFormTwo'}" type="submit">Submit</a>
-`
-![multi form](https://raw.githubusercontent.com/nelsonomuto/angular-ui-form-validation/master/app/images/multiFormExample.png)
 
 [Interactive Demo.](http://nelsonomuto.github.io/angular-ui-form-validation)
 
@@ -56,6 +52,11 @@ Fully unit tested [customValidationTypes.spec.js](/test/customValidations.spec.j
 [Plunker Demo](http://plnkr.co/edit/z0DTSV?p=preview) 
 
 [Plunker Demo for select support](http://plnkr.co/edit/7Ct3X1?p=preview)
+
+#### Multi-form support included
+`            <a class="btn-primary" validation-submit="{onSubmit:'user.save()', formName:'demoFormTwo'}" type="submit">Submit</a>
+`
+![multi form](https://raw.githubusercontent.com/nelsonomuto/angular-ui-form-validation/master/app/images/multiFormExample.png)
 
 ## Getting Started
 >
