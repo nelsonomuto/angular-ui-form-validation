@@ -5932,23 +5932,70 @@ angular_ui_form_validations = (function(){
         $element.addClass('invalid');
         $element.removeClass('valid');
 
-        debugger;
-
         var formIsSubmittable = function () {
+            
+
             formIsValid = true;
             $element.addClass('valid');
             $element.removeClass('invalid');
         };
 
         var formIsNotSubmittable = function () {
+            
+
             formIsValid = false;
             $element.addClass('invalid');
             $element.removeClass('valid');
         };
 
+        var formValidityChangeListener = function (currentValidValue, previousValidValue) {
+            
+
+            var valid = currentValidValue;
+            if (valid === true) {
+                formIsSubmittable();
+
+            } else {
+                formIsNotSubmittable();
+            }
+        };
+
+        var isFormValid = function (scope) {
+            
+            var valid = false;
+            var hasMissingRequiredField = false;
+
+            var fields = form.children('input, select');
+            fields.each(function (index, field) {
+                if(field.value.trim() === "" && $(field).attr('validation-field-required') === "true") {
+                    hasMissingRequiredField = true;
+                    false;
+                }
+            });
+
+            if(hasMissingRequiredField === true) {
+                return false;
+            }
+
+            //At this point all fields that require a value have one and are therefore all validated as success or not
+            //therefore the difference between validated fields and total required fields should be zero at this point
+            //TODO: make valid true if this is the case
+            var numTotalFields = fields.length;
+            var numValidatedFields = form.children('.ValidationLiveSuccess').length;
+
+            if(numTotalFields - numValidatedFields === 0) {
+                valid = true;
+            }
+
+            return valid;
+        };
+
         $scope.$watch( function (scope) {
-            return scope[formName].$valid && $scope[formName].$dirty === true;
+            
+            return isFormValid(scope);
+
         }, function (valid) {
+            
             if (valid === true) {
                 formIsSubmittable();
 
@@ -5962,6 +6009,8 @@ angular_ui_form_validations = (function(){
                submitFunction.apply($scope, []);
            }
         });
+
+        formValidityChangeListener(isFormValid($scope));
     };
 
     dynamicallyDefinedValidation = {
@@ -6054,7 +6103,7 @@ angular_ui_form_validations = (function(){
                 return true;
             });
         return isCurrentlyDisplayingAnErrorMessageInATemplate;
-    }
+    };
 
     getValidationAttributeValue = function (attr, property, strict) {
         var value;
@@ -6272,27 +6321,43 @@ angular_ui_form_validations = (function(){
                         });
                     }
                     if (formatterArgs.customValidationAttribute === 'validationConfirmPassword') {
-                        var passwordFieldSelector = '#' + $element.attr('passwordFieldId');
-                        $element.add(passwordFieldSelector).on('keyup blur', function (target){
-                            var passwordMatch, confirmPasswordElement, passwordElement, confirmPasswordIsDirty, passwordIsValid;
+                        var passwordFieldId = $element.attr('passwordFieldId') || 'password';
+                        var passwordFieldSelector = '#' + passwordFieldId;
 
-                            confirmPasswordElement =
-                              this.hasAttribute('passwordFieldId') === true ? angular.element(this) : angular.element(this).siblings('[passwordFieldId='+this.id+']');
+                        var validationConfirmPasswordHandlerSelector = passwordFieldSelector + ', #' + $element[0].id;
 
-                            passwordElement = confirmPasswordElement.siblings(passwordFieldSelector);
+                        var confirmPasswordElement = $element;
+                        var passwordElement = $element.parent().children(passwordFieldSelector);
+
+
+                        $($element.parent()).on('keyup blur', validationConfirmPasswordHandlerSelector, function (target) {
+                            
+                            
+
+                            var passwordMatch, confirmPasswordIsDirty;
+
 
                             confirmPasswordIsDirty = /dirty/.test(confirmPasswordElement.attr('class'));
 
                             if(confirmPasswordIsDirty === false) {
                                 return;
                             }
-                            passwordIsValid = /invalid/.test(passwordElement.attr('class')) === false;
 
-                            passwordMatch =  $(passwordFieldSelector).val() === $element.val();
+                            passwordMatch =  passwordElement.val() === $element.val();
+
+                            
 
                             ngModelController.$setValidity('validationconfirmpassword', passwordMatch);
+
                             confirmPasswordElement.siblings('.CustomValidationError.validationConfirmPassword:first').toggle(! passwordMatch);
-                            onValidationComplete(passwordMatch, passwordMatch, validationAttributeValue, $element, model, ngModelController, $scope, formatterArgs.success || function(){});
+
+                            onValidationComplete(passwordMatch, passwordMatch, validationAttributeValue, $element, model, ngModelController, $scope, function () {
+                                
+
+                                if (formatterArgs.success) {
+                                    formatterArgs.success();
+                                }
+                            });
                         });
                         return;
                     }
@@ -6303,6 +6368,8 @@ angular_ui_form_validations = (function(){
                 };
 
                 runCustomValidations = function (eventType) {
+                    
+
                     var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage,
                         currentErrorMessage, currentErrorMessageIsStale,
                         currentErrorMessageValidator, currentErrorMessagePriorityIndex,
@@ -6326,6 +6393,7 @@ angular_ui_form_validations = (function(){
 
                     //Do not validate if input is pristine, i.e nothing entered by user yet
                     if($element.hasClass('ng-pristine') && eventType !=='runCustomValidations'){
+                        
                         return;
                     }
 
@@ -6435,8 +6503,9 @@ angular_ui_form_validations = (function(){
                         isValid = true;
                     } else {
                         isValid = runValidation();
-
                     }
+
+                    
 
                     ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
@@ -6450,6 +6519,10 @@ angular_ui_form_validations = (function(){
                         element: $element
                     };
 
+                    
+
+                    
+
                     if(! currentlyDisplayingAnErrorMessage) {
                         whenIsNotCurrentlyDisplayingAnErrorMessage();
                     } else if(! isCurrentlyDisplayingAnErrorMessageInATemplate($element)){
@@ -6457,12 +6530,15 @@ angular_ui_form_validations = (function(){
                     }
 
                     if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
+                        
                         whenIsCurrentlyDisplayingAnErrorMessageInATemplate();
                     }
 
                     $scope.$broadcast('customValidationComplete', customValidationBroadcastArg);
 
                     onValidationComplete(!(currentlyDisplayingAnErrorMessage || isCurrentlyDisplayingAnErrorMessageInATemplate($element) || !isValid), value, validationAttributeValue, $element, model, ngModelController, $scope, successFn);
+
+                    
 
                     return value;
                 };
@@ -6579,8 +6655,7 @@ angular_ui_form_validations = (function(){
                 customValidationAttribute: 'validationConfirmPassword',
                 errorMessage: 'Passwords do not match.',
                 validator: function (errorMessageElement, val, attr, element, model, modelCtrl) {
-                    var password = model.password || '';
-                    return password.replace(/\s+$/, '') === element.val().replace(/\s+$/, '');
+                    return true; //will be validated on keyup & blur event in directive
                 }
             },
             {

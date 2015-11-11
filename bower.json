@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-form-validation",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "main": "./dist/angular-ui-form-validation.js",
   "keywords": [
     "angular",
