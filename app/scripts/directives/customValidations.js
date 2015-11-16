@@ -661,6 +661,7 @@ angular_ui_form_validations = (function(){
                     });
 
                     $element.on('blur', function (event) {
+                        console.log('Entering customValidations directive element blur handler', { event: event});
                         runCustomValidations(event.type);
                     });
 
