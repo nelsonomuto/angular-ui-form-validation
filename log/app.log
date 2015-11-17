@@ -1,0 +1,423 @@
+[2015-11-16 12:59:02.377] [DEBUG] plugin - Loading karma-* from /Users/omuton/angular-ui-form-validation/node_modules
+[2015-11-16 12:59:02.378] [DEBUG] plugin - Loading plugin /Users/omuton/angular-ui-form-validation/node_modules/karma-chrome-launcher.
+[2015-11-16 12:59:02.382] [DEBUG] plugin - Loading plugin /Users/omuton/angular-ui-form-validation/node_modules/karma-coffee-preprocessor.
+[2015-11-16 12:59:02.416] [DEBUG] plugin - Loading plugin /Users/omuton/angular-ui-form-validation/node_modules/karma-firefox-launcher.
+[2015-11-16 12:59:02.417] [DEBUG] plugin - Loading plugin /Users/omuton/angular-ui-form-validation/node_modules/karma-html2js-preprocessor.
+[2015-11-16 12:59:02.418] [DEBUG] plugin - Loading plugin /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine.
+[2015-11-16 12:59:02.418] [DEBUG] plugin - Loading plugin /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine-html-reporter.
+[2015-11-16 12:59:02.419] [DEBUG] plugin - Loading plugin /Users/omuton/angular-ui-form-validation/node_modules/karma-phantomjs-launcher.
+[2015-11-16 12:59:02.443] [DEBUG] plugin - Loading plugin /Users/omuton/angular-ui-form-validation/node_modules/karma-requirejs.
+[2015-11-16 12:59:02.443] [DEBUG] plugin - Loading plugin /Users/omuton/angular-ui-form-validation/node_modules/karma-script-launcher.
+[2015-11-16 12:59:02.475] [WARN] watcher - Pattern "/Users/omuton/angular-ui-form-validation/app/bower_components/angular-template-retriever/dist/angular-template-retriever.js" does not match any file.
+[2015-11-16 12:59:02.496] [DEBUG] karma - List of files has changed, trying to execute
+[2015-11-16 12:59:02.496] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-16 12:59:02.500] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js"
+[2015-11-16 12:59:02.500] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js"
+[2015-11-16 12:59:02.500] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js"
+[2015-11-16 12:59:02.500] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js"
+[2015-11-16 12:59:02.500] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js"
+[2015-11-16 12:59:02.500] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js"
+[2015-11-16 12:59:02.500] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js"
+[2015-11-16 12:59:02.501] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js"
+[2015-11-16 12:59:02.501] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/bower_components/angular-template-retriever/dist/angular-template-retriever.js"
+[2015-11-16 12:59:02.501] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/app/scripts"
+[2015-11-16 12:59:02.501] [DEBUG] watcher - Watching "/Users/omuton/angular-ui-form-validation/test"
+[2015-11-16 12:59:02.501] [INFO] karma - Karma v0.13.15 server started at http://localhost:8082/
+[2015-11-16 12:59:02.505] [INFO] launcher - Starting browser Chrome
+[2015-11-16 12:59:02.505] [DEBUG] temp-dir - Creating temp dir at /var/folders/rk/v_4nrtl93jqb8v3mn9qjcw9s2bd8kq/T/karma-17655379
+[2015-11-16 12:59:02.505] [DEBUG] launcher - /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --user-data-dir=/var/folders/rk/v_4nrtl93jqb8v3mn9qjcw9s2bd8kq/T/karma-17655379 --no-default-browser-check --no-first-run --disable-default-apps --disable-popup-blocking --disable-translate http://localhost:8082/?id=17655379
+[2015-11-16 12:59:03.132] [DEBUG] web-server - serving: /Users/omuton/angular-ui-form-validation/node_modules/karma/static/client.html
+[2015-11-16 12:59:03.149] [DEBUG] web-server - serving: /Users/omuton/angular-ui-form-validation/node_modules/karma/static/karma.js
+[2015-11-16 12:59:03.273] [DEBUG] karma - A browser has connected on socket 3FEN_94axRQPCh1NAAAA
+[2015-11-16 12:59:03.274] [DEBUG] web-server - serving: /Users/omuton/angular-ui-form-validation/node_modules/karma/static/favicon.ico
+[2015-11-16 12:59:03.282] [DEBUG] web-server - upgrade /socket.io/?EIO=3&transport=websocket&sid=3FEN_94axRQPCh1NAAAA
+[2015-11-16 12:59:03.313] [INFO] Chrome 46.0.2490 (Mac OS X 10.10.5) - Connected on socket 3FEN_94axRQPCh1NAAAA with id 17655379
+[2015-11-16 12:59:03.314] [DEBUG] launcher - Chrome (id 17655379) captured in 0.812 secs
+[2015-11-16 12:59:03.314] [DEBUG] karma - All browsers are ready, executing
+[2015-11-16 12:59:03.327] [DEBUG] web-server - serving: /Users/omuton/angular-ui-form-validation/node_modules/karma/static/context.html
+[2015-11-16 12:59:03.339] [DEBUG] middlware:source-files - Requesting /base/node_modules/jasmine-core/lib/jasmine-core/jasmine.js?01f205ae839492ac6544ee124da7c94fbd98e187 /
+[2015-11-16 12:59:03.339] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 12:59:03.339] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 12:59:03.340] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/boot.js?925440973c97e93b99c71f4b1091e4ef4a713597 /
+[2015-11-16 12:59:03.340] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 12:59:03.341] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 12:59:03.342] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/jquery/jquery.js?1d85f0f3464e5e49b0522744bf7314e176ac76d9 /
+[2015-11-16 12:59:03.343] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 12:59:03.344] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/adapter.js?7ee59a2c0ba91fffef258ef34e4953cc4ca2a6c0 /
+[2015-11-16 12:59:03.344] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 12:59:03.344] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 12:59:03.345] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 12:59:03.346] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/lazy.js/lazy.js?897f1ae125bc70a71377bcb1731dd01a8a12eaea /
+[2015-11-16 12:59:03.346] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 12:59:03.346] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 12:59:03.347] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular/angular.js?08058d275936c7431a7cf15f10b4293db95be108 /
+[2015-11-16 12:59:03.347] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 12:59:03.347] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-mocks/angular-mocks.js?021f51722ceeeb422a18bd92ca34fa51daeade26 /
+[2015-11-16 12:59:03.347] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 12:59:03.348] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 12:59:03.355] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 12:59:03.357] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-resource/angular-resource.js?7d5b586f03cafa26b7a10e9c6dfa8e514ae93222 /
+[2015-11-16 12:59:03.357] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 12:59:03.357] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-cookies/angular-cookies.js?53dab7eff142529891456636e404095abd005a9f /
+[2015-11-16 12:59:03.357] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 12:59:03.358] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-sanitize/angular-sanitize.js?8f8fa417146b93595956017daba3e8523b192fd7 /
+[2015-11-16 12:59:03.358] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 12:59:03.358] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 12:59:03.359] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 12:59:03.360] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 12:59:03.376] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-route/angular-route.js?758d6e8b8fbd9027a2ef23f79b8e924910d4bb8f /
+[2015-11-16 12:59:03.376] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 12:59:03.377] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 12:59:03.391] [DEBUG] middlware:source-files - Requesting /base/app/scripts/JSOL/jsol.js?8a645a9010416b4b5d53c4e2546351a19ef0dc2c /
+[2015-11-16 12:59:03.391] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 12:59:03.391] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 12:59:03.392] [DEBUG] middlware:source-files - Requesting /base/app/scripts/app.js?cd2dfb0ab48a3653b4cad2cd09802da3fe13c4bf /
+[2015-11-16 12:59:03.392] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 12:59:03.392] [DEBUG] middlware:source-files - Requesting /base/app/scripts/controllers/main.js?570eaac0480407203577e327901c583a140f075d /
+[2015-11-16 12:59:03.392] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 12:59:03.393] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/customValidations.js?b5b52f9e0825301735f92811b219a9d53069079b /
+[2015-11-16 12:59:03.393] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 12:59:03.393] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 12:59:03.393] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 12:59:03.393] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 12:59:03.420] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/invalidInputFormatter.js?10bc86ed88274af73f75cda702df7bb118ea6a9b /
+[2015-11-16 12:59:03.420] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 12:59:03.420] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 12:59:03.434] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/customValidationTypes.js?b39390d408188a1f31242e4667fec9df33ce1802 /
+[2015-11-16 12:59:03.434] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 12:59:03.434] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 12:59:03.435] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/templateRetriever.js?5e2c7372869f129ee115de49e490ea25719a3d5e /
+[2015-11-16 12:59:03.435] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 12:59:03.435] [DEBUG] middlware:source-files - Requesting /base/test/customValidations.spec.js?96756a8c210573f0c0d810c1bd5dc143edb26baa /
+[2015-11-16 12:59:03.435] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 12:59:03.436] [DEBUG] middlware:source-files - Requesting /base/test/validationSubmitConfirmPassword.spec.js?8078cbbb69aae403ff56761f5db0b987b6958918 /
+[2015-11-16 12:59:03.436] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 12:59:03.436] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 12:59:03.436] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 12:59:03.436] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 12:59:35.562] [DEBUG] web-server - serving: /Users/omuton/angular-ui-form-validation/node_modules/karma/static/debug.html
+[2015-11-16 12:59:35.621] [DEBUG] middlware:source-files - Requesting /base/node_modules/jasmine-core/lib/jasmine-core/jasmine.js /
+[2015-11-16 12:59:35.621] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 12:59:35.622] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 12:59:35.622] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/boot.js /
+[2015-11-16 12:59:35.622] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 12:59:35.622] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/adapter.js /
+[2015-11-16 12:59:35.622] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 12:59:35.622] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 12:59:35.623] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 12:59:35.623] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/lazy.js/lazy.js /
+[2015-11-16 12:59:35.623] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 12:59:35.623] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/jquery/jquery.js /
+[2015-11-16 12:59:35.623] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 12:59:35.623] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 12:59:35.624] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 12:59:35.625] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular/angular.js /
+[2015-11-16 12:59:35.625] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 12:59:35.625] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 12:59:35.635] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-mocks/angular-mocks.js /
+[2015-11-16 12:59:35.635] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 12:59:35.635] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-resource/angular-resource.js /
+[2015-11-16 12:59:35.635] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 12:59:35.636] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-cookies/angular-cookies.js /
+[2015-11-16 12:59:35.636] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 12:59:35.637] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-sanitize/angular-sanitize.js /
+[2015-11-16 12:59:35.637] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 12:59:35.637] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 12:59:35.638] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 12:59:35.638] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 12:59:35.639] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 12:59:35.645] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-route/angular-route.js /
+[2015-11-16 12:59:35.646] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 12:59:35.646] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 12:59:35.656] [DEBUG] middlware:source-files - Requesting /base/app/scripts/JSOL/jsol.js /
+[2015-11-16 12:59:35.658] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 12:59:35.658] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 12:59:35.659] [DEBUG] middlware:source-files - Requesting /base/app/scripts/app.js /
+[2015-11-16 12:59:35.659] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 12:59:35.659] [DEBUG] middlware:source-files - Requesting /base/app/scripts/controllers/main.js /
+[2015-11-16 12:59:35.659] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 12:59:35.659] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/customValidations.js /
+[2015-11-16 12:59:35.659] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 12:59:35.659] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 12:59:35.660] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 12:59:35.660] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 12:59:35.691] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/invalidInputFormatter.js /
+[2015-11-16 12:59:35.691] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 12:59:35.691] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 12:59:35.697] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/customValidationTypes.js /
+[2015-11-16 12:59:35.697] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 12:59:35.697] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 12:59:35.698] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/templateRetriever.js /
+[2015-11-16 12:59:35.698] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 12:59:35.698] [DEBUG] middlware:source-files - Requesting /base/test/customValidations.spec.js /
+[2015-11-16 12:59:35.698] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 12:59:35.699] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 12:59:35.699] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 12:59:35.700] [DEBUG] middlware:source-files - Requesting /base/test/validationSubmitConfirmPassword.spec.js /
+[2015-11-16 12:59:35.700] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 12:59:35.700] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 12:59:36.287] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/favicon.ico
+[2015-11-16 12:59:42.504] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/debug.html
+[2015-11-16 12:59:42.583] [DEBUG] middlware:source-files - Requesting /base/node_modules/jasmine-core/lib/jasmine-core/jasmine.js /
+[2015-11-16 12:59:42.583] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 12:59:42.584] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 12:59:42.584] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/boot.js /
+[2015-11-16 12:59:42.584] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 12:59:42.584] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/adapter.js /
+[2015-11-16 12:59:42.584] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 12:59:42.585] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 12:59:42.585] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 12:59:42.585] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/lazy.js/lazy.js /
+[2015-11-16 12:59:42.586] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 12:59:42.586] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/jquery/jquery.js /
+[2015-11-16 12:59:42.586] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 12:59:42.586] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 12:59:42.587] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 12:59:42.588] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular/angular.js /
+[2015-11-16 12:59:42.588] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 12:59:42.589] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 12:59:42.599] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-mocks/angular-mocks.js /
+[2015-11-16 12:59:42.599] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 12:59:42.599] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-resource/angular-resource.js /
+[2015-11-16 12:59:42.599] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 12:59:42.599] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-cookies/angular-cookies.js /
+[2015-11-16 12:59:42.599] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 12:59:42.600] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 12:59:42.601] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 12:59:42.601] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 12:59:42.601] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-sanitize/angular-sanitize.js /
+[2015-11-16 12:59:42.601] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 12:59:42.601] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 12:59:42.610] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-route/angular-route.js /
+[2015-11-16 12:59:42.610] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 12:59:42.610] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 12:59:42.626] [DEBUG] middlware:source-files - Requesting /base/app/scripts/JSOL/jsol.js /
+[2015-11-16 12:59:42.626] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 12:59:42.626] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 12:59:42.627] [DEBUG] middlware:source-files - Requesting /base/app/scripts/app.js /
+[2015-11-16 12:59:42.627] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 12:59:42.627] [DEBUG] middlware:source-files - Requesting /base/app/scripts/controllers/main.js /
+[2015-11-16 12:59:42.627] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 12:59:42.628] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/customValidations.js /
+[2015-11-16 12:59:42.628] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 12:59:42.628] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 12:59:42.628] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 12:59:42.629] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 12:59:42.638] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/invalidInputFormatter.js /
+[2015-11-16 12:59:42.638] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 12:59:42.638] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 12:59:42.666] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/customValidationTypes.js /
+[2015-11-16 12:59:42.666] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 12:59:42.667] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 12:59:42.667] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/templateRetriever.js /
+[2015-11-16 12:59:42.667] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 12:59:42.667] [DEBUG] middlware:source-files - Requesting /base/test/customValidations.spec.js /
+[2015-11-16 12:59:42.667] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 12:59:42.667] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 12:59:42.668] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 12:59:42.668] [DEBUG] middlware:source-files - Requesting /base/test/validationSubmitConfirmPassword.spec.js /
+[2015-11-16 12:59:42.668] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 12:59:42.668] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 12:59:44.806] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/favicon.ico
+[2015-11-16 12:59:55.110] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/debug.html
+[2015-11-16 12:59:55.193] [DEBUG] middlware:source-files - Requesting /base/node_modules/jasmine-core/lib/jasmine-core/jasmine.js /
+[2015-11-16 12:59:55.193] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 12:59:55.193] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 12:59:55.194] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/boot.js /
+[2015-11-16 12:59:55.194] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 12:59:55.194] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/adapter.js /
+[2015-11-16 12:59:55.194] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 12:59:55.194] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 12:59:55.195] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 12:59:55.195] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/lazy.js/lazy.js /
+[2015-11-16 12:59:55.195] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 12:59:55.195] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/jquery/jquery.js /
+[2015-11-16 12:59:55.195] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 12:59:55.195] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 12:59:55.196] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 12:59:55.202] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular/angular.js /
+[2015-11-16 12:59:55.202] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 12:59:55.202] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 12:59:55.213] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-mocks/angular-mocks.js /
+[2015-11-16 12:59:55.213] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 12:59:55.213] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-resource/angular-resource.js /
+[2015-11-16 12:59:55.213] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 12:59:55.213] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-cookies/angular-cookies.js /
+[2015-11-16 12:59:55.213] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 12:59:55.214] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 12:59:55.214] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 12:59:55.215] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 12:59:55.215] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-sanitize/angular-sanitize.js /
+[2015-11-16 12:59:55.215] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 12:59:55.215] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 12:59:55.229] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-route/angular-route.js /
+[2015-11-16 12:59:55.229] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 12:59:55.229] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 12:59:55.229] [DEBUG] middlware:source-files - Requesting /base/app/scripts/JSOL/jsol.js /
+[2015-11-16 12:59:55.229] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 12:59:55.230] [DEBUG] middlware:source-files - Requesting /base/app/scripts/app.js /
+[2015-11-16 12:59:55.230] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 12:59:55.230] [DEBUG] middlware:source-files - Requesting /base/app/scripts/controllers/main.js /
+[2015-11-16 12:59:55.230] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 12:59:55.230] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 12:59:55.230] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 12:59:55.230] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 12:59:55.237] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/customValidations.js /
+[2015-11-16 12:59:55.238] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 12:59:55.238] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 12:59:55.275] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/invalidInputFormatter.js /
+[2015-11-16 12:59:55.275] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 12:59:55.276] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 12:59:55.276] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/customValidationTypes.js /
+[2015-11-16 12:59:55.276] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 12:59:55.276] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/templateRetriever.js /
+[2015-11-16 12:59:55.276] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 12:59:55.276] [DEBUG] middlware:source-files - Requesting /base/test/customValidations.spec.js /
+[2015-11-16 12:59:55.276] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 12:59:55.276] [DEBUG] middlware:source-files - Requesting /base/test/validationSubmitConfirmPassword.spec.js /
+[2015-11-16 12:59:55.276] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 12:59:55.277] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 12:59:55.277] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 12:59:55.277] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 12:59:55.277] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 12:59:57.402] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/favicon.ico
+[2015-11-16 13:01:44.967] [DEBUG] karma - A browser has connected on socket XK3PUJLL8wXmoS8-AAAB
+[2015-11-16 13:01:45.014] [DEBUG] web-server - upgrade /socket.io/?EIO=3&transport=websocket&sid=XK3PUJLL8wXmoS8-AAAB
+[2015-11-16 13:01:52.518] [INFO] Chrome 46.0.2490 (Mac OS X 10.10.5) - Connected on socket XK3PUJLL8wXmoS8-AAAB with id manual-2581
+[2015-11-16 13:01:52.518] [DEBUG] karma - All browsers are ready, executing
+[2015-11-16 13:01:52.526] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/context.html
+[2015-11-16 13:01:52.527] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/context.html
+[2015-11-16 13:01:53.188] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/favicon.ico
+[2015-11-16 13:01:56.068] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/favicon.ico
+[2015-11-16 13:22:46.459] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/debug.html
+[2015-11-16 13:22:46.569] [DEBUG] middlware:source-files - Requesting /base/node_modules/jasmine-core/lib/jasmine-core/jasmine.js /
+[2015-11-16 13:22:46.569] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 13:22:46.569] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 13:22:46.570] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/boot.js /
+[2015-11-16 13:22:46.570] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 13:22:46.570] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 13:22:46.572] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/adapter.js /
+[2015-11-16 13:22:46.572] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 13:22:46.572] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/lazy.js/lazy.js /
+[2015-11-16 13:22:46.572] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 13:22:46.573] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 13:22:46.573] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 13:22:46.574] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/jquery/jquery.js /
+[2015-11-16 13:22:46.574] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 13:22:46.574] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular/angular.js /
+[2015-11-16 13:22:46.574] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 13:22:46.575] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 13:22:46.577] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 13:22:46.587] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-mocks/angular-mocks.js /
+[2015-11-16 13:22:46.587] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 13:22:46.588] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-resource/angular-resource.js /
+[2015-11-16 13:22:46.588] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 13:22:46.588] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-cookies/angular-cookies.js /
+[2015-11-16 13:22:46.588] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 13:22:46.588] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 13:22:46.589] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 13:22:46.589] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 13:22:46.591] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-sanitize/angular-sanitize.js /
+[2015-11-16 13:22:46.591] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 13:22:46.591] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 13:22:46.606] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-route/angular-route.js /
+[2015-11-16 13:22:46.606] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 13:22:46.607] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 13:22:46.607] [DEBUG] middlware:source-files - Requesting /base/app/scripts/JSOL/jsol.js /
+[2015-11-16 13:22:46.607] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 13:22:46.607] [DEBUG] middlware:source-files - Requesting /base/app/scripts/app.js /
+[2015-11-16 13:22:46.607] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 13:22:46.607] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 13:22:46.608] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 13:22:46.625] [DEBUG] middlware:source-files - Requesting /base/app/scripts/controllers/main.js /
+[2015-11-16 13:22:46.625] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 13:22:46.626] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 13:22:46.626] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/customValidations.js /
+[2015-11-16 13:22:46.626] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 13:22:46.627] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 13:22:46.677] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/invalidInputFormatter.js /
+[2015-11-16 13:22:46.678] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 13:22:46.678] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 13:22:46.679] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/customValidationTypes.js /
+[2015-11-16 13:22:46.679] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 13:22:46.679] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/templateRetriever.js /
+[2015-11-16 13:22:46.679] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 13:22:46.679] [DEBUG] middlware:source-files - Requesting /base/test/customValidations.spec.js /
+[2015-11-16 13:22:46.679] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 13:22:46.679] [DEBUG] middlware:source-files - Requesting /base/test/validationSubmitConfirmPassword.spec.js /
+[2015-11-16 13:22:46.679] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 13:22:46.679] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 13:22:46.680] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 13:22:46.680] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 13:22:46.680] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 13:22:48.841] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/favicon.ico
+[2015-11-16 13:23:02.149] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/debug.html
+[2015-11-16 13:23:02.235] [DEBUG] middlware:source-files - Requesting /base/node_modules/jasmine-core/lib/jasmine-core/jasmine.js /
+[2015-11-16 13:23:02.236] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 13:23:02.236] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/jasmine-core/lib/jasmine-core/jasmine.js
+[2015-11-16 13:23:02.237] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/boot.js /
+[2015-11-16 13:23:02.237] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 13:23:02.238] [DEBUG] middlware:source-files - Requesting /base/node_modules/karma-jasmine/lib/adapter.js /
+[2015-11-16 13:23:02.238] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 13:23:02.239] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/lazy.js/lazy.js /
+[2015-11-16 13:23:02.239] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 13:23:02.239] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/boot.js
+[2015-11-16 13:23:02.240] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma-jasmine/lib/adapter.js
+[2015-11-16 13:23:02.240] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/lazy.js/lazy.js
+[2015-11-16 13:23:02.243] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/jquery/jquery.js /
+[2015-11-16 13:23:02.243] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 13:23:02.243] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular/angular.js /
+[2015-11-16 13:23:02.243] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 13:23:02.245] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-mocks/angular-mocks.js /
+[2015-11-16 13:23:02.245] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 13:23:02.246] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/jquery/jquery.js
+[2015-11-16 13:23:02.248] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular/angular.js
+[2015-11-16 13:23:02.258] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-mocks/angular-mocks.js
+[2015-11-16 13:23:02.260] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-resource/angular-resource.js /
+[2015-11-16 13:23:02.260] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 13:23:02.260] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-cookies/angular-cookies.js /
+[2015-11-16 13:23:02.260] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 13:23:02.260] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-sanitize/angular-sanitize.js /
+[2015-11-16 13:23:02.260] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 13:23:02.260] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-resource/angular-resource.js
+[2015-11-16 13:23:02.261] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-cookies/angular-cookies.js
+[2015-11-16 13:23:02.262] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-sanitize/angular-sanitize.js
+[2015-11-16 13:23:02.269] [DEBUG] middlware:source-files - Requesting /base/app/bower_components/angular-route/angular-route.js /
+[2015-11-16 13:23:02.269] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 13:23:02.269] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/bower_components/angular-route/angular-route.js
+[2015-11-16 13:23:02.270] [DEBUG] middlware:source-files - Requesting /base/app/scripts/JSOL/jsol.js /
+[2015-11-16 13:23:02.270] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 13:23:02.270] [DEBUG] middlware:source-files - Requesting /base/app/scripts/app.js /
+[2015-11-16 13:23:02.270] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 13:23:02.270] [DEBUG] middlware:source-files - Requesting /base/app/scripts/controllers/main.js /
+[2015-11-16 13:23:02.270] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 13:23:02.270] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/JSOL/jsol.js
+[2015-11-16 13:23:02.271] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/app.js
+[2015-11-16 13:23:02.271] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js
+[2015-11-16 13:23:02.282] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/customValidations.js /
+[2015-11-16 13:23:02.282] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 13:23:02.283] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js
+[2015-11-16 13:23:02.316] [DEBUG] middlware:source-files - Requesting /base/app/scripts/directives/invalidInputFormatter.js /
+[2015-11-16 13:23:02.316] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 13:23:02.316] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/directives/invalidInputFormatter.js
+[2015-11-16 13:23:02.316] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/customValidationTypes.js /
+[2015-11-16 13:23:02.316] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 13:23:02.316] [DEBUG] middlware:source-files - Requesting /base/app/scripts/services/templateRetriever.js /
+[2015-11-16 13:23:02.316] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 13:23:02.317] [DEBUG] middlware:source-files - Requesting /base/test/customValidations.spec.js /
+[2015-11-16 13:23:02.317] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 13:23:02.317] [DEBUG] middlware:source-files - Requesting /base/test/validationSubmitConfirmPassword.spec.js /
+[2015-11-16 13:23:02.317] [DEBUG] middlware:source-files - Fetching /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 13:23:02.317] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js
+[2015-11-16 13:23:02.317] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/app/scripts/services/templateRetriever.js
+[2015-11-16 13:23:02.318] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/customValidations.spec.js
+[2015-11-16 13:23:02.318] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/test/validationSubmitConfirmPassword.spec.js
+[2015-11-16 13:23:04.509] [DEBUG] web-server - serving (cached): /Users/omuton/angular-ui-form-validation/node_modules/karma/static/favicon.ico
+[2015-11-16 13:23:56.668] [WARN] watcher - Pattern "/Users/omuton/angular-ui-form-validation/app/bower_components/angular-template-retriever/dist/angular-template-retriever.js" does not match any file.
+[2015-11-16 13:23:56.687] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-16 13:23:56.692] [INFO] karma - Karma v0.13.15 server started at http://localhost:8082/
+[2015-11-16 13:23:56.704] [INFO] launcher - Starting browser Chrome
+[2015-11-16 13:23:57.487] [INFO] Chrome 46.0.2490 (Mac OS X 10.10.5) - Connected on socket 60h9xikXjr4_o9z5AAAA with id 36512050
+[2015-11-16 13:23:58.890] [INFO] Chrome 46.0.2490 (Mac OS X 10.10.5) - Connected on socket OS3U0iriuR-o8CXgAAAB with id manual-2581
+[2015-11-16 13:23:58.890] [INFO] karma - Delaying execution, these browsers are not ready: Chrome 46.0.2490 (Mac OS X 10.10.5)
+[2015-11-17 09:48:11.337] [WARN] Chrome 46.0.2490 (Mac OS X 10.10.5) - Disconnected (1 times)
