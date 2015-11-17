@@ -3,7 +3,7 @@ module.exports = {
         src: '.tmp/concat/scripts/**/*.js'
     },
     distsourcefile: {
-        src: '<%= yeoman.dist %>/<%= pkg.name %>.js'
+        src: '<%= config.path.dist %>/<%= pkg.name %>.js'
     },
     //jshint ignore:start
     options: {

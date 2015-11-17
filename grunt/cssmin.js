@@ -4,7 +4,7 @@
 module.exports = {
     dist: {
         files: {
-            '<%= yeoman.dist %>/styles/main.css': [
+            '<%= config.path.dist %>/styles/main.css': [
                 '.tmp/styles/main.css',
                 '.tmp/styles/form.css'
             ]

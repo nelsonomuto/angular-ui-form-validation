@@ -3,10 +3,10 @@ module.exports = {
     dist: {
         files: {
             src: [
-                '<%= yeoman.dist %>/scripts/{,*/}*.js',
-                '<%= yeoman.dist %>/styles/{,*/}*.css',
-                '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-                '<%= yeoman.dist %>/styles/fonts/*'
+                '<%= config.path.dist %>/scripts/{,*/}*.js',
+                '<%= config.path.dist %>/styles/{,*/}*.css',
+                '<%= config.path.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+                '<%= config.path.dist %>/styles/fonts/*'
             ]
         }
     }

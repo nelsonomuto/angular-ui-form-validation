@@ -19,14 +19,7 @@ module.exports = function (grunt) {
             // Project settings
             pkg: grunt.file.readJSON('package.json'),
 
-            yeoman: {
-                // configurable paths
-                app: require('./bower.json').appPath || 'app',
-                services: 'app/scripts/services',
-                directives: 'app/scripts/directives',
-                bower: 'app/bower_components',
-                dist: 'dist'
-            }
+            config: require('./grunt-config')
         },
 
         // use different function to merge config files

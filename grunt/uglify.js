@@ -1,8 +1,8 @@
  //module.exports = {
  //  dist: {
  //    files: {
- //      '<%= yeoman.dist %>/scripts/scripts.js': [
- //        '<%= yeoman.dist %>/scripts/scripts.js'
+ //      '<%= config.path.dist %>/scripts/scripts.js': [
+ //        '<%= config.path.dist %>/scripts/scripts.js'
  //      ]
  //    }
  //  }
@@ -14,11 +14,11 @@
      },
      distsourcefile: {
          files: {
-             '<%= yeoman.dist %>/scripts/scripts.js': [
-                 '<%= yeoman.dist %>/scripts/scripts.js'
+             '<%= config.path.dist %>/scripts/scripts.js': [
+                 '<%= config.path.dist %>/scripts/scripts.js'
              ],
-                 '<%= yeoman.dist %>/<%= pkg.name %>.js': [
-                 '<%= yeoman.dist %>/<%= pkg.name %>.js'
+                 '<%= config.path.dist %>/<%= pkg.name %>.js': [
+                 '<%= config.path.dist %>/<%= pkg.name %>.js'
              ]
          }
      }

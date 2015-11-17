@@ -1,13 +1,13 @@
 // Compiles Sass to CSS and generates necessary files if requested
 module.exports = {
     options: {
-        sassDir: '<%= yeoman.app %>/styles',
+        sassDir: '<%= config.path.app %>/styles',
             cssDir: '.tmp/styles',
             generatedImagesDir: '.tmp/images/generated',
-            imagesDir: '<%= yeoman.app %>/images',
-            javascriptsDir: '<%= yeoman.app %>/scripts',
-            fontsDir: '<%= yeoman.app %>/styles/fonts',
-            importPath: '<%= yeoman.app %>/bower_components',
+            imagesDir: '<%= config.path.app %>/images',
+            javascriptsDir: '<%= config.path.app %>/scripts',
+            fontsDir: '<%= config.path.app %>/styles/fonts',
+            importPath: '<%= config.path.app %>/bower_components',
             httpImagesPath: '/images',
             httpGeneratedImagesPath: '/images/generated',
             httpFontsPath: '/styles/fonts',
@@ -16,7 +16,7 @@ module.exports = {
     },
     dist: {
         options: {
-            generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+            generatedImagesDir: '<%= config.path.dist %>/images/generated'
         }
     },
     server: {

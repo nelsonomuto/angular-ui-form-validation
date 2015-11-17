@@ -11,7 +11,7 @@ module.exports = {
             open: true,
                 base: [
                 '.tmp',
-                '<%= yeoman.app %>'
+                '<%= config.path.app %>'
             ]
         }
     },
@@ -21,13 +21,13 @@ module.exports = {
                 base: [
                 '.tmp',
                 'test',
-                '<%= yeoman.app %>'
+                '<%= config.path.app %>'
             ]
         }
     },
     dist: {
         options: {
-            base: '<%= yeoman.dist %>'
+            base: '<%= config.path.dist %>'
         }
     }
 };

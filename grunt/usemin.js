@@ -1,8 +1,8 @@
 // Performs rewrites based on rev and the useminPrepare configuration
 module.exports = {
-    html: ['<%= yeoman.dist %>/{,*/}*.html'],
-        css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+    html: ['<%= config.path.dist %>/{,*/}*.html'],
+        css: ['<%= config.path.dist %>/styles/{,*/}*.css'],
         options: {
-        assetsDirs: ['<%= yeoman.dist %>']
+        assetsDirs: ['<%= config.path.dist %>']
     }
 };

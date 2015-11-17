@@ -6,8 +6,8 @@ module.exports = {
                 dot: true,
                 src: [
                     '.tmp',
-                    '<%= yeoman.dist %>/*',
-                    '!<%= yeoman.dist %>/.git*'
+                    '<%= config.path.dist %>/*',
+                    '!<%= config.path.dist %>/.git*'
                 ]
             }
         ]

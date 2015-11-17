@@ -14,9 +14,9 @@ module.exports = {
         files: [
             {
                 expand: true,
-                cwd: '<%= yeoman.app %>',
+                cwd: '<%= config.path.app %>',
                 src: ['*.html', 'views/*.html'],
-                dest: '<%= yeoman.dist %>'
+                dest: '<%= config.path.dist %>'
             }
         ]
     }

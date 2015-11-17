@@ -1,7 +1,7 @@
 // Watches files for changes and runs tasks based on the changed files
 module.exports = {
     js: {
-        files: ['{.tmp,<%= yeoman.app %>}/scripts/**/*.js', '.jshintrc'],
+        files: ['{.tmp,<%= config.path.app %>}/scripts/**/*.js', '.jshintrc'],
             tasks: ['newer:jshint:all']
     },
     jsTest: {
@@ -9,11 +9,11 @@ module.exports = {
             tasks: ['newer:jshint:test', 'karma']
     },
     compass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        files: ['<%= config.path.app %>/styles/{,*/}*.{scss,sass}'],
             tasks: ['compass:server', 'autoprefixer']
     },
     styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+        files: ['<%= config.path.app %>/styles/{,*/}*.css'],
             tasks: ['newer:copy:styles', 'autoprefixer']
     },
     gruntfile: {
@@ -24,9 +24,9 @@ module.exports = {
             livereload: '<%= connect.options.livereload %>'
         },
         files: [
-            '<%= yeoman.app %>/**/*.html',
+            '<%= config.path.app %>/**/*.html',
             '.tmp/styles/{,*/}*.css',
-            '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+            '<%= config.path.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
     }
 };
