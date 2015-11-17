@@ -16,15 +16,14 @@ module.exports = {
         'useminPrepare',
         'concurrent:dist',
         'autoprefixer',
-        'concat',
-        'removelogging',
-        'ngmin',
-        'ngAnnotate',
+        'concat', //concatenating into dist/angular-ui-form-validation.js
+        'removelogging', //remove logging from angular-ui-form-validation.js
+        'ngmin', //TODO: fix ngmin src and dest is .tmp folder
+        'ngAnnotate', //dist/angular-ui-form-validation.js -> dist/angular-ui-form-validation.js
         'copy:dist',
         'cdnify',
         'cssmin:dist',
         'uglify',
-        'rev',
         'usemin'
     ],
     serve: [
