@@ -95,7 +95,7 @@ locallyDefinedValidations: [
 The end result is validation and error handling without convoluting your markup with a bunch of ng-show, ng-hide blocks and having to copy paste that into other forms.
 
 
-![custom validation message for no space](/errorMessageNoSpace.png "validation-no-space")
+![custom validation message for no space](https://raw.githubusercontent.com/nelsonomuto/angular-ui-form-validation/master/app/images/noSpace.png "validation-no-space")
 
 ### API
 
