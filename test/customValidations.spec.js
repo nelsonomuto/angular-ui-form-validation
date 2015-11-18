@@ -2,7 +2,7 @@
 
 describe('directives.customvalidation.customValidations', function () {
     var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages,
-        passwordInput, confirmPasswordInput, templateRetriever;
+        passwordInput, nameInput, confirmPasswordInput, templateRetriever;
 
     beforeEach(function (){
         module('directives.customvalidation.customValidationTypes');
@@ -22,6 +22,7 @@ describe('directives.customvalidation.customValidations', function () {
                 'validation-one-number="true" />'+
                 '</form>');
             passwordInput = element.find('#password');
+            nameInput = element.find('#name');
             templateRetriever = $injector.get('templateRetriever');
 
             spyOn(templateRetriever, 'getTemplate').and.callFake(function (templateUrl){
@@ -76,6 +77,7 @@ describe('directives.customvalidation.customValidations', function () {
 
     it('should show errors based on the order in the custom validations and hide resolved error messages', function () {
         passwordInput.val('sadffsdaadfsfsda');
+        passwordInput.removeClass('ng-pristine');
         scope.$broadcast('runCustomValidations');
         hiddenErrorMessages = element.find('.CustomValidationError[style="display: none;"]');
         visibleErrorMessages = element.find('.CustomValidationError[style="display: inline;"], .CustomValidationError[style="display: block;"]');

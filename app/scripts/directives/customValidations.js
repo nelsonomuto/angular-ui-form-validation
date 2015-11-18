@@ -33,7 +33,7 @@ angular_ui_form_validations = (function(){
         $element.removeClass('valid');
 
         var formIsSubmittable = function () {
-            console.log('Entering formIsSubmittable');
+            console.debug('Entering formIsSubmittable');
 
             formIsValid = true;
             $element.addClass('valid');
@@ -41,7 +41,7 @@ angular_ui_form_validations = (function(){
         };
 
         var formIsNotSubmittable = function () {
-            console.log('Entering formIsNotSubmittable');
+            console.debug('Entering formIsNotSubmittable');
 
             formIsValid = false;
             $element.addClass('invalid');
@@ -49,7 +49,7 @@ angular_ui_form_validations = (function(){
         };
 
         var formValidityChangeListener = function (currentValidValue, previousValidValue) {
-            console.log('Entering formValidityChangeListener', {args: arguments});
+            console.debug('Entering formValidityChangeListener', {args: arguments});
 
             var valid = currentValidValue;
             if (valid === true) {
@@ -61,7 +61,7 @@ angular_ui_form_validations = (function(){
         };
 
         var isFormValid = function (scope) {
-            console.log('Entering isFormValid', {args: arguments});
+            console.debug('Entering isFormValid', {args: arguments});
             var valid = false;
             var hasMissingRequiredField = false;
 
@@ -91,13 +91,13 @@ angular_ui_form_validations = (function(){
         };
 
         $scope.$watch( function (scope) {
-            console.log('Entering validation submit directive watch expression', {
+            console.debug('Entering validation submit directive watch expression', {
                 args: arguments
             });
             return isFormValid(scope);
 
         }, function (valid) {
-            console.log('Entering validation submit directive watch listener', {
+            console.debug('Entering validation submit directive watch listener', {
                 args: arguments
             });
             if (valid === true) {
@@ -290,7 +290,14 @@ angular_ui_form_validations = (function(){
                 return true;
             });
 
-        return validator;
+        return function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
+            for(var indx = 0, len = arguments.length; indx < len; indx++){
+                if(typeof(arguments[indx]) === 'undefined') {
+                    console.warn('Calling validator with an undefined parameter', arguments);
+                }
+            }
+            validator.apply(this, arguments);
+        }
     };
 
     getValidationPriorityIndex = function (customValidationAttribute) {
@@ -435,8 +442,8 @@ angular_ui_form_validations = (function(){
 
 
                         $($element.parent()).on('keyup blur', validationConfirmPasswordHandlerSelector, function (target) {
-                            console.log('Entering validationConfirmPassword keyup blur handler', {args: arguments});
-                            console.log('validationConfirmPassword handler selector' + validationConfirmPasswordHandlerSelector);
+                            console.debug('Entering validationConfirmPassword keyup blur handler', {args: arguments});
+                            console.debug('validationConfirmPassword handler selector' + validationConfirmPasswordHandlerSelector);
 
                             var passwordMatch, confirmPasswordIsDirty;
 
@@ -449,14 +456,14 @@ angular_ui_form_validations = (function(){
 
                             passwordMatch =  passwordElement.val() === $element.val();
 
-                            console.log('--- validationConfirmPassword keyup blur handler passwordMatch', passwordMatch);
+                            console.debug('--- validationConfirmPassword keyup blur handler passwordMatch', passwordMatch);
 
                             ngModelController.$setValidity('validationconfirmpassword', passwordMatch);
 
                             confirmPasswordElement.siblings('.CustomValidationError.validationConfirmPassword:first').toggle(! passwordMatch);
 
                             onValidationComplete(passwordMatch, passwordMatch, validationAttributeValue, $element, model, ngModelController, $scope, function () {
-                                console.log('Entering validationConfirmPassword onCustomSuccess callback');
+                                console.debug('Entering validationConfirmPassword onCustomSuccess callback');
 
                                 if (formatterArgs.success) {
                                     formatterArgs.success();
@@ -471,8 +478,9 @@ angular_ui_form_validations = (function(){
                     }
                 };
 
-                runCustomValidations = function (eventType) {
-                    console.log('Entering runCustomValidations', { eventType: eventType });
+                runCustomValidations = function runCustomValidationsMethod (eventType) {
+                    console.debug('Entering runCustomValidations', { eventType: eventType });
+                    console.trace();
 
                     var isValid, value, customValidationBroadcastArg, currentlyDisplayingAnErrorMessage,
                         currentErrorMessage, currentErrorMessageIsStale,
@@ -491,6 +499,7 @@ angular_ui_form_validations = (function(){
                             //TOOD: figure out why returning here is causing the cursor to be set to last position and
                             //  slowing down UI by preventing key to be pressed while it is moved, thereby causing confusing and bad UX
                             // return;
+                            console.log('--- runCustomValidationsMethod evaluating as valid');
                             evaluateAsValid = true;
                         }
                     }
@@ -518,7 +527,13 @@ angular_ui_form_validations = (function(){
                     }
 
                     function getElementValue() {
-                        var value = $element.val().replace(/\s+$/, '');
+                        console.debug('--- Entering runCustomValidations getElementValue');
+                        var elementVal = $element.val();
+                        console.debug('--- --- $element.val()', elementVal);
+
+                        var value = elementVal.replace(/\s+$/, '');
+
+                        console.debug('--- --- elementVal.replace(/\s+$/, \'\')', value);
 
                         if((/select/).test($element[0].type)){
                             value = $element[0].options[$element[0].selectedIndex].innerHTML;
@@ -539,9 +554,23 @@ angular_ui_form_validations = (function(){
                     }
 
                     function runValidation() {
-                        return formatterArgs.validator(errorMessageElement,
+                        console.debug('--- Entering runValidation in runCustomValidationsMethod');
+                        var isValid = formatterArgs.validator(errorMessageElement,
                             value, validationAttributeValue, $element, model,
                             ngModelController, $scope, rawCustomValidationAttribute);
+                        console.debug('--- --- runValidation in runCustomValidationsMethod variables', {
+                            isValid: isValid,
+                            value: value,
+                            errorMessageElement: errorMessageElement,
+                            validationAttributeValue: validationAttributeValue,
+                            $element: $element,
+                            model: model,
+                            ngModelController: ngModelController,
+                            $scope: $scope,
+                            rawCustomValidationAttribute: rawCustomValidationAttribute
+                        });
+                        console.trace('--- --- running runValidation in runCustomValidationsMethod');
+                        return isValid;
                     }
 
                     function getPropertyNameClass (pname) {
@@ -577,7 +606,7 @@ angular_ui_form_validations = (function(){
                             errorMessageElement,
                             value,
                             getValidationAttributeValue($attrs[currentErrorMessage.attr('data-custom-validation-attribute')]),
-                            $element, model, ngModelController
+                            $element, model, ngModelController, $scope, rawCustomValidationAttribute
                         );
 
                         currentErrorMessagePriorityIndex = parseInt(currentErrorMessage.attr('data-custom-validation-priorityIndex'), 10);
@@ -609,7 +638,7 @@ angular_ui_form_validations = (function(){
                         isValid = runValidation();
                     }
 
-                    console.log('--- runCustomValidations validity ' + isValid);
+                    console.debug('--- runCustomValidations validity ' + isValid);
 
                     ngModelController.$setValidity(formatterArgs.customValidationAttribute.toLowerCase(), isValid);
 
@@ -620,12 +649,13 @@ angular_ui_form_validations = (function(){
                         validation: $element.attr('id') + ' ' + formatterArgs.customValidationAttribute + status,
                         model: model,
                         controller: ngModelController,
-                        element: $element
+                        element: $element,
+                        value: value
                     };
 
-                    console.log('--- runCustomValidations customValidationBroadcastArg', customValidationBroadcastArg);
+                    console.debug('--- runCustomValidations customValidationBroadcastArg', customValidationBroadcastArg);
 
-                    console.log('--- runCustomValidations currentlyDisplayingAnErrorMessage ' + currentlyDisplayingAnErrorMessage);
+                    console.debug('--- runCustomValidations currentlyDisplayingAnErrorMessage ' + currentlyDisplayingAnErrorMessage);
 
                     if(! currentlyDisplayingAnErrorMessage) {
                         whenIsNotCurrentlyDisplayingAnErrorMessage();
@@ -634,7 +664,7 @@ angular_ui_form_validations = (function(){
                     }
 
                     if(isCurrentlyDisplayingAnErrorMessageInATemplate($element)) {
-                        console.log('--- runCustomValidations isCurrentlyDisplayingAnErrorMessageInATemplate');
+                        console.debug('--- runCustomValidations isCurrentlyDisplayingAnErrorMessageInATemplate');
                         whenIsCurrentlyDisplayingAnErrorMessageInATemplate();
                     }
 
@@ -642,8 +672,8 @@ angular_ui_form_validations = (function(){
 
                     onValidationComplete(!(currentlyDisplayingAnErrorMessage || isCurrentlyDisplayingAnErrorMessageInATemplate($element) || !isValid), value, validationAttributeValue, $element, model, ngModelController, $scope, successFn);
 
-                    console.log('--- runCustomValidations returnValue ' + value);
-
+                    console.debug('--- runCustomValidations returnValue ' + value);
+                    console.debug('\n\n\n\n\n\n\n\n\n\n');
                     return value;
                 };
 
@@ -661,11 +691,18 @@ angular_ui_form_validations = (function(){
                     });
 
                     $element.on('blur', function (event) {
-                        console.log('Entering customValidations directive element blur handler', { event: event});
+                        console.debug('Entering customValidations directive element blur handler', { event: event});
                         runCustomValidations(event.type);
                     });
 
-                    $scope.$on('runCustomValidations', function () {
+                    console.info('Registering eventHandlerRunCustomValidations to listen for event runCustomValidations', {
+                        $scope: $scope,
+                        $element: $element,
+                        ngModelController: ngModelController,
+                        $attrs: $attrs,
+                        propertyName: propertyName
+                    });
+                    $scope.$on('runCustomValidations', function eventHandlerRunCustomValidations() {
                         runCustomValidations('runCustomValidations');
                     });
                 }

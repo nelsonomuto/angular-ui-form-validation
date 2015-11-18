@@ -11,7 +11,7 @@
                 customValidationAttribute: 'validationFieldRequired',
                 errorMessage: 'This is a required field',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationRequired', {
+                    console.debug('Entering customValidationTypes#validationRequired', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -21,14 +21,20 @@
                         $scope: $scope,
                         rawAttr: rawAttr
                     });
-                    return (/\S/).test(val);
+                    var valid = (/\S/).test(val);
+
+                    if(valid === false) {
+                        console.trace('--- field required is false');
+                    }
+
+                    return valid;
                 }
             },
             {
                 customValidationAttribute: 'validationConfirmPassword',
                 errorMessage: 'Passwords do not match.',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationConfirmPassword', {
+                    console.debug('Entering customValidationTypes#validationConfirmPassword', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -45,7 +51,7 @@
                 customValidationAttribute: 'validationEmail',
                 errorMessage: 'Please enter a valid email',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationEmail', {
+                    console.debug('Entering customValidationTypes#validationEmail', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -63,7 +69,7 @@
                 errorMessage: 'Cannot contain any spaces',
                 validateWhileEntering: true,
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationNoSpace', {
+                    console.debug('Entering customValidationTypes#validationNoSpace', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -83,7 +89,7 @@
                 customValidationAttribute: 'validationSetLength',
                 errorMessage: '',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationSetLength', {
+                    console.debug('Entering customValidationTypes#validationSetLength', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -105,9 +111,20 @@
             {
                 customValidationAttribute: 'validationMinLength',
                 errorMessage: function (attr) {
+                    console.trace('--- validationMinLength errorMessage function');
                     return 'Minimum of ' + getValidationAttributeValue(attr) + ' characters';
                 },
-                validator: function (errorMessageElement, val, attr) {
+                validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
+                    console.debug('Entering customValidationTypes#validationMinLength', {
+                        errorMessageElement: errorMessageElement,
+                        val: val,
+                        attr: attr,
+                        $element: $element,
+                        model: model,
+                        ngModelController: ngModelController,
+                        $scope: $scope,
+                        rawAttr: rawAttr
+                    });
                     return val.length >= parseInt(getValidationAttributeValue(attr), 10);
                 }
             },
@@ -116,7 +133,7 @@
                 errorMessage: '',
                 validateWhileEntering: true,
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationMaxLength', {
+                    console.debug('Entering customValidationTypes#validationMaxLength', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -128,10 +145,20 @@
                     });
 
                     var customMessage = getValidationAttributeValue(rawAttr, 'message', true);
-                    if (val.length <= parseInt(getValidationAttributeValue(rawAttr), 10)) {
+                    var validationAttributeValue = parseInt(getValidationAttributeValue(rawAttr), 10);
+                    var valid = val.length < validationAttributeValue;
+                    var errorMessage = customMessage || 'Maximum of ' + getValidationAttributeValue(rawAttr) + ' characters';
+
+                    console.debug('--- customValidationTypes#validationMaxLength', {
+                        validationAttributeValue: validationAttributeValue,
+                        errorMessage: errorMessage,
+                        validPassed: valid
+                    });
+
+                    if (valid) {
                         return true;
                     } else {
-                        errorMessageElement.html(customMessage || 'Maximum of ' + getValidationAttributeValue(rawAttr) + ' characters');
+                        errorMessageElement.html(errorMessage);
                         return false;
                     }
                 }
@@ -141,7 +168,7 @@
                 errorMessage: 'Valid characters are: A-Z, a-z',
                 validateWhileEntering: true,
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationOnlyAlphabets', {
+                    console.debug('Entering customValidationTypes#validationOnlyAlphabets', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -158,7 +185,7 @@
                 customValidationAttribute: 'validationOneUpperCaseLetter',
                 errorMessage: 'Must contain at least one uppercase letter',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationOnlyUpperCaseLetter', {
+                    console.debug('Entering customValidationTypes#validationOnlyUpperCaseLetter', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -175,7 +202,7 @@
                 customValidationAttribute: 'validationOnlyNumbers',
                 errorMessage: 'Must contain only numbers',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationOnlyNumbers', {
+                    console.debug('Entering customValidationTypes#validationOnlyNumbers', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -192,7 +219,7 @@
                 customValidationAttribute: 'validationOneNumber',
                 errorMessage: 'Must contain at least one number',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationOneNumber', {
+                    console.debug('Entering customValidationTypes#validationOneNumber', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -209,7 +236,7 @@
                 customValidationAttribute: 'validationOneAlphabet',
                 errorMessage: 'Must contain at least one alphabet',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationOneAlphabet', {
+                    console.debug('Entering customValidationTypes#validationOneAlphabet', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -227,7 +254,7 @@
                 validateWhileEntering: true,
                 errorMessage: 'Valid characters are: A-Z, a-z, 0-9',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationNoSpecialChars', {
+                    console.debug('Entering customValidationTypes#validationNoSpecialChars', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -244,7 +271,7 @@
                 customValidationAttribute: 'validationDateBeforeToday',
                 errorMessage: 'Must be prior to today',
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
-                    console.log('Entering customValidationTypes#validationDateBeforeToday', {
+                    console.debug('Entering customValidationTypes#validationDateBeforeToday', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -268,7 +295,7 @@
                 },
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
                     var beforeDate = attr;
-                    console.log('Entering customValidationTypes#validationSetLength', {
+                    console.debug('Entering customValidationTypes#validationSetLength', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,
@@ -291,7 +318,7 @@
                 },
                 validator: function (errorMessageElement, val, attr, $element, model, ngModelController, $scope, rawAttr) {
                     var afterDate = attr;
-                    console.log('Entering customValidationTypes#validationSetLength', {
+                    console.debug('Entering customValidationTypes#validationSetLength', {
                         errorMessageElement: errorMessageElement,
                         val: val,
                         attr: attr,

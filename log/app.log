@@ -421,3 +421,154 @@
 [2015-11-16 13:23:58.890] [INFO] Chrome 46.0.2490 (Mac OS X 10.10.5) - Connected on socket OS3U0iriuR-o8CXgAAAB with id manual-2581
 [2015-11-16 13:23:58.890] [INFO] karma - Delaying execution, these browsers are not ready: Chrome 46.0.2490 (Mac OS X 10.10.5)
 [2015-11-17 09:48:11.337] [WARN] Chrome 46.0.2490 (Mac OS X 10.10.5) - Disconnected (1 times)
+[2015-11-17 14:44:45.668] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-17 14:45:49.349] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-17 14:53:14.277] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 14:53:18.397] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 14:54:09.948] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 14:58:41.452] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 14:59:43.441] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 15:04:14.923] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 15:04:40.196] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 15:07:04.014] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 15:08:11.804] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 15:26:36.273] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_lite_uncompressed.js".
+[2015-11-17 15:26:36.274] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript.js".
+[2015-11-17 15:26:36.275] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_lite.js".
+[2015-11-17 15:26:36.359] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript.js".
+[2015-11-17 15:26:36.376] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_production.js".
+[2015-11-17 15:26:36.376] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_production_uncompressed.js".
+[2015-11-17 15:26:36.377] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_uncompressed.js".
+[2015-11-17 15:26:36.438] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript.js".
+[2015-11-17 15:26:36.438] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_lite_uncompressed.js".
+[2015-11-17 15:26:36.439] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_lite.js".
+[2015-11-17 15:26:36.439] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_production.js".
+[2015-11-17 15:26:36.439] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_production_uncompressed.js".
+[2015-11-17 15:26:36.439] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_uncompressed.js".
+[2015-11-17 15:26:36.440] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript.js".
+[2015-11-17 15:26:36.440] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_lite.js".
+[2015-11-17 15:26:36.440] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_lite_uncompressed.js".
+[2015-11-17 15:26:36.441] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_production.js".
+[2015-11-17 15:26:36.441] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_uncompressed.js".
+[2015-11-17 15:26:36.441] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_production_uncompressed.js".
+[2015-11-17 15:26:36.461] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript_uncompressed.js".
+[2015-11-17 15:26:36.468] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/test/xntest.js".
+[2015-11-17 18:13:05.176] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 18:14:14.736] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-17 18:15:33.695] [WARN] Chrome 46.0.2490 (Mac OS X 10.10.5) - Disconnected (1 times)
+[2015-11-18 08:00:48.445] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-18 08:00:48.696] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:05:06.304] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/test/xntest.js".
+[2015-11-18 08:05:06.414] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js".
+[2015-11-18 08:05:06.415] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:05:06.415] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript.js".
+[2015-11-18 08:05:06.415] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-18 08:05:06.415] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript_uncompressed.js".
+[2015-11-18 08:05:06.418] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript.js".
+[2015-11-18 08:05:06.506] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_uncompressed.js".
+[2015-11-18 08:05:06.556] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:05:50.138] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript.js".
+[2015-11-18 08:05:50.139] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript.js".
+[2015-11-18 08:05:50.140] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_production.js".
+[2015-11-18 08:05:50.141] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_uncompressed.js".
+[2015-11-18 08:05:50.145] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_uncompressed.js".
+[2015-11-18 08:05:50.147] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript.js".
+[2015-11-18 08:05:50.148] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_lite.js".
+[2015-11-18 08:05:50.149] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/test/xntest.js".
+[2015-11-18 08:05:50.150] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript_uncompressed.js".
+[2015-11-18 08:05:50.151] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript.js".
+[2015-11-18 08:05:50.152] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_uncompressed.js".
+[2015-11-18 08:05:50.153] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_lite_uncompressed.js".
+[2015-11-18 08:05:50.154] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_production_uncompressed.js".
+[2015-11-18 08:05:50.155] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_production.js".
+[2015-11-18 08:05:50.156] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_lite_uncompressed.js".
+[2015-11-18 08:05:50.157] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_lite.js".
+[2015-11-18 08:05:50.158] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_lite.js".
+[2015-11-18 08:05:50.159] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_production.js".
+[2015-11-18 08:05:50.160] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_production_uncompressed.js".
+[2015-11-18 08:05:50.161] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_lite_uncompressed.js".
+[2015-11-18 08:05:50.162] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_production_uncompressed.js".
+[2015-11-18 08:05:50.390] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:06:12.936] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_lite.js".
+[2015-11-18 08:06:12.936] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_lite_uncompressed.js".
+[2015-11-18 08:06:12.937] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript.js".
+[2015-11-18 08:06:13.079] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript.js".
+[2015-11-18 08:06:13.080] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript_uncompressed.js".
+[2015-11-18 08:06:13.081] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_production.js".
+[2015-11-18 08:06:13.081] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_production_uncompressed.js".
+[2015-11-18 08:06:13.081] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_uncompressed.js".
+[2015-11-18 08:06:13.083] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_lite.js".
+[2015-11-18 08:06:13.084] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript.js".
+[2015-11-18 08:06:13.084] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_production.js".
+[2015-11-18 08:06:13.086] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_lite_uncompressed.js".
+[2015-11-18 08:06:13.086] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_production_uncompressed.js".
+[2015-11-18 08:06:13.086] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_uncompressed.js".
+[2015-11-18 08:06:13.086] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_lite.js".
+[2015-11-18 08:06:13.087] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_lite_uncompressed.js".
+[2015-11-18 08:06:13.087] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_production.js".
+[2015-11-18 08:06:13.087] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript.js".
+[2015-11-18 08:06:13.087] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_production_uncompressed.js".
+[2015-11-18 08:06:13.088] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_uncompressed.js".
+[2015-11-18 08:06:13.136] [INFO] watcher - Added file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/test/xntest.js".
+[2015-11-18 08:06:13.187] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:23:44.719] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js".
+[2015-11-18 08:23:44.970] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:23:47.128] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-18 08:23:47.231] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:23:47.379] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:24:18.606] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_production.js".
+[2015-11-18 08:24:18.607] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript_uncompressed.js".
+[2015-11-18 08:24:18.608] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_uncompressed.js".
+[2015-11-18 08:24:18.609] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_production_uncompressed.js".
+[2015-11-18 08:24:18.610] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_lite.js".
+[2015-11-18 08:24:18.611] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_lite.js".
+[2015-11-18 08:24:18.612] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_lite_uncompressed.js".
+[2015-11-18 08:24:18.613] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_lite_uncompressed.js".
+[2015-11-18 08:24:18.614] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/log4javascript.js".
+[2015-11-18 08:24:18.615] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/test/xntest.js".
+[2015-11-18 08:24:18.616] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript_uncompressed.js".
+[2015-11-18 08:24:18.617] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript.js".
+[2015-11-18 08:24:18.618] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_lite.js".
+[2015-11-18 08:24:18.619] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_lite_uncompressed.js".
+[2015-11-18 08:24:18.620] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript.js".
+[2015-11-18 08:24:18.621] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_production_uncompressed.js".
+[2015-11-18 08:24:18.622] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_uncompressed.js".
+[2015-11-18 08:24:18.623] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_production.js".
+[2015-11-18 08:24:18.624] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/stubs/log4javascript_production_uncompressed.js".
+[2015-11-18 08:24:18.624] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/log4javascript.js".
+[2015-11-18 08:24:18.625] [INFO] watcher - Removed file "/Users/omuton/angular-ui-form-validation/app/scripts/log4javascript-1.4.13/js/tests/log4javascript_production.js".
+[2015-11-18 08:24:18.857] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:25:50.675] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-18 08:25:50.927] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:27:38.441] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-18 08:27:38.692] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:30:33.295] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-18 08:30:33.397] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/controllers/main.js".
+[2015-11-18 08:30:33.397] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:30:33.545] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:40:15.635] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:40:15.886] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:41:30.107] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:41:30.357] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:42:29.663] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:42:29.915] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:42:48.707] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:42:48.959] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:42:56.767] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:42:57.017] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:43:03.516] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:43:03.767] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:43:14.509] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:43:14.760] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:43:58.757] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:43:59.009] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:44:10.033] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:44:10.283] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:44:21.397] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:44:21.648] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:46:06.322] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:46:06.573] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:47:15.949] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/directives/customValidations.js".
+[2015-11-18 08:47:16.200] [WARN] karma - No captured browser, open http://localhost:8082/
+[2015-11-18 08:48:53.932] [INFO] watcher - Changed file "/Users/omuton/angular-ui-form-validation/app/scripts/services/customValidationTypes.js".
+[2015-11-18 08:48:54.183] [WARN] karma - No captured browser, open http://localhost:8082/

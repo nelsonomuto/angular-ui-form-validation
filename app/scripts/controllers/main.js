@@ -45,7 +45,7 @@ angular.module('angularUiFormValidationApp')
                      */
                         // jshint ignore:start
                     $scope.$on('customValidationComplete', function (data) {
-                        //console.log(data);
+                        //console.debug(data);
                         //You may perform any business logic here based on the element validation results
                     });
                     // jshint ignore:end
