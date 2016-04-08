@@ -84,14 +84,6 @@
                 }
             },
             {
-                customValidationAttribute: 'validationOnlyAlphabets',
-                errorMessage: 'Valid characters are: A-Z, a-z',
-                validateWhileEntering: true,
-                validator: function (errorMessageElement, val) {
-                    return (/^[a-z]*$/i).test(val);
-                }
-            },
-            {
                 customValidationAttribute: 'validationOneUpperCaseLetter',
                 errorMessage: 'Must contain at least one uppercase letter',
                 validator: function (errorMessageElement, val) {
