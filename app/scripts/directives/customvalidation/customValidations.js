@@ -495,10 +495,12 @@ angular_ui_form_validations = (function(){
                         }
                     }
 
+                    value = getElementValue();
+
                     //Do not validate if input is pristine, i.e nothing entered by user yet
                     if($element.hasClass('ng-pristine') && eventType !=='runCustomValidations'){
                         console.log('--- runCustomValidations not validating because pristine');
-                        return;
+                        return value;
                     }
 
                     successFn = formatterArgs.success || function(){};
@@ -596,7 +598,6 @@ angular_ui_form_validations = (function(){
 
                     currentlyDisplayingAnErrorMessage = currentErrorMessage.length > 0;
 
-                    value = getElementValue();
 
                     if (formatterArgs.customValidationAttribute === 'validationFieldRequired') {
                         toggleRequiredLabelClass();
