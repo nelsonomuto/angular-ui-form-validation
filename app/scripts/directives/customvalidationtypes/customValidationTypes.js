@@ -33,7 +33,7 @@
                 errorMessage: 'Cannot contain any spaces',
                 validateWhileEntering: true,
                 validator: function (errorMessageElement, val) {
-                    if (typeof(val) !== 'undefined' && val.trim() === '') {
+                    if (typeof (val) !== 'undefined' && val.trim() === '') {
                         return true;
                     }
                     return val !== '' && (/^[^\s]+$/).test(val);
@@ -190,20 +190,20 @@
         angular.forEach(myValidations.fetch(),
 
             function (customValidation) {
-                myValidations.compileDirective('input', function (customValidationUtil) {
+                myValidations.compileDirective('input', ['customValidationUtil', function (customValidationUtil) {
                     return {
                         require: '?ngModel',
                         restrict: 'E',
                         link: customValidationUtil.createValidationLink(customValidation)
                     };
-                });
-                myValidations.compileDirective('textarea', function (customValidationUtil) {
+                }]);
+                myValidations.compileDirective('textarea', ['customValidationUtil', function (customValidationUtil) {
                     return {
                         require: '?ngModel',
                         restrict: 'E',
                         link: customValidationUtil.createValidationLink(customValidation)
                     };
-                });
+                }]);
             });
     });
 
