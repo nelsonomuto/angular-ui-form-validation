@@ -1,11 +1,13 @@
 "use strict;"
 
+require('../app/scripts/app.js');
+
 describe('directives.customvalidation.customValidations', function () {
     var element, scope, errorMessages, hiddenErrorMessages, visibleErrorMessages,
         passwordInput, confirmPasswordInput, templateRetriever;
 
     beforeEach(function (){
-        module('directives.customvalidation.customValidationTypes');
+        angular.module('directives.customvalidation.customValidationTypes');
         inject(function ($injector, $rootScope, $compile, $q, $timeout) {
             element = angular.element('<form name="form">' +
                 '<input ng-model="user.password" type="text" name="password" id="password" ng-model="user.password" ' +

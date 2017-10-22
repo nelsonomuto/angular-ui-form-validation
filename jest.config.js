@@ -1,5 +1,5 @@
 module.exports = {
-  setupFiles: ['<rootDir>/jest/requestAnimationFrame.js'],
+  setupFiles: ['<rootDir>/jest/main.js'],
   moduleFileExtensions: ['js', 'jsx'],
   moduleDirectories: ['node_modules', 'app'],
   moduleNameMapper: {
